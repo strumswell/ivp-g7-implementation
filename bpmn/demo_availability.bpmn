@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_086ri11" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.0.3">
+  <bpmn:process id="Process_1" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>SequenceFlow_0kuy0q9</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0kuy0q9" sourceRef="StartEvent_1" targetRef="Task_0codvub" />
+    <bpmn:scriptTask id="Task_0codvub" name="Raum auswählen" scriptFormat="groovy">
+      <bpmn:incoming>SequenceFlow_0kuy0q9</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1l2vi2b</bpmn:outgoing>
+      <bpmn:script>import groovy.json.JsonSlurper
+
+def rooms = getServiceReponse('/rooms')
+def fittingRooms = []
+for (roomNumber in rooms) {
+    def roomInfo = getServiceReponse('/rooms/'+roomNumber)
+    if (roomInfo.get('price') &lt; 100) {
+        roomInfo['number'] = roomNumber
+        fittingRooms.add(roomInfo)
+        break
+    }
+}
+execution.setVariable("number", fittingRooms[0]['number'])
+execution.setVariable("roomtype", fittingRooms[0]['roomtype'])
+execution.setVariable("price", fittingRooms[0]['price'])
+execution.setVariable("status", fittingRooms[0]['status'])
+
+
+def getServiceReponse(route) {
+    def connection = new URL('http://implproz.biz.tm:8007/hotels/berlin'+route).openConnection();
+    def response = '';
+    if(connection.getResponseCode().equals(200)) {
+        response = connection.getInputStream().getText();
+    }
+    return new JsonSlurper().parseText(response);
+} </bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1l2vi2b" sourceRef="Task_0codvub" targetRef="Task_05yjeos" />
+    <bpmn:userTask id="Task_05yjeos" name="Raum anzeigen">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="FormField_2ek839i" label="Nummer" type="string" defaultValue="${number}" />
+          <camunda:formField id="FormField_3qo6lm6" label="Typ" type="string" defaultValue="${roomtype}" />
+          <camunda:formField id="FormField_3jph971" label="Preis" type="string" defaultValue="${price} €" />
+          <camunda:formField id="FormField_2b06qee" label="Status" type="string" defaultValue="${status}" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1l2vi2b</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0t44inm</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:endEvent id="EndEvent_0u8ogrs">
+      <bpmn:incoming>SequenceFlow_0t44inm</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0t44inm" sourceRef="Task_05yjeos" targetRef="EndEvent_0u8ogrs" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_1">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="173" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0kuy0q9_di" bpmnElement="SequenceFlow_0kuy0q9">
+        <di:waypoint x="209" y="120" />
+        <di:waypoint x="244" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ScriptTask_0ubzz0s_di" bpmnElement="Task_0codvub">
+        <dc:Bounds x="244" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1l2vi2b_di" bpmnElement="SequenceFlow_1l2vi2b">
+        <di:waypoint x="344" y="120" />
+        <di:waypoint x="379" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_1c3lq6j_di" bpmnElement="Task_05yjeos">
+        <dc:Bounds x="379" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0u8ogrs_di" bpmnElement="EndEvent_0u8ogrs">
+        <dc:Bounds x="514" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0t44inm_di" bpmnElement="SequenceFlow_0t44inm">
+        <di:waypoint x="479" y="120" />
+        <di:waypoint x="514" y="120" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
