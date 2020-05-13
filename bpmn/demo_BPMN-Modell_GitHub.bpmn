@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_07zezdp" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.1">
+  <bpmn:process id="BPMN_Test_GitHub" name="BPMN_Test_GitHub_V1" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_06nbqwe</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_0m4yn3s" sourceRef="Activity_0asn4tg" targetRef="SteuernBerechnen" />
+    <bpmn:sequenceFlow id="Flow_1l1fuzu" sourceRef="SteuernBerechnen" targetRef="ErgebnisAnzeigen" />
+    <bpmn:endEvent id="Event_1tztv1e">
+      <bpmn:incoming>Flow_1t71evi</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1t71evi" sourceRef="ErgebnisAnzeigen" targetRef="Event_1tztv1e" />
+    <bpmn:sequenceFlow id="Flow_06nbqwe" sourceRef="StartEvent_1" targetRef="Activity_0asn4tg" />
+    <bpmn:userTask id="Activity_0asn4tg" name="Einkommen erfassen">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="vEinkommen" label="Einkommen" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_06nbqwe</bpmn:incoming>
+      <bpmn:outgoing>Flow_0m4yn3s</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:scriptTask id="SteuernBerechnen" name="Steuer berechnen" scriptFormat="groovy">
+      <bpmn:incoming>Flow_0m4yn3s</bpmn:incoming>
+      <bpmn:outgoing>Flow_1l1fuzu</bpmn:outgoing>
+      <bpmn:script>vEink = execution.getVariable('vEinkommen');
+
+double dEink = Double.parseDouble(vEink);
+
+vStSatz = 19/100;
+
+vSteuerbetrag = dEink * (vStSatz+1);
+
+execution.setVariable('berechneteSteuern', vSteuerbetrag);</bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:userTask id="ErgebnisAnzeigen" name="Ergebnis anzeigen">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="berechenteSteuern" label="Steuern" type="string" defaultValue="${berechneteSteuern}" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1l1fuzu</bpmn:incoming>
+      <bpmn:outgoing>Flow_1t71evi</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="BPMN_Test_GitHub">
+      <bpmndi:BPMNEdge id="Flow_06nbqwe_di" bpmnElement="Flow_06nbqwe">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="280" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1t71evi_di" bpmnElement="Flow_1t71evi">
+        <di:waypoint x="740" y="117" />
+        <di:waypoint x="792" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1l1fuzu_di" bpmnElement="Flow_1l1fuzu">
+        <di:waypoint x="560" y="117" />
+        <di:waypoint x="640" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0m4yn3s_di" bpmnElement="Flow_0m4yn3s">
+        <di:waypoint x="380" y="117" />
+        <di:waypoint x="460" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1tztv1e_di" bpmnElement="Event_1tztv1e">
+        <dc:Bounds x="792" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1phn7ws_di" bpmnElement="Activity_0asn4tg">
+        <dc:Bounds x="280" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0y5mb9k_di" bpmnElement="SteuernBerechnen">
+        <dc:Bounds x="460" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_027iatm_di" bpmnElement="ErgebnisAnzeigen">
+        <dc:Bounds x="640" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
