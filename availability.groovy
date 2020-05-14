@@ -1,70 +1,78 @@
 import groovy.json.JsonSlurper
 
-def rooms = getServiceReponse('/rooms')
-def fittingRooms = [] // list for all rooms fullfilling the conditions
+// User Input
+def singleAmount = 0
+def doubleAmount = 0
+def suiteAmount = 0
+def nights = 0
+def guests = 0
 
-// go through all rooms...
+// Prepare
+def rooms = getServiceReponse('/rooms')
+def singleRooms = []
+def doubleRooms = []
+def suiteRooms = []
+def fittingRooms = [] // rooms to return to user
+def price = 0
+
+// Super ugly.... find a better way
+// 1. Build array of all available rooms 2. Try to find users wishes
 for (roomNumber in rooms) {
     def room = getServiceReponse('/rooms/'+roomNumber)
-    print(room)
-    // Get all free rooms in their category
-    // def freeEinzelRooms = []
-    // def freeDoppelRoom = []
-    // def freeSuitRoom = []
-    // if status = free
-    //      if roomtype = single
-    //          room['number'] = roomNuber
-    //          freeEinzelRooms.add(room)
-    //      if roomtype = double
-    //          room['number'] = roomNuber
-    //          freeDoppelRooms.add(room)
-    //      if roomtype = suite
-    //          room['number'] = roomNuber
-    //          freeSuiteRooms.add(room)
-    if (room.get('price') < 100) {
+    if (room.get('status') == 'free') {
         room['number'] = roomNumber // add room number to room info
-        fittingRooms.add(room) 
-    } 
+        if (room.get('roomtype') == 'single') {
+            if (singleAmount > 0) {
+                fittingRooms.add(room)
+                price += room.get('price')
+                singleAmount--
+                guests--
+            } else {
+                singleRooms.add(room)
+            }
+        } else if (room.get('roomtype') == 'double') {
+            if (doubleAmount > 0) {
+                fittingRooms.add(room)
+                price += room.get('price')
+                doubleAmount--
+                guests -= 2
+            } else {
+                doubleRooms.add(room)
+            }
+        } else if (room.get('roomtype') == 'suite') {
+            if (singleAmount > 0) {
+                suiteAmount.add(room)
+                price += room.get('price')
+                suiteAmount--
+                guests -= 3
+            } else {
+                suiteRooms.add(room)
+            }
+        }
+    }
+}
 
-    //execution.setVariable("number", fittingRooms[0]['number']+", "+fittingRooms[1]['number'])
-    // number: 100
-    // number: "100, 202, 310"
-    // type: "single, double, suite"
-    // price: "80€ + 120€ + 300€ = 500€"
-
-
-    // Ende:
-    // return Dopplezimmer, Einzelzimmer
-    // Camunda Modeler (festes) Form: 
-    // - Raumnummer: DefaultValue: ${number} 
-    // - Typ: DefaultValue: ${roomtype} 
-    // - Preis: DefaultValue: ${price} 
-    //
-    // Generated Form:
-    // Array mit Räumen (rooms)
-    // <html>
-    // <script>
-    //  for room in rooms {
-    //      Generiere das einzelne Form
-    //      ODER
-    //      Generiere Tabelle mit Buttons
-    //  }
-    // </script>
-    // <form>
-    //  <input>...
-    //  <button>...
-    // </form>
-    // </html>
-
-
-    // Irgendein anderes Skript:
-    // Input: number ("100, 202, 310")
-    // Verarbeitung: rooms = number.split(",");
-    //                 -> ["100", "202", "310"]
+// We do everything on our own...
+if (guests == 1) {
+    if (singleRooms.length > 0) {
+        fittingRooms.add(singleRooms[0])
+        guests = 0
+    } else if (doubleRooms.length > 0) {
+        fittingRooms.add(doubleRooms[0])
+        guests = 0
+    } else if (suiteRooms.length > 0) {
+        fittingRooms.add(suiteRooms[0])
+        guests = 0
+    } else {
+        fittingRooms.clear() // gibts das?
+        fittingRooms.add('Error: Es gibt keine freie Raumkombination.')
+    }
+} else {
+    // ... more than two people 
 }
 
 
-//print(fittingRooms) // [[number:100, price:80, ...], [number:101, price:80, ...], ...]
+print(fittingRooms) // [[number:100, price:80, ...], [number:101, price:80, ...], ...]
 
 /* Set vars for Camunda BPM
 execution.setVariable("number", fittingRooms[0]['number'])
