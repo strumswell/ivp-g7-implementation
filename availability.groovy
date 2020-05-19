@@ -5,6 +5,7 @@ def rooms = getServiceReponse('/rooms')
 def fittingRooms = [:]
 def errorRooms = [:]
 def price = 0
+def nights = 2 //execution.getVariable("nights")
 
 enum RoomTypes {
     SINGLE, DOUBLE, SUITE
@@ -14,11 +15,11 @@ enum RoomTypes {
 for (type in RoomTypes) {
     typeAvailableRooms = getFreeRooms(rooms, type.name().toLowerCase())
     typeAmount = getRoomAmount(type)
-    typeResult = []
     if (typeAvailableRooms.size() >= typeAmount) {
+        typeResult = []
         for (i = 0; i < typeAmount; i++) {
             typeResult.add(typeAvailableRooms[i])
-            price += typeAvailableRooms[i].get('price')
+            price += nights * typeAvailableRooms[i].get('price')
         }
         fittingRooms[type] = typeResult
     } else {
