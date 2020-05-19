@@ -1,85 +1,39 @@
 import groovy.json.JsonSlurper
 
-// User Input
-def singleAmount = 0
-def doubleAmount = 0
-def suiteAmount = 0
-def nights = 0
-def guests = 0
-
 // Prepare
 def rooms = getServiceReponse('/rooms')
-def singleRooms = []
-def doubleRooms = []
-def suiteRooms = []
-def fittingRooms = [] // rooms to return to user
+def fittingRooms = [:]
+def errorRooms = [:]
 def price = 0
 
-// Super ugly.... find a better way
-// 1. Build array of all available rooms 2. Try to find users wishes
-for (roomNumber in rooms) {
-    def room = getServiceReponse('/rooms/'+roomNumber)
-    if (room.get('status') == 'free') {
-        room['number'] = roomNumber // add room number to room info
-        if (room.get('roomtype') == 'single') {
-            if (singleAmount > 0) {
-                fittingRooms.add(room)
-                price += room.get('price')
-                singleAmount--
-                guests--
-            } else {
-                singleRooms.add(room)
-            }
-        } else if (room.get('roomtype') == 'double') {
-            if (doubleAmount > 0) {
-                fittingRooms.add(room)
-                price += room.get('price')
-                doubleAmount--
-                guests -= 2
-            } else {
-                doubleRooms.add(room)
-            }
-        } else if (room.get('roomtype') == 'suite') {
-            if (singleAmount > 0) {
-                suiteAmount.add(room)
-                price += room.get('price')
-                suiteAmount--
-                guests -= 3
-            } else {
-                suiteRooms.add(room)
-            }
+enum RoomTypes {
+    SINGLE, DOUBLE, SUITE
+}
+
+// Look for fitting rooms
+for (type in RoomTypes) {
+    typeAvailableRooms = getFreeRooms(rooms, type.name().toLowerCase())
+    typeAmount = getRoomAmount(type)
+    typeResult = []
+    if (typeAvailableRooms.size() >= typeAmount) {
+        for (i = 0; i < typeAmount; i++) {
+            typeResult.add(typeAvailableRooms[i])
+            price += typeAvailableRooms[i].get('price')
         }
-    }
-}
-
-// We do everything on our own...
-if (guests == 1) {
-    if (singleRooms.length > 0) {
-        fittingRooms.add(singleRooms[0])
-        guests = 0
-    } else if (doubleRooms.length > 0) {
-        fittingRooms.add(doubleRooms[0])
-        guests = 0
-    } else if (suiteRooms.length > 0) {
-        fittingRooms.add(suiteRooms[0])
-        guests = 0
+        fittingRooms[type] = typeResult
     } else {
-        fittingRooms.clear() // gibts das?
-        fittingRooms.add('Error: Es gibt keine freie Raumkombination.')
+        fittingRooms[type] = []
+        errorRooms[type] = (typeAmount - typeAvailableRooms.size())+" missing"
     }
-} else {
-    // ... more than two people 
 }
 
-
-print(fittingRooms) // [[number:100, price:80, ...], [number:101, price:80, ...], ...]
-
-/* Set vars for Camunda BPM
-execution.setVariable("number", fittingRooms[0]['number'])
-execution.setVariable("roomtype", fittingRooms[0]['roomtype'])
-execution.setVariable("price", fittingRooms[0]['price'])
-execution.setVariable("status", fittingRooms[0]['status'])
-*/
+// Output
+if (errorRooms.size() == 0) {
+    print(fittingRooms) //execution.setVariable("result", fittingRooms)
+    print('\n\nGesamtpreis: '+price+' €') //execution.setVariable("price", price)
+} else {
+    print(errorRooms) //execution.setVariable("error", errorRooms)
+}
 
 /**
 * Make a call to the rooms service api.
@@ -94,3 +48,45 @@ def getServiceReponse(route) {
     }
     return new JsonSlurper().parseText(response);
 } 
+
+/**
+* Get all free rooms of type
+* @param rooms array of all rooms from api
+* @param type type of room to look for
+* @return all free rooms of type
+*/
+def getFreeRooms(rooms, type) {
+    freeRooms = []
+    for (roomNumber in rooms) {
+        def room = getServiceReponse('/rooms/'+roomNumber)
+        if (room.get('status') == 'free') {
+            if (room.get('roomtype') == type) {
+                room['number'] = roomNumber 
+                freeRooms.add(room)
+            } 
+        }
+    }
+    return freeRooms
+}
+
+/**
+* Get requested amount of room type
+* @param type room type
+* @return number of rooms requested
+*/
+def getRoomAmount(type) {
+    switch (type) {
+        case RoomTypes.SINGLE:
+            return 1 //execution.getVariable()...
+            break
+        case RoomTypes.DOUBLE:
+            return 2 //execution.getVariable()...
+            break
+        case RoomTypes.SUITE:
+            return 0 //execution.getVariable()...
+            break
+        default:
+            return 0
+            break
+    }
+}
