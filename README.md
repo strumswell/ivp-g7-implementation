@@ -1,6 +1,6 @@
 # Hotelbuchung in Camunda BPM
 ## Ziel
-Ausführung eines BPMN-Prozesses zum Thema "Hotelbuchung" in dem Worflow-Management-System [Camunda BPM](https://camunda.com/products/) im Rahmen einer Projektarbeit der Technischen Hochschule Brandenburg. 
+Ausführung eines BPMN-Prozesses zum Thema "Hotelbuchung" in dem Workflow-Management-System [Camunda BPM](https://camunda.com/products/) im Rahmen einer Projektarbeit der Technischen Hochschule Brandenburg. 
 
 ## Herangehensweise
 Folgende Abschnitte werden vom Projektteam agil bearbeitet:
