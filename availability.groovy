@@ -1,77 +1,40 @@
 import groovy.json.JsonSlurper
 
+// Prepare
 def rooms = getServiceReponse('/rooms')
-def fittingRooms = [] // list for all rooms fullfilling the conditions
+def fittingRooms = [:]
+def errorRooms = [:]
+def price = 0
+def nights = 2 //execution.getVariable("nights")
 
-// go through all rooms...
-for (roomNumber in rooms) {
-    def room = getServiceReponse('/rooms/'+roomNumber)
-    print(room)
-    // Get all free rooms in their category
-    // def freeEinzelRooms = []
-    // def freeDoppelRoom = []
-    // def freeSuitRoom = []
-    // if status = free
-    //      if roomtype = single
-    //          room['number'] = roomNuber
-    //          freeEinzelRooms.add(room)
-    //      if roomtype = double
-    //          room['number'] = roomNuber
-    //          freeDoppelRooms.add(room)
-    //      if roomtype = suite
-    //          room['number'] = roomNuber
-    //          freeSuiteRooms.add(room)
-    if (room.get('price') < 100) {
-        room['number'] = roomNumber // add room number to room info
-        fittingRooms.add(room) 
-    } 
-
-    //execution.setVariable("number", fittingRooms[0]['number']+", "+fittingRooms[1]['number'])
-    // number: 100
-    // number: "100, 202, 310"
-    // type: "single, double, suite"
-    // price: "80€ + 120€ + 300€ = 500€"
-
-
-    // Ende:
-    // return Dopplezimmer, Einzelzimmer
-    // Camunda Modeler (festes) Form: 
-    // - Raumnummer: DefaultValue: ${number} 
-    // - Typ: DefaultValue: ${roomtype} 
-    // - Preis: DefaultValue: ${price} 
-    //
-    // Generated Form:
-    // Array mit Räumen (rooms)
-    // <html>
-    // <script>
-    //  for room in rooms {
-    //      Generiere das einzelne Form
-    //      ODER
-    //      Generiere Tabelle mit Buttons
-    //  }
-    // </script>
-    // <form>
-    //  <input>...
-    //  <button>...
-    // </form>
-    // </html>
-
-
-    // Irgendein anderes Skript:
-    // Input: number ("100, 202, 310")
-    // Verarbeitung: rooms = number.split(",");
-    //                 -> ["100", "202", "310"]
+enum RoomTypes {
+    SINGLE, DOUBLE, SUITE
 }
 
+// Look for fitting rooms
+for (type in RoomTypes) {
+    typeAvailableRooms = getFreeRooms(rooms, type.name().toLowerCase())
+    typeAmount = getRoomAmount(type)
+    if (typeAvailableRooms.size() >= typeAmount) {
+        typeResult = []
+        for (i = 0; i < typeAmount; i++) {
+            typeResult.add(typeAvailableRooms[i])
+            price += nights * typeAvailableRooms[i].get('price')
+        }
+        fittingRooms[type] = typeResult
+    } else {
+        fittingRooms[type] = []
+        errorRooms[type] = (typeAmount - typeAvailableRooms.size())+" missing"
+    }
+}
 
-//print(fittingRooms) // [[number:100, price:80, ...], [number:101, price:80, ...], ...]
-
-/* Set vars for Camunda BPM
-execution.setVariable("number", fittingRooms[0]['number'])
-execution.setVariable("roomtype", fittingRooms[0]['roomtype'])
-execution.setVariable("price", fittingRooms[0]['price'])
-execution.setVariable("status", fittingRooms[0]['status'])
-*/
+// Output
+if (errorRooms.size() == 0) {
+    print(fittingRooms) //execution.setVariable("result", fittingRooms)
+    print('\n\nGesamtpreis: '+price+' €') //execution.setVariable("price", price)
+} else {
+    print(errorRooms) //execution.setVariable("error", errorRooms)
+}
 
 /**
 * Make a call to the rooms service api.
@@ -86,3 +49,45 @@ def getServiceReponse(route) {
     }
     return new JsonSlurper().parseText(response);
 } 
+
+/**
+* Get all free rooms of type
+* @param rooms array of all rooms from api
+* @param type type of room to look for
+* @return all free rooms of type
+*/
+def getFreeRooms(rooms, type) {
+    freeRooms = []
+    for (roomNumber in rooms) {
+        def room = getServiceReponse('/rooms/'+roomNumber)
+        if (room.get('status') == 'free') {
+            if (room.get('roomtype') == type) {
+                room['number'] = roomNumber 
+                freeRooms.add(room)
+            } 
+        }
+    }
+    return freeRooms
+}
+
+/**
+* Get requested amount of room type
+* @param type room type
+* @return number of rooms requested
+*/
+def getRoomAmount(type) {
+    switch (type) {
+        case RoomTypes.SINGLE:
+            return 1 //execution.getVariable()...
+            break
+        case RoomTypes.DOUBLE:
+            return 2 //execution.getVariable()...
+            break
+        case RoomTypes.SUITE:
+            return 0 //execution.getVariable()...
+            break
+        default:
+            return 0
+            break
+    }
+}
