@@ -15,7 +15,6 @@
         <bpmn:flowNodeRef>Task_09voy42</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0ssicqc</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0cq1ahu</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_1skywdb</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>XOR_BonitaetOk</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0eta6ea</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0snjw6f</bpmn:flowNodeRef>
@@ -25,22 +24,23 @@
         <bpmn:flowNodeRef>XOR_SofortzahlungOk</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0xhtxnq</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_148ls46</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_1n5ions</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>XOR_AngebotOk</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>XOR_AuswahlZahlungsweis</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_17h47ia</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>XOR_AlternativeOk</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_1944dty</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_0srjfvg</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_1skywdb</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_1n5ions</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1kxh7nr</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_069wcre</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>XOR_AlternativeOk</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_0g8vq52</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0lwg6xz</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_12dva4v</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_18098zo</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_1ganrfm</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1ho2gme</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>EndEvent_1944dty</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>EndEvent_0srjfvg</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_1kflstd</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_1ganrfm</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_18098zo</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:exclusiveGateway id="XOR_KundenwunschOk" name="Kundenwunsch verfügbar?">
@@ -122,27 +122,6 @@ execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1jkbexr</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1t55m76</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:userTask id="Task_1skywdb" name="Kundendaten aufnehmen">
-      <bpmn:extensionElements>
-        <camunda:formData>
-          <camunda:formField id="anrede" label="Anrede" type="enum">
-            <camunda:value id="Herr" name="Herr" />
-            <camunda:value id="Frau" name="Frau" />
-          </camunda:formField>
-          <camunda:formField id="firstname" label="Vorname" type="string" defaultValue="Jens" />
-          <camunda:formField id="lastname" label="Nachname" type="string" defaultValue="Tester" />
-          <camunda:formField id="gebDat" label="Geburtsdatum" type="date" defaultValue="12/12/1984" />
-          <camunda:formField id="eMail" label="E-Mail-Adresse" type="string" defaultValue="tester@testnix.de" />
-          <camunda:formField id="strasse" label="Straße" type="string" defaultValue="xyzstraße" />
-          <camunda:formField id="hausnummer" label="Hausnummer" type="string" defaultValue="13A" />
-          <camunda:formField id="plz" label="PLZ" type="string" defaultValue="23455" />
-          <camunda:formField id="ort" label="Ort" type="string" defaultValue="Ortnix" />
-          <camunda:formField id="umzugLetzten12Monate" label="Sind Sie in den letrzten 12 Monaten umgezogen?" type="boolean" />
-        </camunda:formData>
-      </bpmn:extensionElements>
-      <bpmn:incoming>SequenceFlow_1o47qu8</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1fljneq</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:exclusiveGateway id="XOR_BonitaetOk" name="Bonität vorhanden?">
       <bpmn:incoming>SequenceFlow_1hlkcca</bpmn:incoming>
@@ -240,20 +219,6 @@ execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
       <bpmn:incoming>SequenceFlow_0n9prht</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_1mkzrnu</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0ljyxsw</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:userTask id="Task_1n5ions" name="Sofortzahlung durchführen">
-      <bpmn:extensionElements>
-        <camunda:formData>
-          <camunda:formField id="ecKarteKreditKarteBar" label="Wie möchten Sie zahlen? EC-, Kreditkarte oder ?" type="enum">
-            <camunda:value id="ecKarte" name="EC-Karte!" />
-            <camunda:value id="kreditKarte" name="Kreditkarte!" />
-            <camunda:value id="barZahlen" name="Bar bezahlen!" />
-          </camunda:formField>
-        </camunda:formData>
-      </bpmn:extensionElements>
-      <bpmn:incoming>SequenceFlow_1ib12rw</bpmn:incoming>
-      <bpmn:incoming>SequenceFlow_1hbqqii</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_12zwqq9</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="SequenceFlow_0jzxq8u" sourceRef="Task_1kxh7nr" targetRef="Task_069wcre" />
     <bpmn:sequenceFlow id="SequenceFlow_01qftwm" name="Auf Ziel" sourceRef="XOR_AuswahlZahlungsweis" targetRef="ExclusiveGateway_0g8vq52">
@@ -402,6 +367,65 @@ execution.setVariable("bonitaet", varBonitaet)
 
 execution.setVariable("ratenZahlungPruefung", "ungeprüft")</bpmn:script>
     </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0ghvr2o" name="Ja" sourceRef="XOR_AlternativeOk" targetRef="Task_09voy42">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${alternativeAnnehmen == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0zty9hg" sourceRef="Gateway_0lwg6xz" targetRef="Task_18098zo" />
+    <bpmn:sequenceFlow id="Flow_00asvxw" sourceRef="Gateway_0lwg6xz" targetRef="Activity_12dva4v" />
+    <bpmn:sequenceFlow id="Flow_0oyxilm" sourceRef="Activity_12dva4v" targetRef="Gateway_1ho2gme" />
+    <bpmn:sequenceFlow id="Flow_1svdc1e" sourceRef="Task_18098zo" targetRef="Gateway_1ho2gme" />
+    <bpmn:sequenceFlow id="Flow_0lny208" sourceRef="Gateway_1ho2gme" targetRef="Task_1ganrfm" />
+    <bpmn:sequenceFlow id="SequenceFlow_00j2no7" sourceRef="Task_1ganrfm" targetRef="EndEvent_1kflstd" />
+    <bpmn:sequenceFlow id="SequenceFlow_0b5ref0" sourceRef="ExclusiveGateway_0g8vq52" targetRef="Gateway_0lwg6xz" />
+    <bpmn:sequenceFlow id="SequenceFlow_00vat3d" name="Nein" sourceRef="XOR_AlternativeOk" targetRef="EndEvent_1944dty">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${alternativeAnnehmen == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_1omvrja" name="Abgebrochen" sourceRef="XOR_AngebotOk" targetRef="EndEvent_1944dty">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${auswahlAngebot == "abbruch"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="EndEvent_1944dty" name="Buchung abgebrochen">
+      <bpmn:incoming>SequenceFlow_00vat3d</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1omvrja</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:endEvent id="EndEvent_0srjfvg" name="Buchung abgebrochen">
+      <bpmn:incoming>SequenceFlow_091jvlm</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_11bgnag</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="Task_1skywdb" name="Kundendaten aufnehmen">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="anrede" label="Anrede" type="enum">
+            <camunda:value id="Herr" name="Herr" />
+            <camunda:value id="Frau" name="Frau" />
+          </camunda:formField>
+          <camunda:formField id="firstname" label="Vorname" type="string" defaultValue="Jens" />
+          <camunda:formField id="lastname" label="Nachname" type="string" defaultValue="Tester" />
+          <camunda:formField id="gebDat" label="Geburtsdatum" type="date" defaultValue="12/12/1984" />
+          <camunda:formField id="eMail" label="E-Mail-Adresse" type="string" defaultValue="tester@testnix.de" />
+          <camunda:formField id="strasse" label="Straße" type="string" defaultValue="xyzstraße" />
+          <camunda:formField id="hausnummer" label="Hausnummer" type="string" defaultValue="13A" />
+          <camunda:formField id="plz" label="PLZ" type="string" defaultValue="23455" />
+          <camunda:formField id="ort" label="Ort" type="string" defaultValue="Ortnix" />
+          <camunda:formField id="umzugLetzten12Monate" label="Sind Sie in den letrzten 12 Monaten umgezogen?" type="boolean" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1o47qu8</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1fljneq</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="Task_1n5ions" name="Sofortzahlung durchführen">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="ecKarteKreditKarteBar" label="Wie möchten Sie zahlen? EC-, Kreditkarte oder ?" type="enum">
+            <camunda:value id="ecKarte" name="EC-Karte!" />
+            <camunda:value id="kreditKarte" name="Kreditkarte!" />
+            <camunda:value id="barZahlen" name="Bar bezahlen!" />
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1ib12rw</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_1hbqqii</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_12zwqq9</bpmn:outgoing>
+    </bpmn:userTask>
     <bpmn:userTask id="Task_1kxh7nr" name="Bankdaten einholen">
       <bpmn:extensionElements>
         <camunda:formData>
@@ -511,30 +535,6 @@ execution.setVariable("ratenZahlungPruefung", "ungeprüft")</bpmn:script>
       <bpmn:incoming>SequenceFlow_0jzxq8u</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1ts5ggp</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="SequenceFlow_0ghvr2o" name="Ja" sourceRef="XOR_AlternativeOk" targetRef="Task_09voy42">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${alternativeAnnehmen == true}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0zty9hg" sourceRef="Gateway_0lwg6xz" targetRef="Task_18098zo" />
-    <bpmn:sequenceFlow id="Flow_00asvxw" sourceRef="Gateway_0lwg6xz" targetRef="Activity_12dva4v" />
-    <bpmn:sequenceFlow id="Flow_0oyxilm" sourceRef="Activity_12dva4v" targetRef="Gateway_1ho2gme" />
-    <bpmn:sequenceFlow id="Flow_1svdc1e" sourceRef="Task_18098zo" targetRef="Gateway_1ho2gme" />
-    <bpmn:sequenceFlow id="Flow_0lny208" sourceRef="Gateway_1ho2gme" targetRef="Task_1ganrfm" />
-    <bpmn:sequenceFlow id="SequenceFlow_00j2no7" sourceRef="Task_1ganrfm" targetRef="EndEvent_1kflstd" />
-    <bpmn:sequenceFlow id="SequenceFlow_0b5ref0" sourceRef="ExclusiveGateway_0g8vq52" targetRef="Gateway_0lwg6xz" />
-    <bpmn:sequenceFlow id="SequenceFlow_00vat3d" name="Nein" sourceRef="XOR_AlternativeOk" targetRef="EndEvent_1944dty">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${alternativeAnnehmen == false}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_1omvrja" name="Abgebrochen" sourceRef="XOR_AngebotOk" targetRef="EndEvent_1944dty">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${auswahlAngebot == "abbruch"}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:endEvent id="EndEvent_1944dty" name="Buchung abgebrochen">
-      <bpmn:incoming>SequenceFlow_00vat3d</bpmn:incoming>
-      <bpmn:incoming>SequenceFlow_1omvrja</bpmn:incoming>
-    </bpmn:endEvent>
-    <bpmn:endEvent id="EndEvent_0srjfvg" name="Buchung abgebrochen">
-      <bpmn:incoming>SequenceFlow_091jvlm</bpmn:incoming>
-      <bpmn:incoming>SequenceFlow_11bgnag</bpmn:incoming>
-    </bpmn:endEvent>
     <bpmn:exclusiveGateway id="ExclusiveGateway_0g8vq52">
       <bpmn:incoming>SequenceFlow_12zwqq9</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_01qftwm</bpmn:incoming>
@@ -555,15 +555,14 @@ execution.setVariable("ratenZahlungPruefung", "ungeprüft")</bpmn:script>
       <bpmn:incoming>Flow_00asvxw</bpmn:incoming>
       <bpmn:outgoing>Flow_0oyxilm</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:scriptTask id="Task_18098zo" name="Rechnung generieren" scriptFormat="groovy">
-      <bpmn:incoming>Flow_0zty9hg</bpmn:incoming>
-      <bpmn:outgoing>Flow_1svdc1e</bpmn:outgoing>
-      <bpmn:script>//### DemoScriptJK - Ausgabe Rechnung generieren###
-boolean varRechnungGenerieret = true
-execution.setVariable("rechnungOk", varRechnungGenerieret)
-
-print 'Rechnung generieren'</bpmn:script>
-    </bpmn:scriptTask>
+    <bpmn:parallelGateway id="Gateway_1ho2gme">
+      <bpmn:incoming>Flow_1svdc1e</bpmn:incoming>
+      <bpmn:incoming>Flow_0oyxilm</bpmn:incoming>
+      <bpmn:outgoing>Flow_0lny208</bpmn:outgoing>
+    </bpmn:parallelGateway>
+    <bpmn:endEvent id="EndEvent_1kflstd" name="Buchung abgeschlossen">
+      <bpmn:incoming>SequenceFlow_00j2no7</bpmn:incoming>
+    </bpmn:endEvent>
     <bpmn:userTask id="Task_1ganrfm" name="Unterlagen übergeben">
       <bpmn:extensionElements>
         <camunda:formData>
@@ -574,49 +573,45 @@ print 'Rechnung generieren'</bpmn:script>
       <bpmn:incoming>Flow_0lny208</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_00j2no7</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:parallelGateway id="Gateway_1ho2gme">
-      <bpmn:incoming>Flow_1svdc1e</bpmn:incoming>
-      <bpmn:incoming>Flow_0oyxilm</bpmn:incoming>
-      <bpmn:outgoing>Flow_0lny208</bpmn:outgoing>
-    </bpmn:parallelGateway>
-    <bpmn:endEvent id="EndEvent_1kflstd" name="Buchung abgeschlossen">
-      <bpmn:incoming>SequenceFlow_00j2no7</bpmn:incoming>
-    </bpmn:endEvent>
+    <bpmn:serviceTask id="Task_18098zo" name="Rechnung generieren">
+      <bpmn:incoming>Flow_0zty9hg</bpmn:incoming>
+      <bpmn:outgoing>Flow_1svdc1e</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1fkr7nk">
       <bpmndi:BPMNShape id="Participant_0hum507_di" bpmnElement="Participant_0hum507" isHorizontal="true">
-        <dc:Bounds x="279" y="197" width="2918" height="698" />
+        <dc:Bounds x="279" y="197" width="2803" height="700" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0cfch57_di" bpmnElement="Lane_0cfch57" isHorizontal="true">
-        <dc:Bounds x="309" y="197" width="2888" height="502" />
+        <dc:Bounds x="309" y="197" width="2773" height="502" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1jnl604_di" bpmnElement="Lane_1jnl604" isHorizontal="true">
-        <dc:Bounds x="309" y="699" width="2888" height="196" />
+        <dc:Bounds x="309" y="699" width="2773" height="198" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0lny208_di" bpmnElement="Flow_0lny208">
-        <di:waypoint x="2920" y="530" />
-        <di:waypoint x="2951" y="530" />
+        <di:waypoint x="2790" y="530" />
+        <di:waypoint x="2825" y="530" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0oyxilm_di" bpmnElement="Flow_0oyxilm">
-        <di:waypoint x="2831" y="633" />
-        <di:waypoint x="2895" y="633" />
-        <di:waypoint x="2895" y="555" />
+        <di:waypoint x="2707" y="633" />
+        <di:waypoint x="2765" y="633" />
+        <di:waypoint x="2765" y="555" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1svdc1e_di" bpmnElement="Flow_1svdc1e">
-        <di:waypoint x="2831" y="426" />
-        <di:waypoint x="2895" y="426" />
-        <di:waypoint x="2895" y="505" />
+        <di:waypoint x="2707" y="426" />
+        <di:waypoint x="2765" y="426" />
+        <di:waypoint x="2765" y="505" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_00asvxw_di" bpmnElement="Flow_00asvxw">
-        <di:waypoint x="2672" y="555" />
-        <di:waypoint x="2672" y="633" />
-        <di:waypoint x="2731" y="633" />
+        <di:waypoint x="2547" y="555" />
+        <di:waypoint x="2547" y="633" />
+        <di:waypoint x="2607" y="633" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0zty9hg_di" bpmnElement="Flow_0zty9hg">
-        <di:waypoint x="2672" y="505" />
-        <di:waypoint x="2672" y="426" />
-        <di:waypoint x="2731" y="426" />
+        <di:waypoint x="2547" y="505" />
+        <di:waypoint x="2547" y="426" />
+        <di:waypoint x="2607" y="426" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0gmrw1v_di" bpmnElement="SequenceFlow_0gmrw1v">
         <di:waypoint x="1846" y="807" />
@@ -664,9 +659,9 @@ print 'Rechnung generieren'</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1o47qu8_di" bpmnElement="SequenceFlow_1o47qu8">
         <di:waypoint x="1158" y="426" />
-        <di:waypoint x="1243" y="426" />
+        <di:waypoint x="1235" y="426" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1163" y="408" width="57" height="14" />
+          <dc:Bounds x="1160" y="408" width="57" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0dbxllw_di" bpmnElement="SequenceFlow_0dbxllw">
@@ -674,7 +669,7 @@ print 'Rechnung generieren'</bpmn:script>
         <di:waypoint x="583" y="426" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1fljneq_di" bpmnElement="SequenceFlow_1fljneq">
-        <di:waypoint x="1343" y="426" />
+        <di:waypoint x="1335" y="426" />
         <di:waypoint x="1384" y="426" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1hlkcca_di" bpmnElement="SequenceFlow_1hlkcca">
@@ -720,10 +715,10 @@ print 'Rechnung generieren'</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_09zsf56_di" bpmnElement="SequenceFlow_09zsf56">
         <di:waypoint x="1958" y="807" />
-        <di:waypoint x="2186" y="807" />
-        <di:waypoint x="2186" y="673" />
+        <di:waypoint x="2083" y="807" />
+        <di:waypoint x="2083" y="673" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1981" y="785" width="8" height="14" />
+          <dc:Bounds x="1969" y="785" width="9" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_09jw7d1_di" bpmnElement="SequenceFlow_09jw7d1">
@@ -743,10 +738,10 @@ print 'Rechnung generieren'</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1ib12rw_di" bpmnElement="SequenceFlow_1ib12rw">
         <di:waypoint x="1821" y="266" />
-        <di:waypoint x="2409" y="266" />
-        <di:waypoint x="2409" y="386" />
+        <di:waypoint x="2327" y="266" />
+        <di:waypoint x="2327" y="386" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1832" y="247" width="8" height="14" />
+          <dc:Bounds x="1830" y="247" width="9" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_091jvlm_di" bpmnElement="SequenceFlow_091jvlm">
@@ -768,36 +763,36 @@ print 'Rechnung generieren'</bpmn:script>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1hbqqii_di" bpmnElement="SequenceFlow_1hbqqii">
         <di:waypoint x="2108" y="426" />
-        <di:waypoint x="2359" y="426" />
+        <di:waypoint x="2277" y="426" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2116" y="406" width="31" height="14" />
+          <dc:Bounds x="2109" y="406" width="30" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_12zwqq9_di" bpmnElement="SequenceFlow_12zwqq9">
-        <di:waypoint x="2459" y="426" />
-        <di:waypoint x="2592" y="426" />
-        <di:waypoint x="2592" y="505" />
+        <di:waypoint x="2377" y="426" />
+        <di:waypoint x="2453" y="426" />
+        <di:waypoint x="2453" y="505" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_00j2no7_di" bpmnElement="SequenceFlow_00j2no7">
-        <di:waypoint x="3051" y="530" />
-        <di:waypoint x="3109" y="530" />
+        <di:waypoint x="2925" y="530" />
+        <di:waypoint x="2980" y="530" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1ts5ggp_di" bpmnElement="SequenceFlow_1ts5ggp">
-        <di:waypoint x="2386" y="633" />
-        <di:waypoint x="2592" y="633" />
-        <di:waypoint x="2592" y="555" />
+        <di:waypoint x="2377" y="633" />
+        <di:waypoint x="2453" y="633" />
+        <di:waypoint x="2453" y="555" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_01qftwm_di" bpmnElement="SequenceFlow_01qftwm">
         <di:waypoint x="2083" y="451" />
         <di:waypoint x="2083" y="530" />
-        <di:waypoint x="2567" y="530" />
+        <di:waypoint x="2428" y="530" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="2040" y="496" width="38" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0jzxq8u_di" bpmnElement="SequenceFlow_0jzxq8u">
-        <di:waypoint x="2236" y="633" />
-        <di:waypoint x="2286" y="633" />
+        <di:waypoint x="2133" y="633" />
+        <di:waypoint x="2277" y="633" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ExclusiveGateway_1249udf_di" bpmnElement="XOR_KundenwunschOk" isMarkerVisible="true">
         <dc:Bounds x="733" y="401" width="50" height="50" />
@@ -815,7 +810,7 @@ print 'Rechnung generieren'</bpmn:script>
         <dc:Bounds x="938" y="386" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_0v5moj0_di" bpmnElement="Task_1skywdb">
-        <dc:Bounds x="1243" y="386" width="100" height="80" />
+        <dc:Bounds x="1235" y="386" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_1r1mp9i_di" bpmnElement="XOR_BonitaetOk" isMarkerVisible="true">
         <dc:Bounds x="1525" y="401" width="50" height="50" />
@@ -881,24 +876,24 @@ print 'Rechnung generieren'</bpmn:script>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_0gy7xxk_di" bpmnElement="Task_1n5ions">
-        <dc:Bounds x="2359" y="386" width="100" height="80" />
+        <dc:Bounds x="2277" y="386" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1vgz8wa_di" bpmnElement="Gateway_0lwg6xz">
-        <dc:Bounds x="2647" y="505" width="50" height="50" />
+        <dc:Bounds x="2522" y="505" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_12dva4v_di" bpmnElement="Activity_12dva4v">
-        <dc:Bounds x="2731" y="593" width="100" height="80" />
+        <dc:Bounds x="2607" y="593" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_0xt8jco_di" bpmnElement="Gateway_1ho2gme">
-        <dc:Bounds x="2870" y="505" width="50" height="50" />
+        <dc:Bounds x="2740" y="505" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_18npl2a_di" bpmnElement="Task_1ganrfm">
-        <dc:Bounds x="2951" y="490" width="100" height="80" />
+        <dc:Bounds x="2825" y="490" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_1kflstd_di" bpmnElement="EndEvent_1kflstd">
-        <dc:Bounds x="3109" y="512" width="36" height="36" />
+        <dc:Bounds x="2980" y="512" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="3090" y="555" width="74" height="27" />
+          <dc:Bounds x="2961" y="555" width="74" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1x58ef7_di" bpmnElement="Task_073sewa">
@@ -916,20 +911,17 @@ print 'Rechnung generieren'</bpmn:script>
           <dc:Bounds x="2004" y="436" width="62" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0qnvznb_di" bpmnElement="Task_18098zo">
-        <dc:Bounds x="2731" y="386" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0j1ofvr_di" bpmnElement="Task_17h47ia">
         <dc:Bounds x="1384" y="386" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_1drkshf_di" bpmnElement="Task_1kxh7nr">
-        <dc:Bounds x="2136" y="593" width="100" height="80" />
+        <dc:Bounds x="2033" y="593" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_0px80hz_di" bpmnElement="Task_069wcre">
-        <dc:Bounds x="2286" y="593" width="100" height="80" />
+        <dc:Bounds x="2277" y="593" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Participant_08zldhw_di" bpmnElement="Participant_18gnfiq" isHorizontal="true">
-        <dc:Bounds x="279" y="97" width="2776" height="60" />
+        <dc:Bounds x="279" y="97" width="2801" height="60" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0ghvr2o_di" bpmnElement="SequenceFlow_0ghvr2o">
         <di:waypoint x="988" y="583" />
@@ -941,11 +933,11 @@ print 'Rechnung generieren'</bpmn:script>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ExclusiveGateway_0g8vq52_di" bpmnElement="ExclusiveGateway_0g8vq52" isMarkerVisible="true">
-        <dc:Bounds x="2567" y="505" width="50" height="50" />
+        <dc:Bounds x="2428" y="505" width="50" height="50" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0b5ref0_di" bpmnElement="SequenceFlow_0b5ref0">
-        <di:waypoint x="2617" y="530" />
-        <di:waypoint x="2647" y="530" />
+        <di:waypoint x="2478" y="530" />
+        <di:waypoint x="2522" y="530" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_00vat3d_di" bpmnElement="SequenceFlow_00vat3d">
         <di:waypoint x="1013" y="558" />
@@ -961,6 +953,9 @@ print 'Rechnung generieren'</bpmn:script>
           <dc:Bounds x="1143" y="477" width="66" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_0f496nc_di" bpmnElement="Task_18098zo">
+        <dc:Bounds x="2607" y="386" width="100" height="80" />
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
