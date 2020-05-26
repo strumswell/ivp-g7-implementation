@@ -15,11 +15,7 @@
         <bpmn:flowNodeRef>Task_073sewa</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_0cfch57" name="Servicemitarbeiter">
-<<<<<<< HEAD
-        <bpmn:flowNodeRef>ExclusiveGateway_1249udf</bpmn:flowNodeRef>
-=======
         <bpmn:flowNodeRef>XOR_KundenwunschOk</bpmn:flowNodeRef>
->>>>>>> master
         <bpmn:flowNodeRef>Task_09voy42</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0ssicqc</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0cq1ahu</bpmn:flowNodeRef>
@@ -39,15 +35,17 @@
         <bpmn:flowNodeRef>EndEvent_0srjfvg</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1nh6din</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1n5ions</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_1kxh7nr</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_069wcre</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0lwg6xz</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_12dva4v</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1ho2gme</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1ganrfm</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_1kflstd</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>ExclusiveGateway_1ssdepc</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>ExclusiveGateway_1poubd9</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>XOR_AngebotOk</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>XOR_AuswahlZahlungsweis</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_18098zo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_17h47ia</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_1kxh7nr</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_069wcre</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:exclusiveGateway id="XOR_KundenwunschOk" name="Kundenwunsch verfügbar?">
@@ -77,7 +75,6 @@
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_14bnl9k</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_0ixeut4</bpmn:incoming>
-      <bpmn:incoming>Flow_0mlq6v3</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0dbxllw</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:scriptTask id="Task_0ssicqc" name="Verfügbarkeiten prüfen" scriptFormat="groovy">
@@ -97,7 +94,7 @@ execution.setVariable("price", einzelpreis)
 gesamtpreis = 5 * einzelpreis
 execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:userTask id="Task_0cq1ahu" name="Angebot bestätigen">
+    <bpmn:userTask id="Task_0cq1ahu" name="Angebot auswählen">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="ErgVerfuegbar" label="Ergebnis der Verfügbarkeitsprüfung anzeigen" type="string" defaultValue="${verfuegbar}">
@@ -128,6 +125,7 @@ execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1jkbexr</bpmn:incoming>
+      <bpmn:incoming>SequenceFlow_0ghvr2o</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1t55m76</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:userTask id="Task_1skywdb" name="Kundendaten aufnehmen">
@@ -170,7 +168,7 @@ execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
       <bpmn:incoming>SequenceFlow_0p3k10m</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_030o4sl</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:userTask id="Task_0snjw6f" name="Problem besprechen">
+    <bpmn:userTask id="Task_0snjw6f" name="Alternative besprechen">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="ergVerfuegbar" label="Ergebnis der Verfügbarkeitsprüfung anzeigen:" type="string" defaultValue="${verfuegbar}" />
@@ -183,7 +181,7 @@ execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
     <bpmn:exclusiveGateway id="XOR_AlternativeOk" name="Alternativen ok?">
       <bpmn:incoming>SequenceFlow_02kf837</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_00vat3d</bpmn:outgoing>
-      <bpmn:outgoing>Flow_0mlq6v3</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0ghvr2o</bpmn:outgoing>
     </bpmn:exclusiveGateway>
     <bpmn:userTask id="Task_0pra4hf" name="Buchung abbrechen (Task nicht erforderlich!)">
       <bpmn:incoming>SequenceFlow_00vat3d</bpmn:incoming>
@@ -277,14 +275,6 @@ execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
       <bpmn:incoming>SequenceFlow_1ib12rw</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_1hbqqii</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_12zwqq9</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:userTask id="Task_1kxh7nr" name="Bankdaten einholen">
-      <bpmn:incoming>SequenceFlow_09zsf56</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0jzxq8u</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:userTask id="Task_069wcre" name="Lastschrifterlaubnis einholen">
-      <bpmn:incoming>SequenceFlow_0jzxq8u</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1ts5ggp</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:parallelGateway id="Gateway_0lwg6xz">
       <bpmn:incoming>SequenceFlow_12zwqq9</bpmn:incoming>
@@ -462,14 +452,13 @@ execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
       <bpmn:incoming>SequenceFlow_1h399qt</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0gmrw1v</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_0mlq6v3" name="ja" sourceRef="ExclusiveGateway_0zjzoos" targetRef="Task_09voy42" />
-    <bpmn:exclusiveGateway id="ExclusiveGateway_1ssdepc" name="Entscheidung?">
+    <bpmn:exclusiveGateway id="XOR_AngebotOk" name="Entscheidung?">
       <bpmn:incoming>SequenceFlow_1t55m76</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1o47qu8</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1omvrja</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0ixeut4</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:exclusiveGateway id="ExclusiveGateway_1poubd9" name="Ausgewählt?">
+    <bpmn:exclusiveGateway id="XOR_AuswahlZahlungsweis" name="Ausgewählt?">
       <bpmn:incoming>SequenceFlow_0ljyxsw</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_01qftwm</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1hbqqii</bpmn:outgoing>
@@ -610,6 +599,9 @@ Es stellt kein Problem dar, dass die Rechnung nach Buchung generiert wird.
 
 Rechnung abhängig von Zahlungsart. Auf Ziel: Bankverbindung und Datum steht drauf; Raten: mtl Raten</bpmn:text>
     </bpmn:textAnnotation>
+    <bpmn:textAnnotation id="TextAnnotation_0dt3xq0">
+      <bpmn:text>Personananzahl, Anzahl der Nachte, Zimmerdetails</bpmn:text>
+    </bpmn:textAnnotation>
     <bpmn:textAnnotation id="TextAnnotation_0j1qyxn">
       <bpmn:text>Personendaten</bpmn:text>
     </bpmn:textAnnotation>
@@ -634,15 +626,12 @@ DMN-Kombination?!</bpmn:text>
 Maske: Liste an Zimmerkombinationen + Gesamtpreis</bpmn:text>
     </bpmn:textAnnotation>
     <bpmn:association id="Association_0y87xkm" sourceRef="Task_18098zo" targetRef="TextAnnotation_15qt1eo" />
+    <bpmn:association id="Association_1r7clk6" sourceRef="Task_09voy42" targetRef="TextAnnotation_0dt3xq0" />
     <bpmn:association id="Association_17ea25n" sourceRef="Task_0ssicqc" targetRef="TextAnnotation_1m2b5w3" />
     <bpmn:association id="Association_0u85i1i" sourceRef="Task_0cq1ahu" targetRef="TextAnnotation_0zssd3i" />
     <bpmn:association id="Association_12y6ex2" sourceRef="Task_1skywdb" targetRef="TextAnnotation_0j1qyxn" />
     <bpmn:association id="Association_1dsekbo" sourceRef="Task_17h47ia" targetRef="TextAnnotation_0j5920w" />
     <bpmn:association id="Association_0jxn632" sourceRef="Task_0snjw6f" targetRef="TextAnnotation_17zt6ve" />
-    <bpmn:textAnnotation id="TextAnnotation_0dt3xq0">
-      <bpmn:text>Personananzahl, Anzahl der Nachte, Zimmerdetails</bpmn:text>
-    </bpmn:textAnnotation>
-    <bpmn:association id="Association_1r7clk6" sourceRef="Task_09voy42" targetRef="TextAnnotation_0dt3xq0" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1fkr7nk">
@@ -655,15 +644,6 @@ Maske: Liste an Zimmerkombinationen + Gesamtpreis</bpmn:text>
       <bpmndi:BPMNShape id="Lane_1jnl604_di" bpmnElement="Lane_1jnl604" isHorizontal="true">
         <dc:Bounds x="309" y="699" width="2770" height="196" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_0mlq6v3_di" bpmnElement="Flow_0mlq6v3">
-        <di:waypoint x="988" y="583" />
-        <di:waypoint x="988" y="650" />
-        <di:waypoint x="483" y="650" />
-        <di:waypoint x="483" y="466" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="732" y="632" width="8" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0lny208_di" bpmnElement="Flow_0lny208">
         <di:waypoint x="2725" y="426" />
         <di:waypoint x="2750" y="426" />
@@ -724,6 +704,13 @@ Maske: Liste an Zimmerkombinationen + Gesamtpreis</bpmn:text>
         <di:waypoint x="1083" y="558" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1019" y="540" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0ghvr2o_di" bpmnElement="SequenceFlow_0ghvr2o">
+        <di:waypoint x="988" y="533" />
+        <di:waypoint x="988" y="466" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="997" y="480" width="12" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0pug0xn_di" bpmnElement="SequenceFlow_0pug0xn">
@@ -809,7 +796,7 @@ Maske: Liste an Zimmerkombinationen + Gesamtpreis</bpmn:text>
       <bpmndi:BPMNEdge id="SequenceFlow_09zsf56_di" bpmnElement="SequenceFlow_09zsf56">
         <di:waypoint x="1958" y="807" />
         <di:waypoint x="2186" y="807" />
-        <di:waypoint x="2186" y="672" />
+        <di:waypoint x="2186" y="673" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1981" y="785" width="8" height="14" />
         </bpmndi:BPMNLabel>
@@ -873,8 +860,8 @@ Maske: Liste an Zimmerkombinationen + Gesamtpreis</bpmn:text>
         <di:waypoint x="2912" y="426" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1ts5ggp_di" bpmnElement="SequenceFlow_1ts5ggp">
-        <di:waypoint x="2386" y="632" />
-        <di:waypoint x="2520" y="632" />
+        <di:waypoint x="2386" y="633" />
+        <di:waypoint x="2520" y="633" />
         <di:waypoint x="2520" y="451" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_01qftwm_di" bpmnElement="SequenceFlow_01qftwm">
@@ -887,8 +874,8 @@ Maske: Liste an Zimmerkombinationen + Gesamtpreis</bpmn:text>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0jzxq8u_di" bpmnElement="SequenceFlow_0jzxq8u">
-        <di:waypoint x="2236" y="632" />
-        <di:waypoint x="2286" y="632" />
+        <di:waypoint x="2236" y="633" />
+        <di:waypoint x="2286" y="633" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ExclusiveGateway_1249udf_di" bpmnElement="XOR_KundenwunschOk" isMarkerVisible="true">
         <dc:Bounds x="733" y="401" width="50" height="50" />
@@ -923,7 +910,7 @@ Maske: Liste an Zimmerkombinationen + Gesamtpreis</bpmn:text>
       <bpmndi:BPMNShape id="ExclusiveGateway_0zjzoos_di" bpmnElement="XOR_AlternativeOk" isMarkerVisible="true">
         <dc:Bounds x="963" y="533" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="952" y="506" width="76" height="27" />
+          <dc:Bounds x="951" y="590" width="78" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_0brev00_di" bpmnElement="Task_0pra4hf">
@@ -980,12 +967,6 @@ Maske: Liste an Zimmerkombinationen + Gesamtpreis</bpmn:text>
       <bpmndi:BPMNShape id="UserTask_0gy7xxk_di" bpmnElement="Task_1n5ions">
         <dc:Bounds x="2359" y="386" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="UserTask_1drkshf_di" bpmnElement="Task_1kxh7nr">
-        <dc:Bounds x="2136" y="592" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="UserTask_0px80hz_di" bpmnElement="Task_069wcre">
-        <dc:Bounds x="2286" y="592" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_1vgz8wa_di" bpmnElement="Gateway_0lwg6xz">
         <dc:Bounds x="2495" y="401" width="50" height="50" />
       </bpmndi:BPMNShape>
@@ -1007,8 +988,29 @@ Maske: Liste an Zimmerkombinationen + Gesamtpreis</bpmn:text>
       <bpmndi:BPMNShape id="Activity_1x58ef7_di" bpmnElement="Task_073sewa">
         <dc:Bounds x="1746" y="767" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_12g2xw6_di" bpmnElement="XOR_AngebotOk" isMarkerVisible="true">
+        <dc:Bounds x="1108" y="401" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1047" y="442" width="73" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1vzv0bw_di" bpmnElement="XOR_AuswahlZahlungsweis" isMarkerVisible="true">
+        <dc:Bounds x="2058" y="401" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2004" y="436" width="62" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0qnvznb_di" bpmnElement="Task_18098zo">
+        <dc:Bounds x="2570" y="330" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0j1ofvr_di" bpmnElement="Task_17h47ia">
+        <dc:Bounds x="1384" y="386" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_15qt1eo_di" bpmnElement="TextAnnotation_15qt1eo">
         <dc:Bounds x="2610" y="209" width="438" height="114" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0dt3xq0_di" bpmnElement="TextAnnotation_0dt3xq0">
+        <dc:Bounds x="424" y="502" width="117" height="68" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0j1qyxn_di" bpmnElement="TextAnnotation_0j1qyxn">
         <dc:Bounds x="1276" y="330" width="129" height="26" />
@@ -1025,24 +1027,19 @@ Maske: Liste an Zimmerkombinationen + Gesamtpreis</bpmn:text>
       <bpmndi:BPMNShape id="TextAnnotation_17zt6ve_di" bpmnElement="TextAnnotation_17zt6ve">
         <dc:Bounds x="882" y="752" width="120" height="110" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_0dt3xq0_di" bpmnElement="TextAnnotation_0dt3xq0">
-        <dc:Bounds x="350" y="510" width="117" height="68" />
+      <bpmndi:BPMNShape id="UserTask_1drkshf_di" bpmnElement="Task_1kxh7nr">
+        <dc:Bounds x="2136" y="593" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1kczfrr_di" bpmnElement="ExclusiveGateway_1ssdepc" isMarkerVisible="true">
-        <dc:Bounds x="1108" y="401" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1047" y="442" width="73" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0cm3ofe_di" bpmnElement="ExclusiveGateway_1poubd9" isMarkerVisible="true">
-        <dc:Bounds x="2058" y="401" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2004" y="436" width="62" height="14" />
-        </bpmndi:BPMNLabel>
+      <bpmndi:BPMNShape id="UserTask_0px80hz_di" bpmnElement="Task_069wcre">
+        <dc:Bounds x="2286" y="593" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_0y87xkm_di" bpmnElement="Association_0y87xkm">
         <di:waypoint x="2670" y="346" />
         <di:waypoint x="2716" y="323" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_1r7clk6_di" bpmnElement="Association_1r7clk6">
+        <di:waypoint x="483" y="466" />
+        <di:waypoint x="483" y="502" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_17ea25n_di" bpmnElement="Association_17ea25n">
         <di:waypoint x="633" y="466" />
@@ -1063,10 +1060,6 @@ Maske: Liste an Zimmerkombinationen + Gesamtpreis</bpmn:text>
       <bpmndi:BPMNEdge id="Association_0jxn632_di" bpmnElement="Association_0jxn632">
         <di:waypoint x="869" y="598" />
         <di:waypoint x="924" y="752" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Association_1r7clk6_di" bpmnElement="Association_1r7clk6">
-        <di:waypoint x="458" y="466" />
-        <di:waypoint x="430" y="510" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Participant_08zldhw_di" bpmnElement="Participant_18gnfiq" isHorizontal="true">
         <dc:Bounds x="279" y="97" width="2776" height="60" />
