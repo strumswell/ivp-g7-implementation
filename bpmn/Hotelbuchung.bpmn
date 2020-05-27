@@ -1,36 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1phg2cc" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.0.3">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1phg2cc" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.4">
   <bpmn:collaboration id="Collaboration_1fkr7nk">
-    <bpmn:participant id="Participant_0hum507" name="Reisebüro" processRef="Hotelbuchung" />
-    <bpmn:participant id="Participant_18gnfiq" name="Kunde" />
+    <bpmn:participant id="Participant_reisebuero" name="Reisebüro" processRef="Hotelbuchung" />
+    <bpmn:participant id="Participant_kunde" name="Kunde" />
   </bpmn:collaboration>
   <bpmn:process id="Hotelbuchung" isExecutable="true">
     <bpmn:laneSet id="LaneSet_1rvvgjs">
-      <bpmn:lane id="Lane_1jnl604" name="Filialleiter">
+      <bpmn:lane id="Lane_filialleiter" name="Filialleiter">
         <bpmn:flowNodeRef>XOR_RatenGenehmigt</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_073sewa</bpmn:flowNodeRef>
       </bpmn:lane>
-      <bpmn:lane id="Lane_0cfch57" name="Servicemitarbeiter">
-        <bpmn:flowNodeRef>XOR_KundenwunschOk</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_09voy42</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_0ssicqc</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_0cq1ahu</bpmn:flowNodeRef>
+      <bpmn:lane id="Lane_servicemitarbeiter" name="Servicemitarbeiter">
+        <bpmn:flowNodeRef>XOR_kundenwunschVerfuegbar</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_kundenwunschErfassen</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_verfuegbarkeitenPruefen</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_angebotAuswaehlen</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>XOR_BonitaetOk</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0eta6ea</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_0snjw6f</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_problemBesprechen</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>XOR_RatenzahlungOk</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>StartEvent_1</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>StartEvent_buchungswunschLiegtVor</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0gdd21m</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>XOR_SofortzahlungOk</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_0xhtxnq</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_148ls46</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>XOR_AngebotOk</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>XOR_entscheidung</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>XOR_AuswahlZahlungsweis</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_17h47ia</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>XOR_AlternativeOk</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>EndEvent_1944dty</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>XOR_kundenwunschAnpassen</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_buchungAbgebrochen</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_0srjfvg</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_1skywdb</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_kundendatenAufnehmen</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1n5ions</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1kxh7nr</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_069wcre</bpmn:flowNodeRef>
@@ -41,31 +40,32 @@
         <bpmn:flowNodeRef>EndEvent_1kflstd</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_1ganrfm</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_18098zo</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_17h47ia</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
-    <bpmn:exclusiveGateway id="XOR_KundenwunschOk" name="Kundenwunsch verfügbar?">
+    <bpmn:exclusiveGateway id="XOR_kundenwunschVerfuegbar" name="Kundenwunsch verfügbar?">
       <bpmn:incoming>SequenceFlow_1em2555</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1jkbexr</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_059rxai</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="Task_09voy42" name="Kundenwunsch erfassen">
+    <bpmn:userTask id="Task_kundenwunschErfassen" name="Kundenwunsch erfassen">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="AnzahlPersonen" label="Anzahl der Personen* (* Eingabe erforderlich)" type="string">
+          <camunda:formField id="kE_anzPersonen" label="Anzahl der Personen* (* Eingabe erforderlich)" type="string">
             <camunda:validation>
               <camunda:constraint name="required" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="singleRoom" label="Einzelzimmer" type="boolean" defaultValue="true" />
-          <camunda:formField id="doubleRoom" label="Doppelzimmer" type="boolean" />
-          <camunda:formField id="suiteRoom" label="Suite / Appartment" type="boolean" />
-          <camunda:formField id="AnzahlUebernachtungen" label="Anzahl der Übernachtungen*" type="long">
+          <camunda:formField id="kE_einzelzimmer" label="Einzelzimmer" type="boolean" defaultValue="true" />
+          <camunda:formField id="kE_doppelzimmer" label="Doppelzimmer" type="boolean" />
+          <camunda:formField id="kE_suite" label="Suite / Appartment" type="boolean" />
+          <camunda:formField id="kE_anzUebernachtungen" label="Anzahl der Übernachtungen*" type="long">
             <camunda:validation>
               <camunda:constraint name="required" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="maxReisebeginn" label="Reisebeginn (frühestens) " type="date" />
-          <camunda:formField id="maxReiseende" label="Reiseende (spätestens)" type="date" />
+          <camunda:formField id="kE_reisebeginn" label="Reisebeginn (frühestens) " type="date" />
+          <camunda:formField id="kE_reiseende" label="Reiseende (spätestens)" type="date" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_14bnl9k</bpmn:incoming>
@@ -73,7 +73,7 @@
       <bpmn:incoming>SequenceFlow_0ghvr2o</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0dbxllw</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:scriptTask id="Task_0ssicqc" name="Verfügbarkeiten prüfen" scriptFormat="groovy">
+    <bpmn:scriptTask id="Task_verfuegbarkeitenPruefen" name="Verfügbarkeiten prüfen" scriptFormat="groovy">
       <bpmn:incoming>SequenceFlow_0dbxllw</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1em2555</bpmn:outgoing>
       <bpmn:script>//### DemoScriptJK - Ausgabe Verfügbarkeit###
@@ -90,30 +90,15 @@ execution.setVariable("price", einzelpreis)
 gesamtpreis = 5 * einzelpreis
 execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
     </bpmn:scriptTask>
-    <bpmn:userTask id="Task_0cq1ahu" name="Angebot auswählen">
+    <bpmn:userTask id="Task_angebotAuswaehlen" name="Angebot auswählen">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="ErgVerfuegbar" label="Ergebnis der Verfügbarkeitsprüfung anzeigen" type="string" defaultValue="${verfuegbar}">
+          <camunda:formField id="aA_ergebnis" label="Ergebnis der Verfügbarkeitsprüfung anzeigen" type="string" defaultValue="${vP_angebot}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="Raumtyp" label="Verfügbares Zimmer" type="string" defaultValue="${roomtyp}">
-            <camunda:validation>
-              <camunda:constraint name="readonly" />
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="PreisProNacht" label="Preis pro Nacht" type="long" defaultValue="${price}">
-            <camunda:validation>
-              <camunda:constraint name="readonly" />
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="Gesamtpreis" label="Gesamtpreis aller Übernachtungen" type="long" defaultValue="${preisGesamt}">
-            <camunda:validation>
-              <camunda:constraint name="readonly" />
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="auswahlAngebot" label="Entscheidung zum Angebot?" type="enum">
+          <camunda:formField id="aA_entscheidung" label="Entscheidung zum Angebot?" type="enum">
             <camunda:value id="annehmen" name="Angebot annehmen!" />
             <camunda:value id="abbruch" name="Vorgang abbrechen!" />
             <camunda:value id="aendern" name="Kundenwunsch ändern!" />
@@ -142,17 +127,17 @@ execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
       <bpmn:incoming>SequenceFlow_0p3k10m</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_030o4sl</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:userTask id="Task_0snjw6f" name="Problem besprechen">
+    <bpmn:userTask id="Task_problemBesprechen" name="Problem besprechen">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="ergVerfuegbar" label="Ergebnis der Verfügbarkeitsprüfung anzeigen:" type="string" defaultValue="${verfuegbar}" />
-          <camunda:formField id="alternativeAnnehmen" label="Alternative ok, annehmen?" type="boolean" />
+          <camunda:formField id="pB_nichtVerfuegbar" label="Ergebnis der Verfügbarkeitsprüfung anzeigen:" type="string" defaultValue="${vP_fehlendeZimmer}" />
+          <camunda:formField id="pB_entscheidung" label="Alternative ok, annehmen?" type="boolean" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_059rxai</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_02kf837</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:exclusiveGateway id="XOR_AlternativeOk" name="Kundenwunsch anpassen?">
+    <bpmn:exclusiveGateway id="XOR_kundenwunschAnpassen" name="Kundenwunsch anpassen?">
       <bpmn:incoming>SequenceFlow_02kf837</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0ghvr2o</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_00vat3d</bpmn:outgoing>
@@ -162,7 +147,7 @@ execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
       <bpmn:outgoing>SequenceFlow_1h399qt</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0n9prht</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:startEvent id="StartEvent_1" name="Buchungswunsch liegt vor">
+    <bpmn:startEvent id="StartEvent_buchungswunschLiegtVor" name="Buchungswunsch liegt vor">
       <bpmn:outgoing>SequenceFlow_14bnl9k</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:userTask id="Task_0gdd21m" name="Sofortzahlung anbieten">
@@ -261,24 +246,24 @@ execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${bonitaet == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_1hlkcca" sourceRef="Task_17h47ia" targetRef="XOR_BonitaetOk" />
-    <bpmn:sequenceFlow id="SequenceFlow_1fljneq" sourceRef="Task_1skywdb" targetRef="Task_17h47ia" />
-    <bpmn:sequenceFlow id="SequenceFlow_0dbxllw" sourceRef="Task_09voy42" targetRef="Task_0ssicqc" />
-    <bpmn:sequenceFlow id="SequenceFlow_1o47qu8" name="Ausgewählt" sourceRef="XOR_AngebotOk" targetRef="Task_1skywdb">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${auswahlAngebot == "annehmen"}</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="SequenceFlow_1fljneq" sourceRef="Task_kundendatenAufnehmen" targetRef="Task_17h47ia" />
+    <bpmn:sequenceFlow id="SequenceFlow_0dbxllw" sourceRef="Task_kundenwunschErfassen" targetRef="Task_verfuegbarkeitenPruefen" />
+    <bpmn:sequenceFlow id="SequenceFlow_1o47qu8" name="Ausgewählt" sourceRef="XOR_entscheidung" targetRef="Task_kundendatenAufnehmen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aA_entscheidung == "annehmen"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_0ixeut4" name="Änderung angefragt" sourceRef="XOR_AngebotOk" targetRef="Task_09voy42">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${auswahlAngebot == "aendern"}</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="SequenceFlow_0ixeut4" name="Änderung angefragt" sourceRef="XOR_entscheidung" targetRef="Task_kundenwunschErfassen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aA_entscheidung == "aendern"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_1t55m76" sourceRef="Task_0cq1ahu" targetRef="XOR_AngebotOk" />
-    <bpmn:sequenceFlow id="SequenceFlow_02kf837" sourceRef="Task_0snjw6f" targetRef="XOR_AlternativeOk" />
-    <bpmn:sequenceFlow id="SequenceFlow_059rxai" name="nein" sourceRef="XOR_KundenwunschOk" targetRef="Task_0snjw6f">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${verfuegbar == false}</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="SequenceFlow_1t55m76" sourceRef="Task_angebotAuswaehlen" targetRef="XOR_entscheidung" />
+    <bpmn:sequenceFlow id="SequenceFlow_02kf837" sourceRef="Task_problemBesprechen" targetRef="XOR_kundenwunschAnpassen" />
+    <bpmn:sequenceFlow id="SequenceFlow_059rxai" name="nein" sourceRef="XOR_kundenwunschVerfuegbar" targetRef="Task_problemBesprechen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${vP_verfuegbar == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_1jkbexr" name="ja" sourceRef="XOR_KundenwunschOk" targetRef="Task_0cq1ahu">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${verfuegbar == true}</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="SequenceFlow_1jkbexr" name="ja" sourceRef="XOR_kundenwunschVerfuegbar" targetRef="Task_angebotAuswaehlen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${vP_verfuegbar == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_1em2555" sourceRef="Task_0ssicqc" targetRef="XOR_KundenwunschOk" />
-    <bpmn:sequenceFlow id="SequenceFlow_14bnl9k" sourceRef="StartEvent_1" targetRef="Task_09voy42" />
+    <bpmn:sequenceFlow id="SequenceFlow_1em2555" sourceRef="Task_verfuegbarkeitenPruefen" targetRef="XOR_kundenwunschVerfuegbar" />
+    <bpmn:sequenceFlow id="SequenceFlow_14bnl9k" sourceRef="StartEvent_buchungswunschLiegtVor" targetRef="Task_kundenwunschErfassen" />
     <bpmn:sequenceFlow id="SequenceFlow_0gmrw1v" sourceRef="Task_073sewa" targetRef="XOR_RatenGenehmigt" />
     <bpmn:userTask id="Task_073sewa" name="Ratenzahlung prüfen">
       <bpmn:extensionElements>
@@ -345,7 +330,7 @@ execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
       <bpmn:incoming>SequenceFlow_1h399qt</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0gmrw1v</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:exclusiveGateway id="XOR_AngebotOk" name="Entscheidung?">
+    <bpmn:exclusiveGateway id="XOR_entscheidung" name="Entscheidung?">
       <bpmn:incoming>SequenceFlow_1t55m76</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1o47qu8</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0ixeut4</bpmn:outgoing>
@@ -357,18 +342,8 @@ execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
       <bpmn:outgoing>SequenceFlow_1hbqqii</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_11bgnag</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:scriptTask id="Task_17h47ia" name="Bonität prüfen" scriptFormat="groovy" camunda:resultVariable="${bonitaet}">
-      <bpmn:incoming>SequenceFlow_1fljneq</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1hlkcca</bpmn:outgoing>
-      <bpmn:script>//### DemoScriptJK - Ausgabe Bonitätsprüfung###
-boolean varBonitaet = true
-execution.setVariable("bonitaet", varBonitaet)
-
-
-execution.setVariable("ratenZahlungPruefung", "ungeprüft")</bpmn:script>
-    </bpmn:scriptTask>
-    <bpmn:sequenceFlow id="SequenceFlow_0ghvr2o" name="Ja" sourceRef="XOR_AlternativeOk" targetRef="Task_09voy42">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${alternativeAnnehmen == true}</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="SequenceFlow_0ghvr2o" name="Ja" sourceRef="XOR_kundenwunschAnpassen" targetRef="Task_kundenwunschErfassen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${pB_entscheidung == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_0zty9hg" sourceRef="Gateway_0lwg6xz" targetRef="Task_18098zo" />
     <bpmn:sequenceFlow id="Flow_00asvxw" sourceRef="Gateway_0lwg6xz" targetRef="Activity_12dva4v" />
@@ -377,13 +352,13 @@ execution.setVariable("ratenZahlungPruefung", "ungeprüft")</bpmn:script>
     <bpmn:sequenceFlow id="Flow_0lny208" sourceRef="Gateway_1ho2gme" targetRef="Task_1ganrfm" />
     <bpmn:sequenceFlow id="SequenceFlow_00j2no7" sourceRef="Task_1ganrfm" targetRef="EndEvent_1kflstd" />
     <bpmn:sequenceFlow id="SequenceFlow_0b5ref0" sourceRef="ExclusiveGateway_0g8vq52" targetRef="Gateway_0lwg6xz" />
-    <bpmn:sequenceFlow id="SequenceFlow_00vat3d" name="Nein" sourceRef="XOR_AlternativeOk" targetRef="EndEvent_1944dty">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${alternativeAnnehmen == false}</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="SequenceFlow_00vat3d" name="Nein" sourceRef="XOR_kundenwunschAnpassen" targetRef="EndEvent_buchungAbgebrochen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${pB_entscheidung == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_1omvrja" name="Abgebrochen" sourceRef="XOR_AngebotOk" targetRef="EndEvent_1944dty">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${auswahlAngebot == "abbruch"}</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="SequenceFlow_1omvrja" name="Abgebrochen" sourceRef="XOR_entscheidung" targetRef="EndEvent_buchungAbgebrochen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aA_entscheidung == "abbruch"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:endEvent id="EndEvent_1944dty" name="Buchung abgebrochen">
+    <bpmn:endEvent id="EndEvent_buchungAbgebrochen" name="Buchung abgebrochen">
       <bpmn:incoming>SequenceFlow_00vat3d</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_1omvrja</bpmn:incoming>
     </bpmn:endEvent>
@@ -391,22 +366,22 @@ execution.setVariable("ratenZahlungPruefung", "ungeprüft")</bpmn:script>
       <bpmn:incoming>SequenceFlow_091jvlm</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_11bgnag</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:userTask id="Task_1skywdb" name="Kundendaten aufnehmen">
+    <bpmn:userTask id="Task_kundendatenAufnehmen" name="Kundendaten aufnehmen">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="anrede" label="Anrede" type="enum">
+          <camunda:formField id="kA_anrede" label="Anrede" type="enum">
             <camunda:value id="Herr" name="Herr" />
             <camunda:value id="Frau" name="Frau" />
           </camunda:formField>
-          <camunda:formField id="firstname" label="Vorname" type="string" defaultValue="Jens" />
-          <camunda:formField id="lastname" label="Nachname" type="string" defaultValue="Tester" />
-          <camunda:formField id="gebDat" label="Geburtsdatum" type="date" defaultValue="12/12/1984" />
-          <camunda:formField id="eMail" label="E-Mail-Adresse" type="string" defaultValue="tester@testnix.de" />
-          <camunda:formField id="strasse" label="Straße" type="string" defaultValue="xyzstraße" />
-          <camunda:formField id="hausnummer" label="Hausnummer" type="string" defaultValue="13A" />
-          <camunda:formField id="plz" label="PLZ" type="string" defaultValue="23455" />
-          <camunda:formField id="ort" label="Ort" type="string" defaultValue="Ortnix" />
-          <camunda:formField id="umzugLetzten12Monate" label="Sind Sie in den letrzten 12 Monaten umgezogen?" type="boolean" />
+          <camunda:formField id="kA_vornahme" label="Vorname" type="string" defaultValue="Jens" />
+          <camunda:formField id="kA_nachnahme" label="Nachname" type="string" defaultValue="Tester" />
+          <camunda:formField id="kA_geburtsdatum" label="Geburtsdatum" type="date" defaultValue="12/12/1984" />
+          <camunda:formField id="kA_eMail" label="E-Mail-Adresse" type="string" defaultValue="tester@testnix.de" />
+          <camunda:formField id="kA_straße" label="Straße" type="string" defaultValue="xyzstraße" />
+          <camunda:formField id="kA_hausnummer" label="Hausnummer" type="string" defaultValue="13A" />
+          <camunda:formField id="kA_plz" label="PLZ" type="string" defaultValue="23455" />
+          <camunda:formField id="kA_ort" label="Ort" type="string" defaultValue="Ortnix" />
+          <camunda:formField id="kA_umzugLetzten12Monate" label="Sind Sie in den letrzten 12 Monaten umgezogen?" type="boolean" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1o47qu8</bpmn:incoming>
@@ -573,20 +548,28 @@ execution.setVariable("ratenZahlungPruefung", "ungeprüft")</bpmn:script>
       <bpmn:incoming>Flow_0lny208</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_00j2no7</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:serviceTask id="Task_18098zo" name="Rechnung generieren">
+    <bpmn:serviceTask id="Task_18098zo" name="Rechnung generieren" camunda:type="external" camunda:topic="rG_rechnungGenerieren">
       <bpmn:incoming>Flow_0zty9hg</bpmn:incoming>
       <bpmn:outgoing>Flow_1svdc1e</bpmn:outgoing>
     </bpmn:serviceTask>
+    <bpmn:serviceTask id="Task_17h47ia" name="Bonität prüfen" camunda:type="external" camunda:topic="bP_bonitaetPruefen">
+      <bpmn:incoming>SequenceFlow_1fljneq</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1hlkcca</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:association id="Association_1hms1y0" sourceRef="Task_17h47ia" targetRef="TextAnnotation_1sge9ih" />
+    <bpmn:textAnnotation id="TextAnnotation_1sge9ih">
+      <bpmn:text>Ab hier beginnt die lustige und aufregende Reise durch das BPMN-Universum</bpmn:text>
+    </bpmn:textAnnotation>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1fkr7nk">
-      <bpmndi:BPMNShape id="Participant_0hum507_di" bpmnElement="Participant_0hum507" isHorizontal="true">
+      <bpmndi:BPMNShape id="Participant_0hum507_di" bpmnElement="Participant_reisebuero" isHorizontal="true">
         <dc:Bounds x="279" y="197" width="2803" height="700" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_0cfch57_di" bpmnElement="Lane_0cfch57" isHorizontal="true">
+      <bpmndi:BPMNShape id="Lane_0cfch57_di" bpmnElement="Lane_servicemitarbeiter" isHorizontal="true">
         <dc:Bounds x="309" y="197" width="2773" height="502" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Lane_1jnl604_di" bpmnElement="Lane_1jnl604" isHorizontal="true">
+      <bpmndi:BPMNShape id="Lane_1jnl604_di" bpmnElement="Lane_filialleiter" isHorizontal="true">
         <dc:Bounds x="309" y="699" width="2773" height="198" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_0lny208_di" bpmnElement="Flow_0lny208">
@@ -794,22 +777,22 @@ execution.setVariable("ratenZahlungPruefung", "ungeprüft")</bpmn:script>
         <di:waypoint x="2133" y="633" />
         <di:waypoint x="2277" y="633" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ExclusiveGateway_1249udf_di" bpmnElement="XOR_KundenwunschOk" isMarkerVisible="true">
+      <bpmndi:BPMNShape id="ExclusiveGateway_1249udf_di" bpmnElement="XOR_kundenwunschVerfuegbar" isMarkerVisible="true">
         <dc:Bounds x="733" y="401" width="50" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="720" y="364" width="76" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="UserTask_14pdan0_di" bpmnElement="Task_09voy42">
+      <bpmndi:BPMNShape id="UserTask_14pdan0_di" bpmnElement="Task_kundenwunschErfassen">
         <dc:Bounds x="433" y="386" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ScriptTask_120u5yz_di" bpmnElement="Task_0ssicqc">
+      <bpmndi:BPMNShape id="ScriptTask_120u5yz_di" bpmnElement="Task_verfuegbarkeitenPruefen">
         <dc:Bounds x="583" y="386" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="UserTask_02tq31b_di" bpmnElement="Task_0cq1ahu">
+      <bpmndi:BPMNShape id="UserTask_02tq31b_di" bpmnElement="Task_angebotAuswaehlen">
         <dc:Bounds x="938" y="386" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="UserTask_0v5moj0_di" bpmnElement="Task_1skywdb">
+      <bpmndi:BPMNShape id="UserTask_0v5moj0_di" bpmnElement="Task_kundendatenAufnehmen">
         <dc:Bounds x="1235" y="386" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_1r1mp9i_di" bpmnElement="XOR_BonitaetOk" isMarkerVisible="true">
@@ -821,16 +804,16 @@ execution.setVariable("ratenZahlungPruefung", "ungeprüft")</bpmn:script>
       <bpmndi:BPMNShape id="UserTask_0fn95et_di" bpmnElement="Task_0eta6ea">
         <dc:Bounds x="1623" y="386" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="UserTask_05quikx_di" bpmnElement="Task_0snjw6f">
+      <bpmndi:BPMNShape id="UserTask_05quikx_di" bpmnElement="Task_problemBesprechen">
         <dc:Bounds x="805" y="518" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ExclusiveGateway_0zjzoos_di" bpmnElement="XOR_AlternativeOk" isMarkerVisible="true">
+      <bpmndi:BPMNShape id="ExclusiveGateway_0zjzoos_di" bpmnElement="XOR_kundenwunschAnpassen" isMarkerVisible="true">
         <dc:Bounds x="963" y="533" width="50" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="950" y="502" width="76" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_1944dty_di" bpmnElement="EndEvent_1944dty">
+      <bpmndi:BPMNShape id="EndEvent_1944dty_di" bpmnElement="EndEvent_buchungAbgebrochen">
         <dc:Bounds x="1115" y="540" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1101" y="583" width="65" height="27" />
@@ -842,7 +825,7 @@ execution.setVariable("ratenZahlungPruefung", "ungeprüft")</bpmn:script>
           <dc:Bounds x="1769" y="382" width="55" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_buchungswunschLiegtVor">
         <dc:Bounds x="366" y="408" width="36" height="36" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="341" y="451" width="87" height="27" />
@@ -899,7 +882,7 @@ execution.setVariable("ratenZahlungPruefung", "ungeprüft")</bpmn:script>
       <bpmndi:BPMNShape id="Activity_1x58ef7_di" bpmnElement="Task_073sewa">
         <dc:Bounds x="1746" y="767" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_12g2xw6_di" bpmnElement="XOR_AngebotOk" isMarkerVisible="true">
+      <bpmndi:BPMNShape id="Gateway_12g2xw6_di" bpmnElement="XOR_entscheidung" isMarkerVisible="true">
         <dc:Bounds x="1108" y="401" width="50" height="50" />
         <bpmndi:BPMNLabel>
           <dc:Bounds x="1047" y="442" width="73" height="14" />
@@ -911,16 +894,13 @@ execution.setVariable("ratenZahlungPruefung", "ungeprüft")</bpmn:script>
           <dc:Bounds x="2004" y="436" width="62" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0j1ofvr_di" bpmnElement="Task_17h47ia">
-        <dc:Bounds x="1384" y="386" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_1drkshf_di" bpmnElement="Task_1kxh7nr">
         <dc:Bounds x="2033" y="593" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_0px80hz_di" bpmnElement="Task_069wcre">
         <dc:Bounds x="2277" y="593" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Participant_08zldhw_di" bpmnElement="Participant_18gnfiq" isHorizontal="true">
+      <bpmndi:BPMNShape id="Participant_08zldhw_di" bpmnElement="Participant_kunde" isHorizontal="true">
         <dc:Bounds x="279" y="97" width="2801" height="60" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="SequenceFlow_0ghvr2o_di" bpmnElement="SequenceFlow_0ghvr2o">
@@ -956,6 +936,16 @@ execution.setVariable("ratenZahlungPruefung", "ungeprüft")</bpmn:script>
       <bpmndi:BPMNShape id="ServiceTask_0f496nc_di" bpmnElement="Task_18098zo">
         <dc:Bounds x="2607" y="386" width="100" height="80" />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_1h8459x_di" bpmnElement="Task_17h47ia">
+        <dc:Bounds x="1384" y="386" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1sge9ih_di" bpmnElement="TextAnnotation_1sge9ih">
+        <dc:Bounds x="1384" y="266" width="100" height="96" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_1hms1y0_di" bpmnElement="Association_1hms1y0">
+        <di:waypoint x="1434" y="386" />
+        <di:waypoint x="1434" y="362" />
+      </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
