@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1phg2cc" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.4">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1phg2cc" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.0.3">
   <bpmn:collaboration id="Collaboration_1fkr7nk">
     <bpmn:participant id="Participant_reisebuero" name="Reisebüro" processRef="Hotelbuchung" />
     <bpmn:participant id="Participant_kunde" name="Kunde" />
   </bpmn:collaboration>
   <bpmn:process id="Hotelbuchung" isExecutable="true">
     <bpmn:laneSet id="LaneSet_1rvvgjs">
-      <bpmn:lane id="Lane_filialleiter" name="Filialleiter">
-        <bpmn:flowNodeRef>XOR_RatenGenehmigt</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_073sewa</bpmn:flowNodeRef>
-      </bpmn:lane>
       <bpmn:lane id="Lane_servicemitarbeiter" name="Servicemitarbeiter">
         <bpmn:flowNodeRef>XOR_kundenwunschVerfuegbar</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_kundenwunschErfassen</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_verfuegbarkeitenPruefen</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_angebotAuswaehlen</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>XOR_BonitaetOk</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_0eta6ea</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>XOR_bonitaetVorhanden</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ratenzahlungAnbieten</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_problemBesprechen</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>XOR_RatenzahlungOk</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>StartEvent_buchungswunschLiegtVor</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_0gdd21m</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>XOR_SofortzahlungOk</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_0xhtxnq</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_148ls46</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>XOR_entscheidung</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>XOR_AuswahlZahlungsweis</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>XOR_kundenwunschAnpassen</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>XOR_abgelehnt</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>StartEvent_buchungswunschLiegtVor</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_sofortzahlungAnbieten</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>XOR_zugestimmt</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_kundenInformieren</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_zahlungsweiseAuswaehlen</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>XOR_entscheidung</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>XOR_ausgewaehlt</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_buchungAbgebrochen</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>EndEvent_0srjfvg</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_buchungAbgebrochen2</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_kundendatenAufnehmen</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_1n5ions</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_1kxh7nr</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_069wcre</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_sofortzahlungDurchfuehren</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_bankdatenEinholen</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_lastschrifterlaubnisEinholen</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>ExclusiveGateway_0g8vq52</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_0lwg6xz</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_12dva4v</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_buchungDurchfuehren</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_1ho2gme</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>EndEvent_1kflstd</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_1ganrfm</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_18098zo</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Task_17h47ia</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>EndEvent_buchungAbgeschlossen</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_unterlagenUebergeben</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_rechnungGenerieren</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_bonitaetPruefen</bpmn:flowNodeRef>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_filialleiter" name="Filialleiter">
+        <bpmn:flowNodeRef>XOR_ratenzahlungGenehmigt</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Task_ratenzahlungPruefen</bpmn:flowNodeRef>
       </bpmn:lane>
     </bpmn:laneSet>
     <bpmn:exclusiveGateway id="XOR_kundenwunschVerfuegbar" name="Kundenwunsch verfügbar?">
@@ -108,12 +108,12 @@ execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
       <bpmn:incoming>SequenceFlow_1jkbexr</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1t55m76</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:exclusiveGateway id="XOR_BonitaetOk" name="Bonität vorhanden?">
+    <bpmn:exclusiveGateway id="XOR_bonitaetVorhanden" name="Bonität vorhanden?">
       <bpmn:incoming>SequenceFlow_1hlkcca</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1ar5dxc</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0p3k10m</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="Task_0eta6ea" name="Ratenzahlung anbieten">
+    <bpmn:userTask id="Task_ratenzahlungAnbieten" name="Ratenzahlung anbieten">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="ergBonitaet" label="Ergebnis der Bonitätsprüfung:" type="string" defaultValue="${bonitaet}">
@@ -142,7 +142,7 @@ execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
       <bpmn:outgoing>SequenceFlow_0ghvr2o</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_00vat3d</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:exclusiveGateway id="XOR_RatenzahlungOk" name="Abgelehnt?">
+    <bpmn:exclusiveGateway id="XOR_abgelehnt" name="Abgelehnt?">
       <bpmn:incoming>SequenceFlow_030o4sl</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1h399qt</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0n9prht</bpmn:outgoing>
@@ -150,7 +150,7 @@ execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
     <bpmn:startEvent id="StartEvent_buchungswunschLiegtVor" name="Buchungswunsch liegt vor">
       <bpmn:outgoing>SequenceFlow_14bnl9k</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:userTask id="Task_0gdd21m" name="Sofortzahlung anbieten">
+    <bpmn:userTask id="Task_sofortzahlungAnbieten" name="Sofortzahlung anbieten">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="ergBonitaet" label="Ergebnis der Bonitätsprüfung:" type="string" defaultValue="${bonitaet}">
@@ -167,21 +167,26 @@ execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
       <bpmn:incoming>SequenceFlow_1ar5dxc</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1mz5q3s</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:exclusiveGateway id="XOR_SofortzahlungOk" name="Zugestimmt?">
+    <bpmn:exclusiveGateway id="XOR_zugestimmt" name="Zugestimmt?">
       <bpmn:incoming>SequenceFlow_1mz5q3s</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1ib12rw</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_091jvlm</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:exclusiveGateway id="XOR_RatenGenehmigt" name="Ratenzahlung genemigt?">
+    <bpmn:exclusiveGateway id="XOR_ratenzahlungGenehmigt" name="Ratenzahlung genemigt?">
       <bpmn:incoming>SequenceFlow_0gmrw1v</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_09zsf56</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_09jw7d1</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:userTask id="Task_0xhtxnq" name="Kunden informieren">
+    <bpmn:userTask id="Task_kundenInformieren" name="Kunden informieren">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="ergPruefungRatenZahlung" label="Ergebnis der Prüfung der Ratenzahlung:" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_09jw7d1</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1mkzrnu</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:userTask id="Task_148ls46" name="Zahlungsweise auswählen">
+    <bpmn:userTask id="Task_zahlungsweiseAuswaehlen" name="Zahlungsweise auswählen">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="ergRatenZahlung" label="Ergebnis des Kundenwunsches auf Ratenzahlung:" type="string" defaultValue="${ratenZahlung}">
@@ -205,67 +210,7 @@ execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
       <bpmn:incoming>SequenceFlow_1mkzrnu</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0ljyxsw</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="SequenceFlow_0jzxq8u" sourceRef="Task_1kxh7nr" targetRef="Task_069wcre" />
-    <bpmn:sequenceFlow id="SequenceFlow_01qftwm" name="Auf Ziel" sourceRef="XOR_AuswahlZahlungsweis" targetRef="ExclusiveGateway_0g8vq52">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${auswahlZahlung == "aufZiel"}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_1ts5ggp" sourceRef="Task_069wcre" targetRef="ExclusiveGateway_0g8vq52" />
-    <bpmn:sequenceFlow id="SequenceFlow_12zwqq9" sourceRef="Task_1n5ions" targetRef="ExclusiveGateway_0g8vq52" />
-    <bpmn:sequenceFlow id="SequenceFlow_1hbqqii" name="Sofort" sourceRef="XOR_AuswahlZahlungsweis" targetRef="Task_1n5ions">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${auswahlZahlung == "sofort"}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_11bgnag" name="Abgebrochen" sourceRef="XOR_AuswahlZahlungsweis" targetRef="EndEvent_0srjfvg">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${auswahlZahlung == "abbruch"}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_091jvlm" name="nein" sourceRef="XOR_SofortzahlungOk" targetRef="EndEvent_0srjfvg">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${sofortZahlung == false}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_1ib12rw" name="ja" sourceRef="XOR_SofortzahlungOk" targetRef="Task_1n5ions">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${sofortZahlung == true}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_0ljyxsw" sourceRef="Task_148ls46" targetRef="XOR_AuswahlZahlungsweis" />
-    <bpmn:sequenceFlow id="SequenceFlow_1mkzrnu" sourceRef="Task_0xhtxnq" targetRef="Task_148ls46" />
-    <bpmn:sequenceFlow id="SequenceFlow_09jw7d1" name="nein" sourceRef="XOR_RatenGenehmigt" targetRef="Task_0xhtxnq">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ratenZahlungPruefung == false}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_09zsf56" name="ja" sourceRef="XOR_RatenGenehmigt" targetRef="Task_1kxh7nr">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ratenZahlungPruefung == true}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_1mz5q3s" sourceRef="Task_0gdd21m" targetRef="XOR_SofortzahlungOk" />
-    <bpmn:sequenceFlow id="SequenceFlow_0n9prht" name="ja" sourceRef="XOR_RatenzahlungOk" targetRef="Task_148ls46">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ratenZahlung == false}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_1h399qt" name="nein" sourceRef="XOR_RatenzahlungOk" targetRef="Task_073sewa">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ratenZahlung == true}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_0p3k10m" name="ja" sourceRef="XOR_BonitaetOk" targetRef="Task_0eta6ea">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${bonitaet == true}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_030o4sl" sourceRef="Task_0eta6ea" targetRef="XOR_RatenzahlungOk" />
-    <bpmn:sequenceFlow id="SequenceFlow_1ar5dxc" name="nein" sourceRef="XOR_BonitaetOk" targetRef="Task_0gdd21m">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${bonitaet == false}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_1hlkcca" sourceRef="Task_17h47ia" targetRef="XOR_BonitaetOk" />
-    <bpmn:sequenceFlow id="SequenceFlow_1fljneq" sourceRef="Task_kundendatenAufnehmen" targetRef="Task_17h47ia" />
-    <bpmn:sequenceFlow id="SequenceFlow_0dbxllw" sourceRef="Task_kundenwunschErfassen" targetRef="Task_verfuegbarkeitenPruefen" />
-    <bpmn:sequenceFlow id="SequenceFlow_1o47qu8" name="Ausgewählt" sourceRef="XOR_entscheidung" targetRef="Task_kundendatenAufnehmen">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aA_entscheidung == "annehmen"}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_0ixeut4" name="Änderung angefragt" sourceRef="XOR_entscheidung" targetRef="Task_kundenwunschErfassen">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aA_entscheidung == "aendern"}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_1t55m76" sourceRef="Task_angebotAuswaehlen" targetRef="XOR_entscheidung" />
-    <bpmn:sequenceFlow id="SequenceFlow_02kf837" sourceRef="Task_problemBesprechen" targetRef="XOR_kundenwunschAnpassen" />
-    <bpmn:sequenceFlow id="SequenceFlow_059rxai" name="nein" sourceRef="XOR_kundenwunschVerfuegbar" targetRef="Task_problemBesprechen">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${vP_verfuegbar == false}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_1jkbexr" name="ja" sourceRef="XOR_kundenwunschVerfuegbar" targetRef="Task_angebotAuswaehlen">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${vP_verfuegbar == true}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_1em2555" sourceRef="Task_verfuegbarkeitenPruefen" targetRef="XOR_kundenwunschVerfuegbar" />
-    <bpmn:sequenceFlow id="SequenceFlow_14bnl9k" sourceRef="StartEvent_buchungswunschLiegtVor" targetRef="Task_kundenwunschErfassen" />
-    <bpmn:sequenceFlow id="SequenceFlow_0gmrw1v" sourceRef="Task_073sewa" targetRef="XOR_RatenGenehmigt" />
-    <bpmn:userTask id="Task_073sewa" name="Ratenzahlung prüfen">
+    <bpmn:userTask id="Task_ratenzahlungPruefen" name="Ratenzahlung prüfen">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="anrede" label="Anrede" type="string" defaultValue="${anrede}">
@@ -336,33 +281,17 @@ execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
       <bpmn:outgoing>SequenceFlow_0ixeut4</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1omvrja</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:exclusiveGateway id="XOR_AuswahlZahlungsweis" name="Ausgewählt?">
+    <bpmn:exclusiveGateway id="XOR_ausgewaehlt" name="Ausgewählt?">
       <bpmn:incoming>SequenceFlow_0ljyxsw</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_01qftwm</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1hbqqii</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_11bgnag</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:sequenceFlow id="SequenceFlow_0ghvr2o" name="Ja" sourceRef="XOR_kundenwunschAnpassen" targetRef="Task_kundenwunschErfassen">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${pB_entscheidung == true}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0zty9hg" sourceRef="Gateway_0lwg6xz" targetRef="Task_18098zo" />
-    <bpmn:sequenceFlow id="Flow_00asvxw" sourceRef="Gateway_0lwg6xz" targetRef="Activity_12dva4v" />
-    <bpmn:sequenceFlow id="Flow_0oyxilm" sourceRef="Activity_12dva4v" targetRef="Gateway_1ho2gme" />
-    <bpmn:sequenceFlow id="Flow_1svdc1e" sourceRef="Task_18098zo" targetRef="Gateway_1ho2gme" />
-    <bpmn:sequenceFlow id="Flow_0lny208" sourceRef="Gateway_1ho2gme" targetRef="Task_1ganrfm" />
-    <bpmn:sequenceFlow id="SequenceFlow_00j2no7" sourceRef="Task_1ganrfm" targetRef="EndEvent_1kflstd" />
-    <bpmn:sequenceFlow id="SequenceFlow_0b5ref0" sourceRef="ExclusiveGateway_0g8vq52" targetRef="Gateway_0lwg6xz" />
-    <bpmn:sequenceFlow id="SequenceFlow_00vat3d" name="Nein" sourceRef="XOR_kundenwunschAnpassen" targetRef="EndEvent_buchungAbgebrochen">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${pB_entscheidung == false}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_1omvrja" name="Abgebrochen" sourceRef="XOR_entscheidung" targetRef="EndEvent_buchungAbgebrochen">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aA_entscheidung == "abbruch"}</bpmn:conditionExpression>
-    </bpmn:sequenceFlow>
     <bpmn:endEvent id="EndEvent_buchungAbgebrochen" name="Buchung abgebrochen">
       <bpmn:incoming>SequenceFlow_00vat3d</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_1omvrja</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:endEvent id="EndEvent_0srjfvg" name="Buchung abgebrochen">
+    <bpmn:endEvent id="EndEvent_buchungAbgebrochen2" name="Buchung abgebrochen">
       <bpmn:incoming>SequenceFlow_091jvlm</bpmn:incoming>
       <bpmn:incoming>SequenceFlow_11bgnag</bpmn:incoming>
     </bpmn:endEvent>
@@ -387,7 +316,7 @@ execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
       <bpmn:incoming>SequenceFlow_1o47qu8</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1fljneq</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:userTask id="Task_1n5ions" name="Sofortzahlung durchführen">
+    <bpmn:userTask id="Task_sofortzahlungDurchfuehren" name="Sofortzahlung durchführen">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="ecKarteKreditKarteBar" label="Wie möchten Sie zahlen? EC-, Kreditkarte oder ?" type="enum">
@@ -401,7 +330,7 @@ execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
       <bpmn:incoming>SequenceFlow_1hbqqii</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_12zwqq9</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:userTask id="Task_1kxh7nr" name="Bankdaten einholen">
+    <bpmn:userTask id="Task_bankdatenEinholen" name="Bankdaten einholen">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="anrede" label="Anrede" type="string" defaultValue="${anrede}">
@@ -481,7 +410,7 @@ execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
       <bpmn:incoming>SequenceFlow_09zsf56</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0jzxq8u</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:userTask id="Task_069wcre" name="Lastschrifterlaubnis einholen">
+    <bpmn:userTask id="Task_lastschrifterlaubnisEinholen" name="Lastschrifterlaubnis einholen">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="ErgVerfuegbar" label="Ergebnis der Verfügbarkeitsprüfung" type="string" defaultValue="${verfuegbar}">
@@ -521,7 +450,7 @@ execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
       <bpmn:outgoing>Flow_0zty9hg</bpmn:outgoing>
       <bpmn:outgoing>Flow_00asvxw</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:userTask id="Activity_12dva4v" name="Buchung durchführen">
+    <bpmn:userTask id="Task_buchungDurchfuehren" name="Buchung durchführen">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="hotelBuchen" label="Hotelbuchung verbindlich durchführen?" type="boolean" />
@@ -535,10 +464,10 @@ execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
       <bpmn:incoming>Flow_0oyxilm</bpmn:incoming>
       <bpmn:outgoing>Flow_0lny208</bpmn:outgoing>
     </bpmn:parallelGateway>
-    <bpmn:endEvent id="EndEvent_1kflstd" name="Buchung abgeschlossen">
+    <bpmn:endEvent id="EndEvent_buchungAbgeschlossen" name="Buchung abgeschlossen">
       <bpmn:incoming>SequenceFlow_00j2no7</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:userTask id="Task_1ganrfm" name="Unterlagen übergeben">
+    <bpmn:userTask id="Task_unterlagenUebergeben" name="Unterlagen übergeben">
       <bpmn:extensionElements>
         <camunda:formData>
           <camunda:formField id="unterlagenGedruckt" label="Unterlagen gedruckt?" type="boolean" />
@@ -548,404 +477,480 @@ execution.setVariable("preisGesamt", gesamtpreis)</bpmn:script>
       <bpmn:incoming>Flow_0lny208</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_00j2no7</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:serviceTask id="Task_18098zo" name="Rechnung generieren" camunda:type="external" camunda:topic="rG_rechnungGenerieren">
+    <bpmn:serviceTask id="Task_rechnungGenerieren" name="Rechnung generieren" camunda:type="external" camunda:topic="rG_rechnungGenerieren">
       <bpmn:incoming>Flow_0zty9hg</bpmn:incoming>
       <bpmn:outgoing>Flow_1svdc1e</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:serviceTask id="Task_17h47ia" name="Bonität prüfen" camunda:type="external" camunda:topic="bP_bonitaetPruefen">
+    <bpmn:serviceTask id="Task_bonitaetPruefen" name="Bonität prüfen" camunda:type="external" camunda:topic="bP_bonitaetPruefen">
       <bpmn:incoming>SequenceFlow_1fljneq</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1hlkcca</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:association id="Association_1hms1y0" sourceRef="Task_17h47ia" targetRef="TextAnnotation_1sge9ih" />
+    <bpmn:sequenceFlow id="SequenceFlow_1omvrja" name="Abgebrochen" sourceRef="XOR_entscheidung" targetRef="EndEvent_buchungAbgebrochen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aA_entscheidung == "abbruch"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_00vat3d" name="Nein" sourceRef="XOR_kundenwunschAnpassen" targetRef="EndEvent_buchungAbgebrochen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${pB_entscheidung == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_0b5ref0" sourceRef="ExclusiveGateway_0g8vq52" targetRef="Gateway_0lwg6xz" />
+    <bpmn:sequenceFlow id="SequenceFlow_00j2no7" sourceRef="Task_unterlagenUebergeben" targetRef="EndEvent_buchungAbgeschlossen" />
+    <bpmn:sequenceFlow id="Flow_0lny208" sourceRef="Gateway_1ho2gme" targetRef="Task_unterlagenUebergeben" />
+    <bpmn:sequenceFlow id="Flow_1svdc1e" sourceRef="Task_rechnungGenerieren" targetRef="Gateway_1ho2gme" />
+    <bpmn:sequenceFlow id="Flow_0oyxilm" sourceRef="Task_buchungDurchfuehren" targetRef="Gateway_1ho2gme" />
+    <bpmn:sequenceFlow id="Flow_00asvxw" sourceRef="Gateway_0lwg6xz" targetRef="Task_buchungDurchfuehren" />
+    <bpmn:sequenceFlow id="Flow_0zty9hg" sourceRef="Gateway_0lwg6xz" targetRef="Task_rechnungGenerieren" />
+    <bpmn:sequenceFlow id="SequenceFlow_0ghvr2o" name="Ja" sourceRef="XOR_kundenwunschAnpassen" targetRef="Task_kundenwunschErfassen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${pB_entscheidung == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_0gmrw1v" sourceRef="Task_ratenzahlungPruefen" targetRef="XOR_ratenzahlungGenehmigt" />
+    <bpmn:sequenceFlow id="SequenceFlow_14bnl9k" sourceRef="StartEvent_buchungswunschLiegtVor" targetRef="Task_kundenwunschErfassen" />
+    <bpmn:sequenceFlow id="SequenceFlow_1em2555" sourceRef="Task_verfuegbarkeitenPruefen" targetRef="XOR_kundenwunschVerfuegbar" />
+    <bpmn:sequenceFlow id="SequenceFlow_1jkbexr" name="ja" sourceRef="XOR_kundenwunschVerfuegbar" targetRef="Task_angebotAuswaehlen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${vP_verfuegbar == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_059rxai" name="nein" sourceRef="XOR_kundenwunschVerfuegbar" targetRef="Task_problemBesprechen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${vP_verfuegbar == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_02kf837" sourceRef="Task_problemBesprechen" targetRef="XOR_kundenwunschAnpassen" />
+    <bpmn:sequenceFlow id="SequenceFlow_1t55m76" sourceRef="Task_angebotAuswaehlen" targetRef="XOR_entscheidung" />
+    <bpmn:sequenceFlow id="SequenceFlow_0ixeut4" name="Änderung angefragt" sourceRef="XOR_entscheidung" targetRef="Task_kundenwunschErfassen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aA_entscheidung == "aendern"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_1o47qu8" name="Ausgewählt" sourceRef="XOR_entscheidung" targetRef="Task_kundendatenAufnehmen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aA_entscheidung == "annehmen"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_0dbxllw" sourceRef="Task_kundenwunschErfassen" targetRef="Task_verfuegbarkeitenPruefen" />
+    <bpmn:sequenceFlow id="SequenceFlow_1fljneq" sourceRef="Task_kundendatenAufnehmen" targetRef="Task_bonitaetPruefen" />
+    <bpmn:sequenceFlow id="SequenceFlow_1hlkcca" sourceRef="Task_bonitaetPruefen" targetRef="XOR_bonitaetVorhanden" />
+    <bpmn:sequenceFlow id="SequenceFlow_1ar5dxc" name="nein" sourceRef="XOR_bonitaetVorhanden" targetRef="Task_sofortzahlungAnbieten">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${bonitaet == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_030o4sl" sourceRef="Task_ratenzahlungAnbieten" targetRef="XOR_abgelehnt" />
+    <bpmn:sequenceFlow id="SequenceFlow_0p3k10m" name="ja" sourceRef="XOR_bonitaetVorhanden" targetRef="Task_ratenzahlungAnbieten">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${bonitaet == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_1h399qt" name="nein" sourceRef="XOR_abgelehnt" targetRef="Task_ratenzahlungPruefen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ratenZahlung == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_0n9prht" name="ja" sourceRef="XOR_abgelehnt" targetRef="Task_zahlungsweiseAuswaehlen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ratenZahlung == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_1mz5q3s" sourceRef="Task_sofortzahlungAnbieten" targetRef="XOR_zugestimmt" />
+    <bpmn:sequenceFlow id="SequenceFlow_09zsf56" name="ja" sourceRef="XOR_ratenzahlungGenehmigt" targetRef="Task_bankdatenEinholen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ratenZahlungPruefung == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_09jw7d1" name="nein" sourceRef="XOR_ratenzahlungGenehmigt" targetRef="Task_kundenInformieren">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${ratenZahlungPruefung == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_1mkzrnu" sourceRef="Task_kundenInformieren" targetRef="Task_zahlungsweiseAuswaehlen" />
+    <bpmn:sequenceFlow id="SequenceFlow_0ljyxsw" sourceRef="Task_zahlungsweiseAuswaehlen" targetRef="XOR_ausgewaehlt" />
+    <bpmn:sequenceFlow id="SequenceFlow_1ib12rw" name="ja" sourceRef="XOR_zugestimmt" targetRef="Task_sofortzahlungDurchfuehren">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${sofortZahlung == true}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_091jvlm" name="nein" sourceRef="XOR_zugestimmt" targetRef="EndEvent_buchungAbgebrochen2">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${sofortZahlung == false}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_11bgnag" name="Abgebrochen" sourceRef="XOR_ausgewaehlt" targetRef="EndEvent_buchungAbgebrochen2">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${auswahlZahlung == "abbruch"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_1hbqqii" name="Sofort" sourceRef="XOR_ausgewaehlt" targetRef="Task_sofortzahlungDurchfuehren">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${auswahlZahlung == "sofort"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_12zwqq9" sourceRef="Task_sofortzahlungDurchfuehren" targetRef="ExclusiveGateway_0g8vq52" />
+    <bpmn:sequenceFlow id="SequenceFlow_1ts5ggp" sourceRef="Task_lastschrifterlaubnisEinholen" targetRef="ExclusiveGateway_0g8vq52" />
+    <bpmn:sequenceFlow id="SequenceFlow_01qftwm" name="Auf Ziel" sourceRef="XOR_ausgewaehlt" targetRef="ExclusiveGateway_0g8vq52">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${auswahlZahlung == "aufZiel"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="SequenceFlow_0jzxq8u" sourceRef="Task_bankdatenEinholen" targetRef="Task_lastschrifterlaubnisEinholen" />
     <bpmn:textAnnotation id="TextAnnotation_1sge9ih">
       <bpmn:text>Ab hier beginnt die lustige und aufregende Reise durch das BPMN-Universum</bpmn:text>
     </bpmn:textAnnotation>
+    <bpmn:association id="Association_1hms1y0" sourceRef="Task_bonitaetPruefen" targetRef="TextAnnotation_1sge9ih" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1fkr7nk">
       <bpmndi:BPMNShape id="Participant_0hum507_di" bpmnElement="Participant_reisebuero" isHorizontal="true">
-        <dc:Bounds x="279" y="197" width="2803" height="700" />
+        <dc:Bounds x="159" y="197" width="2803" height="700" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_0cfch57_di" bpmnElement="Lane_servicemitarbeiter" isHorizontal="true">
-        <dc:Bounds x="309" y="197" width="2773" height="502" />
+        <dc:Bounds x="189" y="197" width="2773" height="502" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Lane_1jnl604_di" bpmnElement="Lane_filialleiter" isHorizontal="true">
-        <dc:Bounds x="309" y="699" width="2773" height="198" />
+        <dc:Bounds x="189" y="699" width="2773" height="198" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_0lny208_di" bpmnElement="Flow_0lny208">
-        <di:waypoint x="2790" y="530" />
-        <di:waypoint x="2825" y="530" />
+      <bpmndi:BPMNEdge id="SequenceFlow_1omvrja_di" bpmnElement="SequenceFlow_1omvrja">
+        <di:waypoint x="1013" y="451" />
+        <di:waypoint x="1013" y="540" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1024" y="477" width="65" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0oyxilm_di" bpmnElement="Flow_0oyxilm">
-        <di:waypoint x="2707" y="633" />
-        <di:waypoint x="2765" y="633" />
-        <di:waypoint x="2765" y="555" />
+      <bpmndi:BPMNEdge id="SequenceFlow_00vat3d_di" bpmnElement="SequenceFlow_00vat3d">
+        <di:waypoint x="893" y="558" />
+        <di:waypoint x="995" y="558" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="907" y="540" width="23" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0b5ref0_di" bpmnElement="SequenceFlow_0b5ref0">
+        <di:waypoint x="2358" y="530" />
+        <di:waypoint x="2402" y="530" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_00j2no7_di" bpmnElement="SequenceFlow_00j2no7">
+        <di:waypoint x="2805" y="530" />
+        <di:waypoint x="2860" y="530" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0lny208_di" bpmnElement="Flow_0lny208">
+        <di:waypoint x="2670" y="530" />
+        <di:waypoint x="2705" y="530" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1svdc1e_di" bpmnElement="Flow_1svdc1e">
-        <di:waypoint x="2707" y="426" />
-        <di:waypoint x="2765" y="426" />
-        <di:waypoint x="2765" y="505" />
+        <di:waypoint x="2587" y="426" />
+        <di:waypoint x="2645" y="426" />
+        <di:waypoint x="2645" y="505" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0oyxilm_di" bpmnElement="Flow_0oyxilm">
+        <di:waypoint x="2587" y="633" />
+        <di:waypoint x="2645" y="633" />
+        <di:waypoint x="2645" y="555" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_00asvxw_di" bpmnElement="Flow_00asvxw">
-        <di:waypoint x="2547" y="555" />
-        <di:waypoint x="2547" y="633" />
-        <di:waypoint x="2607" y="633" />
+        <di:waypoint x="2427" y="555" />
+        <di:waypoint x="2427" y="633" />
+        <di:waypoint x="2487" y="633" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0zty9hg_di" bpmnElement="Flow_0zty9hg">
-        <di:waypoint x="2547" y="505" />
-        <di:waypoint x="2547" y="426" />
-        <di:waypoint x="2607" y="426" />
+        <di:waypoint x="2427" y="505" />
+        <di:waypoint x="2427" y="426" />
+        <di:waypoint x="2487" y="426" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0ghvr2o_di" bpmnElement="SequenceFlow_0ghvr2o">
+        <di:waypoint x="868" y="583" />
+        <di:waypoint x="868" y="659" />
+        <di:waypoint x="363" y="659" />
+        <di:waypoint x="363" y="466" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="612" y="663" width="12" height="14" />
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0gmrw1v_di" bpmnElement="SequenceFlow_0gmrw1v">
-        <di:waypoint x="1846" y="807" />
-        <di:waypoint x="1908" y="807" />
+        <di:waypoint x="1726" y="807" />
+        <di:waypoint x="1788" y="807" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_14bnl9k_di" bpmnElement="SequenceFlow_14bnl9k">
-        <di:waypoint x="402" y="426" />
-        <di:waypoint x="433" y="426" />
+        <di:waypoint x="282" y="426" />
+        <di:waypoint x="313" y="426" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1em2555_di" bpmnElement="SequenceFlow_1em2555">
-        <di:waypoint x="683" y="426" />
-        <di:waypoint x="733" y="426" />
+        <di:waypoint x="563" y="426" />
+        <di:waypoint x="613" y="426" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1jkbexr_di" bpmnElement="SequenceFlow_1jkbexr">
-        <di:waypoint x="783" y="426" />
-        <di:waypoint x="938" y="426" />
+        <di:waypoint x="663" y="426" />
+        <di:waypoint x="818" y="426" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="799" y="408" width="8" height="14" />
+          <dc:Bounds x="679" y="408" width="8" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_059rxai_di" bpmnElement="SequenceFlow_059rxai">
-        <di:waypoint x="758" y="451" />
-        <di:waypoint x="758" y="558" />
-        <di:waypoint x="805" y="558" />
+        <di:waypoint x="638" y="451" />
+        <di:waypoint x="638" y="558" />
+        <di:waypoint x="685" y="558" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="769" y="464" width="21" height="14" />
+          <dc:Bounds x="649" y="464" width="21" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_02kf837_di" bpmnElement="SequenceFlow_02kf837">
-        <di:waypoint x="905" y="558" />
-        <di:waypoint x="963" y="558" />
+        <di:waypoint x="785" y="558" />
+        <di:waypoint x="843" y="558" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1t55m76_di" bpmnElement="SequenceFlow_1t55m76">
-        <di:waypoint x="1038" y="426" />
-        <di:waypoint x="1108" y="426" />
+        <di:waypoint x="918" y="426" />
+        <di:waypoint x="988" y="426" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0ixeut4_di" bpmnElement="SequenceFlow_0ixeut4">
-        <di:waypoint x="1133" y="401" />
-        <di:waypoint x="1133" y="305" />
-        <di:waypoint x="483" y="305" />
-        <di:waypoint x="483" y="386" />
+        <di:waypoint x="1013" y="401" />
+        <di:waypoint x="1013" y="305" />
+        <di:waypoint x="363" y="305" />
+        <di:waypoint x="363" y="386" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1142" y="361" width="48" height="27" />
+          <dc:Bounds x="1022" y="361" width="48" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1o47qu8_di" bpmnElement="SequenceFlow_1o47qu8">
-        <di:waypoint x="1158" y="426" />
-        <di:waypoint x="1235" y="426" />
+        <di:waypoint x="1038" y="426" />
+        <di:waypoint x="1115" y="426" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1160" y="408" width="57" height="14" />
+          <dc:Bounds x="1040" y="408" width="57" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0dbxllw_di" bpmnElement="SequenceFlow_0dbxllw">
-        <di:waypoint x="533" y="426" />
-        <di:waypoint x="583" y="426" />
+        <di:waypoint x="413" y="426" />
+        <di:waypoint x="463" y="426" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1fljneq_di" bpmnElement="SequenceFlow_1fljneq">
-        <di:waypoint x="1335" y="426" />
-        <di:waypoint x="1384" y="426" />
+        <di:waypoint x="1215" y="426" />
+        <di:waypoint x="1264" y="426" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1hlkcca_di" bpmnElement="SequenceFlow_1hlkcca">
-        <di:waypoint x="1484" y="426" />
-        <di:waypoint x="1525" y="426" />
+        <di:waypoint x="1364" y="426" />
+        <di:waypoint x="1405" y="426" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1ar5dxc_di" bpmnElement="SequenceFlow_1ar5dxc">
-        <di:waypoint x="1550" y="401" />
-        <di:waypoint x="1550" y="266" />
-        <di:waypoint x="1623" y="266" />
+        <di:waypoint x="1430" y="401" />
+        <di:waypoint x="1430" y="266" />
+        <di:waypoint x="1503" y="266" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1520" y="366" width="21" height="14" />
+          <dc:Bounds x="1400" y="366" width="21" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_030o4sl_di" bpmnElement="SequenceFlow_030o4sl">
-        <di:waypoint x="1723" y="426" />
-        <di:waypoint x="1771" y="426" />
+        <di:waypoint x="1603" y="426" />
+        <di:waypoint x="1651" y="426" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0p3k10m_di" bpmnElement="SequenceFlow_0p3k10m">
-        <di:waypoint x="1575" y="426" />
-        <di:waypoint x="1623" y="426" />
+        <di:waypoint x="1455" y="426" />
+        <di:waypoint x="1503" y="426" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1587" y="407" width="8" height="14" />
+          <dc:Bounds x="1467" y="407" width="8" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1h399qt_di" bpmnElement="SequenceFlow_1h399qt">
-        <di:waypoint x="1796" y="451" />
-        <di:waypoint x="1796" y="767" />
+        <di:waypoint x="1676" y="451" />
+        <di:waypoint x="1676" y="767" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1807" y="458" width="21" height="14" />
+          <dc:Bounds x="1687" y="458" width="21" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0n9prht_di" bpmnElement="SequenceFlow_0n9prht">
-        <di:waypoint x="1821" y="426" />
-        <di:waypoint x="1883" y="426" />
+        <di:waypoint x="1701" y="426" />
+        <di:waypoint x="1763" y="426" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1823" y="405" width="8" height="14" />
+          <dc:Bounds x="1703" y="405" width="8" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1mz5q3s_di" bpmnElement="SequenceFlow_1mz5q3s">
-        <di:waypoint x="1723" y="266" />
-        <di:waypoint x="1771" y="266" />
+        <di:waypoint x="1603" y="266" />
+        <di:waypoint x="1651" y="266" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_09zsf56_di" bpmnElement="SequenceFlow_09zsf56">
-        <di:waypoint x="1958" y="807" />
-        <di:waypoint x="2083" y="807" />
-        <di:waypoint x="2083" y="673" />
+        <di:waypoint x="1838" y="807" />
+        <di:waypoint x="1963" y="807" />
+        <di:waypoint x="1963" y="673" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1969" y="785" width="9" height="14" />
+          <dc:Bounds x="1850" y="785" width="8" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_09jw7d1_di" bpmnElement="SequenceFlow_09jw7d1">
-        <di:waypoint x="1933" y="782" />
-        <di:waypoint x="1933" y="598" />
+        <di:waypoint x="1813" y="782" />
+        <di:waypoint x="1813" y="598" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1937" y="734" width="21" height="14" />
+          <dc:Bounds x="1817" y="734" width="21" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1mkzrnu_di" bpmnElement="SequenceFlow_1mkzrnu">
-        <di:waypoint x="1933" y="518" />
-        <di:waypoint x="1933" y="466" />
+        <di:waypoint x="1813" y="518" />
+        <di:waypoint x="1813" y="466" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0ljyxsw_di" bpmnElement="SequenceFlow_0ljyxsw">
-        <di:waypoint x="1983" y="426" />
-        <di:waypoint x="2058" y="426" />
+        <di:waypoint x="1863" y="426" />
+        <di:waypoint x="1938" y="426" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1ib12rw_di" bpmnElement="SequenceFlow_1ib12rw">
-        <di:waypoint x="1821" y="266" />
-        <di:waypoint x="2327" y="266" />
-        <di:waypoint x="2327" y="386" />
+        <di:waypoint x="1701" y="266" />
+        <di:waypoint x="2207" y="266" />
+        <di:waypoint x="2207" y="386" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1830" y="247" width="9" height="14" />
+          <dc:Bounds x="1711" y="247" width="8" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_091jvlm_di" bpmnElement="SequenceFlow_091jvlm">
-        <di:waypoint x="1796" y="291" />
-        <di:waypoint x="1796" y="314" />
-        <di:waypoint x="2208" y="314" />
-        <di:waypoint x="2208" y="340" />
+        <di:waypoint x="1676" y="291" />
+        <di:waypoint x="1676" y="314" />
+        <di:waypoint x="2088" y="314" />
+        <di:waypoint x="2088" y="340" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1830" y="298" width="21" height="14" />
+          <dc:Bounds x="1710" y="298" width="21" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_11bgnag_di" bpmnElement="SequenceFlow_11bgnag">
-        <di:waypoint x="2083" y="401" />
-        <di:waypoint x="2083" y="358" />
-        <di:waypoint x="2190" y="358" />
+        <di:waypoint x="1963" y="401" />
+        <di:waypoint x="1963" y="358" />
+        <di:waypoint x="2070" y="358" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2014" y="366" width="66" height="14" />
+          <dc:Bounds x="1895" y="366" width="65" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1hbqqii_di" bpmnElement="SequenceFlow_1hbqqii">
-        <di:waypoint x="2108" y="426" />
-        <di:waypoint x="2277" y="426" />
+        <di:waypoint x="1988" y="426" />
+        <di:waypoint x="2157" y="426" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2109" y="406" width="30" height="14" />
+          <dc:Bounds x="1989" y="406" width="31" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_12zwqq9_di" bpmnElement="SequenceFlow_12zwqq9">
-        <di:waypoint x="2377" y="426" />
-        <di:waypoint x="2453" y="426" />
-        <di:waypoint x="2453" y="505" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_00j2no7_di" bpmnElement="SequenceFlow_00j2no7">
-        <di:waypoint x="2925" y="530" />
-        <di:waypoint x="2980" y="530" />
+        <di:waypoint x="2257" y="426" />
+        <di:waypoint x="2333" y="426" />
+        <di:waypoint x="2333" y="505" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1ts5ggp_di" bpmnElement="SequenceFlow_1ts5ggp">
-        <di:waypoint x="2377" y="633" />
-        <di:waypoint x="2453" y="633" />
-        <di:waypoint x="2453" y="555" />
+        <di:waypoint x="2257" y="633" />
+        <di:waypoint x="2333" y="633" />
+        <di:waypoint x="2333" y="555" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_01qftwm_di" bpmnElement="SequenceFlow_01qftwm">
-        <di:waypoint x="2083" y="451" />
-        <di:waypoint x="2083" y="530" />
-        <di:waypoint x="2428" y="530" />
+        <di:waypoint x="1963" y="451" />
+        <di:waypoint x="1963" y="530" />
+        <di:waypoint x="2308" y="530" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2040" y="496" width="38" height="14" />
+          <dc:Bounds x="1921" y="496" width="37" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0jzxq8u_di" bpmnElement="SequenceFlow_0jzxq8u">
-        <di:waypoint x="2133" y="633" />
-        <di:waypoint x="2277" y="633" />
+        <di:waypoint x="2013" y="633" />
+        <di:waypoint x="2157" y="633" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ExclusiveGateway_1249udf_di" bpmnElement="XOR_kundenwunschVerfuegbar" isMarkerVisible="true">
-        <dc:Bounds x="733" y="401" width="50" height="50" />
+        <dc:Bounds x="613" y="401" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="720" y="364" width="76" height="27" />
+          <dc:Bounds x="600" y="364" width="76" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_14pdan0_di" bpmnElement="Task_kundenwunschErfassen">
-        <dc:Bounds x="433" y="386" width="100" height="80" />
+        <dc:Bounds x="313" y="386" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ScriptTask_120u5yz_di" bpmnElement="Task_verfuegbarkeitenPruefen">
-        <dc:Bounds x="583" y="386" width="100" height="80" />
+        <dc:Bounds x="463" y="386" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_02tq31b_di" bpmnElement="Task_angebotAuswaehlen">
-        <dc:Bounds x="938" y="386" width="100" height="80" />
+        <dc:Bounds x="818" y="386" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="UserTask_0v5moj0_di" bpmnElement="Task_kundendatenAufnehmen">
-        <dc:Bounds x="1235" y="386" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ExclusiveGateway_1r1mp9i_di" bpmnElement="XOR_BonitaetOk" isMarkerVisible="true">
-        <dc:Bounds x="1525" y="401" width="50" height="50" />
+      <bpmndi:BPMNShape id="ExclusiveGateway_1r1mp9i_di" bpmnElement="XOR_bonitaetVorhanden" isMarkerVisible="true">
+        <dc:Bounds x="1405" y="401" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1521" y="461" width="58" height="27" />
+          <dc:Bounds x="1401" y="461" width="59" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="UserTask_0fn95et_di" bpmnElement="Task_0eta6ea">
-        <dc:Bounds x="1623" y="386" width="100" height="80" />
+      <bpmndi:BPMNShape id="UserTask_0fn95et_di" bpmnElement="Task_ratenzahlungAnbieten">
+        <dc:Bounds x="1503" y="386" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="UserTask_05quikx_di" bpmnElement="Task_problemBesprechen">
-        <dc:Bounds x="805" y="518" width="100" height="80" />
+        <dc:Bounds x="685" y="518" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_0zjzoos_di" bpmnElement="XOR_kundenwunschAnpassen" isMarkerVisible="true">
-        <dc:Bounds x="963" y="533" width="50" height="50" />
+        <dc:Bounds x="843" y="533" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="950" y="502" width="76" height="27" />
+          <dc:Bounds x="830" y="502" width="76" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_1944dty_di" bpmnElement="EndEvent_buchungAbgebrochen">
-        <dc:Bounds x="1115" y="540" width="36" height="36" />
+      <bpmndi:BPMNShape id="ExclusiveGateway_1vzvrge_di" bpmnElement="XOR_abgelehnt" isMarkerVisible="true">
+        <dc:Bounds x="1651" y="401" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1101" y="583" width="65" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ExclusiveGateway_1vzvrge_di" bpmnElement="XOR_RatenzahlungOk" isMarkerVisible="true">
-        <dc:Bounds x="1771" y="401" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1769" y="382" width="55" height="14" />
+          <dc:Bounds x="1649" y="382" width="56" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_buchungswunschLiegtVor">
-        <dc:Bounds x="366" y="408" width="36" height="36" />
+        <dc:Bounds x="246" y="408" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="341" y="451" width="87" height="27" />
+          <dc:Bounds x="221" y="451" width="87" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="UserTask_0eiy8fn_di" bpmnElement="Task_0gdd21m">
-        <dc:Bounds x="1623" y="226" width="100" height="80" />
+      <bpmndi:BPMNShape id="UserTask_0eiy8fn_di" bpmnElement="Task_sofortzahlungAnbieten">
+        <dc:Bounds x="1503" y="226" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ExclusiveGateway_0jv2kj3_di" bpmnElement="XOR_SofortzahlungOk" isMarkerVisible="true">
-        <dc:Bounds x="1771" y="241" width="50" height="50" />
+      <bpmndi:BPMNShape id="ExclusiveGateway_0jv2kj3_di" bpmnElement="XOR_zugestimmt" isMarkerVisible="true">
+        <dc:Bounds x="1651" y="241" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1765" y="217" width="63" height="14" />
+          <dc:Bounds x="1645" y="217" width="64" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ExclusiveGateway_0louat6_di" bpmnElement="XOR_RatenGenehmigt" isMarkerVisible="true">
-        <dc:Bounds x="1908" y="782" width="50" height="50" />
+      <bpmndi:BPMNShape id="ExclusiveGateway_0louat6_di" bpmnElement="XOR_ratenzahlungGenehmigt" isMarkerVisible="true">
+        <dc:Bounds x="1788" y="782" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1899" y="842" width="68" height="27" />
+          <dc:Bounds x="1779" y="842" width="68" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="UserTask_16ij1i5_di" bpmnElement="Task_0xhtxnq">
-        <dc:Bounds x="1883" y="518" width="100" height="80" />
+      <bpmndi:BPMNShape id="UserTask_16ij1i5_di" bpmnElement="Task_kundenInformieren">
+        <dc:Bounds x="1763" y="518" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="UserTask_0bz1in2_di" bpmnElement="Task_148ls46">
-        <dc:Bounds x="1883" y="386" width="100" height="80" />
+      <bpmndi:BPMNShape id="UserTask_0bz1in2_di" bpmnElement="Task_zahlungsweiseAuswaehlen">
+        <dc:Bounds x="1763" y="386" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_0srjfvg_di" bpmnElement="EndEvent_0srjfvg">
-        <dc:Bounds x="2190" y="340" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2176" y="383" width="65" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="UserTask_0gy7xxk_di" bpmnElement="Task_1n5ions">
-        <dc:Bounds x="2277" y="386" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1vgz8wa_di" bpmnElement="Gateway_0lwg6xz">
-        <dc:Bounds x="2522" y="505" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_12dva4v_di" bpmnElement="Activity_12dva4v">
-        <dc:Bounds x="2607" y="593" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_0xt8jco_di" bpmnElement="Gateway_1ho2gme">
-        <dc:Bounds x="2740" y="505" width="50" height="50" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="UserTask_18npl2a_di" bpmnElement="Task_1ganrfm">
-        <dc:Bounds x="2825" y="490" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_1kflstd_di" bpmnElement="EndEvent_1kflstd">
-        <dc:Bounds x="2980" y="512" width="36" height="36" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="2961" y="555" width="74" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1x58ef7_di" bpmnElement="Task_073sewa">
-        <dc:Bounds x="1746" y="767" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_1x58ef7_di" bpmnElement="Task_ratenzahlungPruefen">
+        <dc:Bounds x="1626" y="767" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Gateway_12g2xw6_di" bpmnElement="XOR_entscheidung" isMarkerVisible="true">
-        <dc:Bounds x="1108" y="401" width="50" height="50" />
+        <dc:Bounds x="988" y="401" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1047" y="442" width="73" height="14" />
+          <dc:Bounds x="927" y="442" width="73" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1vzv0bw_di" bpmnElement="XOR_AuswahlZahlungsweis" isMarkerVisible="true">
-        <dc:Bounds x="2058" y="401" width="50" height="50" />
+      <bpmndi:BPMNShape id="Gateway_1vzv0bw_di" bpmnElement="XOR_ausgewaehlt" isMarkerVisible="true">
+        <dc:Bounds x="1938" y="401" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="2004" y="436" width="62" height="14" />
+          <dc:Bounds x="1884" y="436" width="63" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="UserTask_1drkshf_di" bpmnElement="Task_1kxh7nr">
-        <dc:Bounds x="2033" y="593" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="UserTask_0px80hz_di" bpmnElement="Task_069wcre">
-        <dc:Bounds x="2277" y="593" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Participant_08zldhw_di" bpmnElement="Participant_kunde" isHorizontal="true">
-        <dc:Bounds x="279" y="97" width="2801" height="60" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0ghvr2o_di" bpmnElement="SequenceFlow_0ghvr2o">
-        <di:waypoint x="988" y="583" />
-        <di:waypoint x="988" y="659" />
-        <di:waypoint x="483" y="659" />
-        <di:waypoint x="483" y="466" />
+      <bpmndi:BPMNShape id="EndEvent_1944dty_di" bpmnElement="EndEvent_buchungAbgebrochen">
+        <dc:Bounds x="995" y="540" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="732" y="663" width="12" height="14" />
+          <dc:Bounds x="981" y="583" width="65" height="27" />
         </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0srjfvg_di" bpmnElement="EndEvent_buchungAbgebrochen2">
+        <dc:Bounds x="2070" y="340" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2056" y="383" width="65" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_0v5moj0_di" bpmnElement="Task_kundendatenAufnehmen">
+        <dc:Bounds x="1115" y="386" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_0gy7xxk_di" bpmnElement="Task_sofortzahlungDurchfuehren">
+        <dc:Bounds x="2157" y="386" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_1drkshf_di" bpmnElement="Task_bankdatenEinholen">
+        <dc:Bounds x="1913" y="593" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_0px80hz_di" bpmnElement="Task_lastschrifterlaubnisEinholen">
+        <dc:Bounds x="2157" y="593" width="100" height="80" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_0g8vq52_di" bpmnElement="ExclusiveGateway_0g8vq52" isMarkerVisible="true">
-        <dc:Bounds x="2428" y="505" width="50" height="50" />
+        <dc:Bounds x="2308" y="505" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0b5ref0_di" bpmnElement="SequenceFlow_0b5ref0">
-        <di:waypoint x="2478" y="530" />
-        <di:waypoint x="2522" y="530" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_00vat3d_di" bpmnElement="SequenceFlow_00vat3d">
-        <di:waypoint x="1013" y="558" />
-        <di:waypoint x="1115" y="558" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1027" y="540" width="23" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="SequenceFlow_1omvrja_di" bpmnElement="SequenceFlow_1omvrja">
-        <di:waypoint x="1133" y="451" />
-        <di:waypoint x="1133" y="540" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="1143" y="477" width="66" height="14" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="ServiceTask_0f496nc_di" bpmnElement="Task_18098zo">
-        <dc:Bounds x="2607" y="386" width="100" height="80" />
+      <bpmndi:BPMNShape id="Gateway_1vgz8wa_di" bpmnElement="Gateway_0lwg6xz">
+        <dc:Bounds x="2402" y="505" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ServiceTask_1h8459x_di" bpmnElement="Task_17h47ia">
-        <dc:Bounds x="1384" y="386" width="100" height="80" />
+      <bpmndi:BPMNShape id="Activity_12dva4v_di" bpmnElement="Task_buchungDurchfuehren">
+        <dc:Bounds x="2487" y="593" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0xt8jco_di" bpmnElement="Gateway_1ho2gme">
+        <dc:Bounds x="2620" y="505" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_1kflstd_di" bpmnElement="EndEvent_buchungAbgeschlossen">
+        <dc:Bounds x="2860" y="512" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="2841" y="555" width="74" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="UserTask_18npl2a_di" bpmnElement="Task_unterlagenUebergeben">
+        <dc:Bounds x="2705" y="490" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0f496nc_di" bpmnElement="Task_rechnungGenerieren">
+        <dc:Bounds x="2487" y="386" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_1h8459x_di" bpmnElement="Task_bonitaetPruefen">
+        <dc:Bounds x="1264" y="386" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_1sge9ih_di" bpmnElement="TextAnnotation_1sge9ih">
-        <dc:Bounds x="1384" y="266" width="100" height="96" />
+        <dc:Bounds x="1264" y="266" width="100" height="96" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_1hms1y0_di" bpmnElement="Association_1hms1y0">
-        <di:waypoint x="1434" y="386" />
-        <di:waypoint x="1434" y="362" />
+        <di:waypoint x="1314" y="386" />
+        <di:waypoint x="1314" y="362" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Participant_08zldhw_di" bpmnElement="Participant_kunde" isHorizontal="true">
+        <dc:Bounds x="159" y="97" width="2801" height="60" />
+      </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
 </bpmn:definitions>
