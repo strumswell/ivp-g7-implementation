@@ -1,24 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_0v03cvb" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.0.3">
-  <bpmn:process id="Bonitaet_demo" isExecutable="true">
+  <bpmn:process id="service_tasks_demo" isExecutable="true">
     <bpmn:startEvent id="StartEvent_1">
-      <bpmn:outgoing>SequenceFlow_0ec9x6k</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_0hop3os</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_0ec9x6k" sourceRef="StartEvent_1" targetRef="Task_0epv425" />
-    <bpmn:userTask id="Task_0epv425" name="Daten erheben">
-      <bpmn:extensionElements>
-        <camunda:formData>
-          <camunda:formField id="FormField_191imfb" label="Vorname" type="string" defaultValue="Klaus" />
-          <camunda:formField id="FormField_0hrk5hs" label="Name" type="string" defaultValue="Kleber" />
-          <camunda:formField id="FormField_2n4p8ss" label="IBAN" type="string" defaultValue="DE26500105178418388876" />
-        </camunda:formData>
-      </bpmn:extensionElements>
-      <bpmn:incoming>SequenceFlow_0ec9x6k</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_1owhptq</bpmn:outgoing>
-    </bpmn:userTask>
-    <bpmn:sequenceFlow id="SequenceFlow_1owhptq" sourceRef="Task_0epv425" targetRef="Task_1h3zqkb" />
-    <bpmn:serviceTask id="Task_1h3zqkb" name="Bonität prüfen" camunda:type="external" camunda:topic="bonitaet">
-      <bpmn:incoming>SequenceFlow_1owhptq</bpmn:incoming>
+    <bpmn:serviceTask id="Task_1h3zqkb" name="Bonität prüfen" camunda:type="external" camunda:topic="bonitaetPruefen">
+      <bpmn:incoming>SequenceFlow_1yhrt3z</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1nwxaqo</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="SequenceFlow_1nwxaqo" sourceRef="Task_1h3zqkb" targetRef="Task_1372xst" />
@@ -29,12 +16,40 @@
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1nwxaqo</bpmn:incoming>
-      <bpmn:outgoing>SequenceFlow_0z0fm8c</bpmn:outgoing>
+      <bpmn:outgoing>SequenceFlow_1nxoh4x</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:endEvent id="EndEvent_08flyx8">
-      <bpmn:incoming>SequenceFlow_0z0fm8c</bpmn:incoming>
+    <bpmn:userTask id="UserTask_1u3du3h" name="Kundendaten aufnehmen">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="kA_anrede" label="Anrede" type="enum">
+            <camunda:value id="Herr" name="Herr" />
+            <camunda:value id="Frau" name="Frau" />
+          </camunda:formField>
+          <camunda:formField id="kA_vorname" label="Vorname" type="string" defaultValue="Jens" />
+          <camunda:formField id="kA_nachname" label="Nachname" type="string" defaultValue="Tester" />
+          <camunda:formField id="kA_geburtsdatum" label="Geburtsdatum" type="date" defaultValue="12/12/1984" />
+          <camunda:formField id="kA_eMail" label="E-Mail-Adresse" type="string" defaultValue="tester@testnix.de" />
+          <camunda:formField id="kA_strasse" label="Straße" type="string" defaultValue="xyzstraße" />
+          <camunda:formField id="kA_hausnummer" label="Hausnummer" type="string" defaultValue="13A" />
+          <camunda:formField id="kA_plz" label="PLZ" type="string" defaultValue="23455" />
+          <camunda:formField id="kA_ort" label="Ort" type="string" defaultValue="Ortnix" />
+          <camunda:formField id="kA_umzugLetzten12Monate" label="Sind Sie in den letrzten 12 Monaten umgezogen?" type="boolean" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_0hop3os</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1yhrt3z</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0hop3os" sourceRef="StartEvent_1" targetRef="UserTask_1u3du3h" />
+    <bpmn:sequenceFlow id="SequenceFlow_1yhrt3z" sourceRef="UserTask_1u3du3h" targetRef="Task_1h3zqkb" />
+    <bpmn:sequenceFlow id="SequenceFlow_1nxoh4x" sourceRef="Task_1372xst" targetRef="Task_088x4jm" />
+    <bpmn:serviceTask id="Task_088x4jm" name="Rechnung generieren" camunda:type="external" camunda:topic="rechnungGenerieren">
+      <bpmn:incoming>SequenceFlow_1nxoh4x</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_14sw1co</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="EndEvent_0bmx86l">
+      <bpmn:incoming>SequenceFlow_14sw1co</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="SequenceFlow_0z0fm8c" sourceRef="Task_1372xst" targetRef="EndEvent_08flyx8" />
+    <bpmn:sequenceFlow id="SequenceFlow_14sw1co" sourceRef="Task_088x4jm" targetRef="EndEvent_0bmx86l" />
     <bpmn:textAnnotation id="TextAnnotation_0rsmmes">
       <bpmn:text>Horche auf Topic "bonitaet"</bpmn:text>
     </bpmn:textAnnotation>
@@ -46,21 +61,10 @@ Endet IBAN auf 0-5 -&gt; Bonität da, ansonsten nicht</bpmn:text>
     <bpmn:association id="Association_1ur6phn" sourceRef="Task_1h3zqkb" targetRef="TextAnnotation_1qeks86" />
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
-    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Bonitaet_demo">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="service_tasks_demo">
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
         <dc:Bounds x="173" y="102" width="36" height="36" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0ec9x6k_di" bpmnElement="SequenceFlow_0ec9x6k">
-        <di:waypoint x="209" y="120" />
-        <di:waypoint x="259" y="120" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNShape id="UserTask_1bhvnj5_di" bpmnElement="Task_0epv425">
-        <dc:Bounds x="259" y="80" width="100" height="80" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_1owhptq_di" bpmnElement="SequenceFlow_1owhptq">
-        <di:waypoint x="359" y="120" />
-        <di:waypoint x="409" y="120" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ServiceTask_1lva1lr_di" bpmnElement="Task_1h3zqkb">
         <dc:Bounds x="409" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
@@ -85,12 +89,30 @@ Endet IBAN auf 0-5 -&gt; Bonität da, ansonsten nicht</bpmn:text>
       <bpmndi:BPMNShape id="UserTask_038qupp_di" bpmnElement="Task_1372xst">
         <dc:Bounds x="559" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="EndEvent_08flyx8_di" bpmnElement="EndEvent_08flyx8">
-        <dc:Bounds x="709" y="102" width="36" height="36" />
+      <bpmndi:BPMNShape id="UserTask_1u3du3h_di" bpmnElement="UserTask_1u3du3h">
+        <dc:Bounds x="257" y="80" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="SequenceFlow_0z0fm8c_di" bpmnElement="SequenceFlow_0z0fm8c">
+      <bpmndi:BPMNEdge id="SequenceFlow_0hop3os_di" bpmnElement="SequenceFlow_0hop3os">
+        <di:waypoint x="209" y="120" />
+        <di:waypoint x="257" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1yhrt3z_di" bpmnElement="SequenceFlow_1yhrt3z">
+        <di:waypoint x="357" y="120" />
+        <di:waypoint x="409" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1nxoh4x_di" bpmnElement="SequenceFlow_1nxoh4x">
         <di:waypoint x="659" y="120" />
         <di:waypoint x="709" y="120" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1qxcltb_di" bpmnElement="Task_088x4jm">
+        <dc:Bounds x="709" y="80" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_0bmx86l_di" bpmnElement="EndEvent_0bmx86l">
+        <dc:Bounds x="859" y="102" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_14sw1co_di" bpmnElement="SequenceFlow_14sw1co">
+        <di:waypoint x="809" y="120" />
+        <di:waypoint x="859" y="120" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
