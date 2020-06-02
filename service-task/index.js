@@ -4,6 +4,7 @@
 */
 const { Client, Variables, logger } = require('camunda-external-task-client-js');
 const config = { baseUrl: 'http://bolte.cloud:8080/engine-rest/', use: logger };
+//const config = { baseUrl: 'http://localhost:8080/engine-rest/', use: logger };
 const client = new Client(config);
 
 client.subscribe('bonitaetPruefen', async function({ task, taskService }) {
