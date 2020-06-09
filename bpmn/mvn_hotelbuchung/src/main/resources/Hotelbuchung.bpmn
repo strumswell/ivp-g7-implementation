@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1phg2cc" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.1">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1phg2cc" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.3">
   <bpmn:collaboration id="Collaboration_1fkr7nk">
     <bpmn:participant id="Participant_reisebuero" name="Reisebüro" processRef="Hotelbuchung" />
     <bpmn:participant id="Participant_kunde" name="Kunde" />
@@ -15,14 +15,14 @@
         <bpmn:flowNodeRef>Task_ratenzahlungAnbieten</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_problemBesprechen</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>XOR_kundenwunschAnpassen</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>XOR_abgelehnt</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>XOR_ratenzahlungZugestimmt</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>StartEvent_buchungswunschLiegtVor</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_sofortzahlungAnbieten</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>XOR_zugestimmt</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>XOR_sofortzahlungZugestimmt</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_kundenInformieren</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_zahlungsweiseAuswaehlen</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>XOR_entscheidung</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>XOR_ausgewaehlt</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>XOR_angebotZugestimmt</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>XOR_ZahlungsweiseAusgewaehlt</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_buchungAbgebrochen</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>EndEvent_buchungAbgebrochen2</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Task_kundendatenAufnehmen</bpmn:flowNodeRef>
@@ -143,7 +143,7 @@ bonitaet
       <bpmn:outgoing>SequenceFlow_0ghvr2o</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_00vat3d</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:exclusiveGateway id="XOR_abgelehnt" name="Abgelehnt?">
+    <bpmn:exclusiveGateway id="XOR_ratenzahlungZugestimmt" name="Ratenzahlung zugestimmt?">
       <bpmn:incoming>SequenceFlow_030o4sl</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1h399qt</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0n9prht</bpmn:outgoing>
@@ -168,7 +168,7 @@ bonitaet
       <bpmn:incoming>SequenceFlow_1ar5dxc</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1mz5q3s</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:exclusiveGateway id="XOR_zugestimmt" name="Zugestimmt?">
+    <bpmn:exclusiveGateway id="XOR_sofortzahlungZugestimmt" name="Sofortzahlung zugestimmt?">
       <bpmn:incoming>SequenceFlow_1mz5q3s</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1ib12rw</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_091jvlm</bpmn:outgoing>
@@ -270,13 +270,13 @@ bonitaet
       <bpmn:incoming>SequenceFlow_1h399qt</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_0gmrw1v</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:exclusiveGateway id="XOR_entscheidung" name="Entscheidung?">
+    <bpmn:exclusiveGateway id="XOR_angebotZugestimmt" name="Angebot zugestimmt?">
       <bpmn:incoming>SequenceFlow_1t55m76</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_1o47qu8</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_0ixeut4</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1omvrja</bpmn:outgoing>
     </bpmn:exclusiveGateway>
-    <bpmn:exclusiveGateway id="XOR_ausgewaehlt" name="Ausgewählt?">
+    <bpmn:exclusiveGateway id="XOR_ZahlungsweiseAusgewaehlt" name="Zahlungsweise ausgewählt?">
       <bpmn:incoming>SequenceFlow_0ljyxsw</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_01qftwm</bpmn:outgoing>
       <bpmn:outgoing>SequenceFlow_1hbqqii</bpmn:outgoing>
@@ -467,8 +467,8 @@ bonitaet
       <bpmn:incoming>Flow_0lny208</bpmn:incoming>
       <bpmn:outgoing>SequenceFlow_00j2no7</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="SequenceFlow_1omvrja" name="Abgebrochen" sourceRef="XOR_entscheidung" targetRef="EndEvent_buchungAbgebrochen">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aA_entscheidung == "abbruch"}</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="SequenceFlow_1omvrja" name="Angebot abgebrochen" sourceRef="XOR_angebotZugestimmt" targetRef="EndEvent_buchungAbgebrochen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aA_angebotZugestimmt == "abbruch"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_00vat3d" name="Nein" sourceRef="XOR_kundenwunschAnpassen" targetRef="EndEvent_buchungAbgebrochen">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${pB_entscheidung == false}</bpmn:conditionExpression>
@@ -487,18 +487,18 @@ bonitaet
     <bpmn:sequenceFlow id="SequenceFlow_14bnl9k" sourceRef="StartEvent_buchungswunschLiegtVor" targetRef="Task_kundenwunschErfassen" />
     <bpmn:sequenceFlow id="SequenceFlow_1em2555" sourceRef="Task_verfuegbarkeitenPruefen" targetRef="XOR_kundenwunschVerfuegbar" />
     <bpmn:sequenceFlow id="SequenceFlow_1jkbexr" name="ja" sourceRef="XOR_kundenwunschVerfuegbar" targetRef="Task_angebotAuswaehlen">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${vP_verfuegbar == true}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${vP_kundenwunschVerfuegbar == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_059rxai" name="nein" sourceRef="XOR_kundenwunschVerfuegbar" targetRef="Task_problemBesprechen">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${vP_verfuegbar == false}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${vP_kundenwunschVerfuegbar == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_02kf837" sourceRef="Task_problemBesprechen" targetRef="XOR_kundenwunschAnpassen" />
-    <bpmn:sequenceFlow id="SequenceFlow_1t55m76" sourceRef="Task_angebotAuswaehlen" targetRef="XOR_entscheidung" />
-    <bpmn:sequenceFlow id="SequenceFlow_0ixeut4" name="Änderung angefragt" sourceRef="XOR_entscheidung" targetRef="Task_kundenwunschErfassen">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aA_entscheidung == "aendern"}</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="SequenceFlow_1t55m76" sourceRef="Task_angebotAuswaehlen" targetRef="XOR_angebotZugestimmt" />
+    <bpmn:sequenceFlow id="SequenceFlow_0ixeut4" name="Änderung angefragt" sourceRef="XOR_angebotZugestimmt" targetRef="Task_kundenwunschErfassen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aA_angebotZugestimmt == "aendern"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_1o47qu8" name="Ausgewählt" sourceRef="XOR_entscheidung" targetRef="Task_kundendatenAufnehmen">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aA_entscheidung == "annehmen"}</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="SequenceFlow_1o47qu8" name="Angebot zugestimmt" sourceRef="XOR_angebotZugestimmt" targetRef="Task_kundendatenAufnehmen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aA_angebotZugestimmt == "annehmen"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0dbxllw" sourceRef="Task_kundenwunschErfassen" targetRef="Task_verfuegbarkeitenPruefen" />
     <bpmn:sequenceFlow id="SequenceFlow_1fljneq" sourceRef="Task_kundendatenAufnehmen" targetRef="Task_bonitaetPruefen" />
@@ -506,17 +506,17 @@ bonitaet
     <bpmn:sequenceFlow id="SequenceFlow_1ar5dxc" name="nein" sourceRef="XOR_bonitaetVorhanden" targetRef="Task_sofortzahlungAnbieten">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${bonitaet == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_030o4sl" sourceRef="Task_ratenzahlungAnbieten" targetRef="XOR_abgelehnt" />
+    <bpmn:sequenceFlow id="SequenceFlow_030o4sl" sourceRef="Task_ratenzahlungAnbieten" targetRef="XOR_ratenzahlungZugestimmt" />
     <bpmn:sequenceFlow id="SequenceFlow_0p3k10m" name="ja" sourceRef="XOR_bonitaetVorhanden" targetRef="Task_ratenzahlungAnbieten">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${bonitaet == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_1h399qt" name="nein" sourceRef="XOR_abgelehnt" targetRef="Task_ratenzahlungPruefen">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${rA_ratenzahlung == true}</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="SequenceFlow_1h399qt" name="ja" sourceRef="XOR_ratenzahlungZugestimmt" targetRef="Task_ratenzahlungPruefen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${rA_ratenzahlungZugestimmt == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_0n9prht" name="ja" sourceRef="XOR_abgelehnt" targetRef="Task_zahlungsweiseAuswaehlen">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${rA_ratenzahlung == false}</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="SequenceFlow_0n9prht" name="nein" sourceRef="XOR_ratenzahlungZugestimmt" targetRef="Task_zahlungsweiseAuswaehlen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${rA_ratenzahlungZugestimmt == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_1mz5q3s" sourceRef="Task_sofortzahlungAnbieten" targetRef="XOR_zugestimmt" />
+    <bpmn:sequenceFlow id="SequenceFlow_1mz5q3s" sourceRef="Task_sofortzahlungAnbieten" targetRef="XOR_sofortzahlungZugestimmt" />
     <bpmn:sequenceFlow id="SequenceFlow_09zsf56" name="ja" sourceRef="XOR_ratenzahlungGenehmigt" targetRef="Task_bankdatenEinholen">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${rP_ratenzahlungPruefung == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
@@ -524,22 +524,22 @@ bonitaet
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${rP_ratenzahlungPruefung == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_1mkzrnu" sourceRef="Task_kundenInformieren" targetRef="Task_zahlungsweiseAuswaehlen" />
-    <bpmn:sequenceFlow id="SequenceFlow_0ljyxsw" sourceRef="Task_zahlungsweiseAuswaehlen" targetRef="XOR_ausgewaehlt" />
-    <bpmn:sequenceFlow id="SequenceFlow_1ib12rw" name="ja" sourceRef="XOR_zugestimmt" targetRef="Task_sofortzahlungDurchfuehren">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${sA_sofortzahlung == true}</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="SequenceFlow_0ljyxsw" sourceRef="Task_zahlungsweiseAuswaehlen" targetRef="XOR_ZahlungsweiseAusgewaehlt" />
+    <bpmn:sequenceFlow id="SequenceFlow_1ib12rw" name="ja" sourceRef="XOR_sofortzahlungZugestimmt" targetRef="Task_sofortzahlungDurchfuehren">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${sA_sofortzahlungZugestimmt == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_091jvlm" name="nein" sourceRef="XOR_zugestimmt" targetRef="EndEvent_buchungAbgebrochen2">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${sA_sofortzahlung == false}</bpmn:conditionExpression>
+    <bpmn:sequenceFlow id="SequenceFlow_091jvlm" name="nein" sourceRef="XOR_sofortzahlungZugestimmt" targetRef="EndEvent_buchungAbgebrochen2">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${sA_sofortzahlungZugestimmt == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_11bgnag" name="Abgebrochen" sourceRef="XOR_ausgewaehlt" targetRef="EndEvent_buchungAbgebrochen2">
+    <bpmn:sequenceFlow id="SequenceFlow_11bgnag" name="Abgebrochen" sourceRef="XOR_ZahlungsweiseAusgewaehlt" targetRef="EndEvent_buchungAbgebrochen2">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${zA_auswahlZahlungsweise == "abbruch"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="SequenceFlow_1hbqqii" name="Sofort" sourceRef="XOR_ausgewaehlt" targetRef="Task_sofortzahlungDurchfuehren">
+    <bpmn:sequenceFlow id="SequenceFlow_1hbqqii" name="Sofort" sourceRef="XOR_ZahlungsweiseAusgewaehlt" targetRef="Task_sofortzahlungDurchfuehren">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${zA_auswahlZahlungsweise == "sofort"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_12zwqq9" sourceRef="Task_sofortzahlungDurchfuehren" targetRef="ExclusiveGateway_0g8vq52" />
     <bpmn:sequenceFlow id="SequenceFlow_1ts5ggp" sourceRef="Task_lastschrifterlaubnisEinholen" targetRef="ExclusiveGateway_0g8vq52" />
-    <bpmn:sequenceFlow id="SequenceFlow_01qftwm" name="Auf Ziel" sourceRef="XOR_ausgewaehlt" targetRef="ExclusiveGateway_0g8vq52">
+    <bpmn:sequenceFlow id="SequenceFlow_01qftwm" name="Auf Ziel" sourceRef="XOR_ZahlungsweiseAusgewaehlt" targetRef="ExclusiveGateway_0g8vq52">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${zA_auswahlZahlungsweise == "aufZiel"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0jzxq8u" sourceRef="Task_bankdatenEinholen" targetRef="Task_lastschrifterlaubnisEinholen" />
@@ -654,14 +654,14 @@ bonitaet
         <di:waypoint x="1701" y="426" />
         <di:waypoint x="1763" y="426" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1703" y="405" width="8" height="14" />
+          <dc:Bounds x="1697" y="405" width="21" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1h399qt_di" bpmnElement="SequenceFlow_1h399qt">
         <di:waypoint x="1676" y="451" />
         <di:waypoint x="1676" y="767" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1687" y="458" width="21" height="14" />
+          <dc:Bounds x="1694" y="458" width="8" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0p3k10m_di" bpmnElement="SequenceFlow_0p3k10m">
@@ -699,7 +699,7 @@ bonitaet
         <di:waypoint x="1038" y="426" />
         <di:waypoint x="1115" y="426" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1040" y="408" width="57" height="14" />
+          <dc:Bounds x="1041" y="426" width="57" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0ixeut4_di" bpmnElement="SequenceFlow_0ixeut4">
@@ -798,7 +798,7 @@ bonitaet
         <di:waypoint x="1013" y="451" />
         <di:waypoint x="1013" y="540" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1024" y="477" width="65" height="14" />
+          <dc:Bounds x="1024" y="477" width="65" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="ExclusiveGateway_1249udf_di" bpmnElement="XOR_kundenwunschVerfuegbar" isMarkerVisible="true">
@@ -834,10 +834,10 @@ bonitaet
           <dc:Bounds x="830" y="502" width="76" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ExclusiveGateway_1vzvrge_di" bpmnElement="XOR_abgelehnt" isMarkerVisible="true">
+      <bpmndi:BPMNShape id="ExclusiveGateway_1vzvrge_di" bpmnElement="XOR_ratenzahlungZugestimmt" isMarkerVisible="true">
         <dc:Bounds x="1651" y="401" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1649" y="382" width="56" height="14" />
+          <dc:Bounds x="1644" y="376" width="68" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_buchungswunschLiegtVor">
@@ -849,10 +849,10 @@ bonitaet
       <bpmndi:BPMNShape id="UserTask_0eiy8fn_di" bpmnElement="Task_sofortzahlungAnbieten">
         <dc:Bounds x="1503" y="226" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="ExclusiveGateway_0jv2kj3_di" bpmnElement="XOR_zugestimmt" isMarkerVisible="true">
+      <bpmndi:BPMNShape id="ExclusiveGateway_0jv2kj3_di" bpmnElement="XOR_sofortzahlungZugestimmt" isMarkerVisible="true">
         <dc:Bounds x="1651" y="241" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1645" y="217" width="64" height="14" />
+          <dc:Bounds x="1644" y="217" width="68" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="ExclusiveGateway_0louat6_di" bpmnElement="XOR_ratenzahlungGenehmigt" isMarkerVisible="true">
@@ -870,16 +870,16 @@ bonitaet
       <bpmndi:BPMNShape id="Activity_1x58ef7_di" bpmnElement="Task_ratenzahlungPruefen">
         <dc:Bounds x="1626" y="767" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_12g2xw6_di" bpmnElement="XOR_entscheidung" isMarkerVisible="true">
+      <bpmndi:BPMNShape id="Gateway_12g2xw6_di" bpmnElement="XOR_angebotZugestimmt" isMarkerVisible="true">
         <dc:Bounds x="988" y="401" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="927" y="442" width="73" height="14" />
+          <dc:Bounds x="933" y="442" width="62" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1vzv0bw_di" bpmnElement="XOR_ausgewaehlt" isMarkerVisible="true">
+      <bpmndi:BPMNShape id="Gateway_1vzv0bw_di" bpmnElement="XOR_ZahlungsweiseAusgewaehlt" isMarkerVisible="true">
         <dc:Bounds x="1938" y="401" width="50" height="50" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1884" y="436" width="63" height="14" />
+          <dc:Bounds x="1880" y="436" width="73" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_1944dty_di" bpmnElement="EndEvent_buchungAbgebrochen">
@@ -927,14 +927,14 @@ bonitaet
       <bpmndi:BPMNShape id="UserTask_18npl2a_di" bpmnElement="Task_unterlagenUebergeben">
         <dc:Bounds x="2705" y="490" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="TextAnnotation_1sge9ih_di" bpmnElement="TextAnnotation_1sge9ih">
-        <dc:Bounds x="1264" y="266" width="100" height="96" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0g40iik_di" bpmnElement="Task_bonitaetPruefen">
         <dc:Bounds x="1264" y="386" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0v4n72t_di" bpmnElement="Task_rechnungGenerieren">
         <dc:Bounds x="2487" y="386" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1sge9ih_di" bpmnElement="TextAnnotation_1sge9ih">
+        <dc:Bounds x="1264" y="266" width="100" height="96" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Association_1hms1y0_di" bpmnElement="Association_1hms1y0">
         <di:waypoint x="1314" y="386" />
