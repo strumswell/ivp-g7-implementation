@@ -9,6 +9,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "camunda-external-task-client-js": "^2.0.0"
+    "@rimiti/invoice-it": "^3.5.0",
+    "axios": "^0.19.2",
+    "camunda-external-task-client-js": "^2.0.0",
+    "easyinvoice": "^1.0.91",
+    "is-base64": "^1.1.0",
+    "pdfjs-dist": "^2.4.456",
+    "shortid": "^2.2.15"
   }
 }

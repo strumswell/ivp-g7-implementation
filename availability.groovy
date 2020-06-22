@@ -42,7 +42,7 @@ if (errorRooms.size() == 0) {
 * @return the response of the service api
 */
 def getServiceReponse(route) {
-    def connection = new URL('http://implproz.biz.tm:8007/hotels/berlin'+route).openConnection();
+    def connection = new URL('http://implproz.cbu.net:8007/hotels/berlin'+route).openConnection();
     def response = '';
     if(connection.getResponseCode().equals(200)) {
         response = connection.getInputStream().getText();
