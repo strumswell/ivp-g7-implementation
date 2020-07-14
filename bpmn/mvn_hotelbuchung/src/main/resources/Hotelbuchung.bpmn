@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1phg2cc" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.3">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1phg2cc" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.1">
   <bpmn:collaboration id="Collaboration_1fkr7nk">
     <bpmn:participant id="Participant_reisebuero" name="Reisebüro" processRef="Hotelbuchung" />
     <bpmn:participant id="Participant_kunde" name="Kunde" />
@@ -56,16 +56,11 @@
               <camunda:constraint name="required" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="kE_einzelzimmer" label="Einzelzimmer" type="boolean" defaultValue="true" />
-          <camunda:formField id="kE_doppelzimmer" label="Doppelzimmer" type="boolean" />
-          <camunda:formField id="kE_suite" label="Suite / Appartment" type="boolean" />
-          <camunda:formField id="kE_anzUebernachtungen" label="Anzahl der Übernachtungen*" type="long">
-            <camunda:validation>
-              <camunda:constraint name="required" />
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="kE_reisebeginn" label="Reisebeginn (frühestens) " type="date" />
-          <camunda:formField id="kE_reiseende" label="Reiseende (spätestens)" type="date" />
+          <camunda:formField id="kE_anzEinzelzimmer" label="Anzahl der Einzelzimmer" type="long" defaultValue="0" />
+          <camunda:formField id="kE_anzDoppelzimmer" label="Anzahl der Doppelzimmer" type="long" defaultValue="0" />
+          <camunda:formField id="kE_anzSuite" label="Anzahl der Suiten / Appartments" type="long" defaultValue="0" />
+          <camunda:formField id="kE_anreisedatum" label="Reisebeginn (Datum der Anreise) " type="string" defaultValue="tt.mm.jjjj" />
+          <camunda:formField id="kE_abreisedatum" label="Reiseende (Datum der Abreise)" type="string" defaultValue="tt.mm.jjjj" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_14bnl9k</bpmn:incoming>
@@ -79,12 +74,27 @@
       <bpmn:script>//### DemoScriptJK - Ausgabe Verfügbarkeit###
 
 boolean varVerfuegbar = true			
-execution.setVariable("vP_verfuegbar", varVerfuegbar)
-execution.setVariable("vP_fehlendeZimmer", "5 Zimmer fehlen")
-execution.setVariable("vP_angebot", "single")
+execution.setVariable("vP_verfuegbarkeit", varVerfuegbar)
+//execution.setVariable("vP_fehlendeZimmer", "5 Zimmer fehlen")
+//execution.setVariable("vP_angebot", "single")
+
+
+//Preis je Zimmertyp:
+execution.setVariable("vP_preisEinzelzimmer", 80)
+execution.setVariable("vP_preisDoppelzimmer", 120)
+execution.setVariable("vP_preisSuiten", 250)
+
+//Gesamtpreis:
+execution.setVariable("vP_preisReiseGesamt", 450)
+
+//Für False-Fall:
+execution.setVariable("vP_anzFehlenderEinzelzimmer", 0)
+execution.setVariable("vP_anzFehlenderDoppelzimmerzimmer", 1)
+execution.setVariable("vP_anzFehlenderSuiten", 3)
+
 
 execution.setVariable("bonitaet", true)
-bonitaet
+//bonitaet
 //#Gesamtpreis
 //double einzelpreis = 80
 //execution.setVariable("price", einzelpreis)
@@ -94,7 +104,27 @@ bonitaet
     <bpmn:userTask id="Task_angebotAuswaehlen" name="Angebot auswählen">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="aA_ergebnis" label="Ergebnis der Verfügbarkeitsprüfung anzeigen" type="string" defaultValue="${vP_angebot}">
+          <camunda:formField id="aA_verfuegbarkeit" label="Ergebnis der Verfügbarkeitsprüfung anzeigen" type="string" defaultValue="${vP_verfuegbarkeit}">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="aA_preisEinzelzimmer" label="Preis Einzelzimmer (gesamt):" type="long" defaultValue="${vP_preisEinzelzimmer}">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="aA_preisDoppelzimmer" label="Preis Doppelzimmer (gesamt):" type="long" defaultValue="${vP_preisDoppelzimmer}">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="aA_preisSuiten" label="Preis Suiten / Appartments (gesamt):" type="long" defaultValue="${vP_preisSuiten}">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="aA_preisReise" label="Gesamtpreis der Reise:" type="long" defaultValue="${vP_preisReiseGesamt}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
@@ -122,7 +152,10 @@ bonitaet
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="rA_ratenzahlung" label="Ratenzahlung gewünscht?" type="boolean" />
+          <camunda:formField id="rA_ratenzahlung" label="Ratenzahlung gewünscht?" type="enum">
+            <camunda:value id="true" name="Ja, Ratenzahlung." />
+            <camunda:value id="false" name="Nein, keine Ratenzahlung." />
+          </camunda:formField>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_0p3k10m</bpmn:incoming>
@@ -131,8 +164,41 @@ bonitaet
     <bpmn:userTask id="Task_problemBesprechen" name="Problem besprechen">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="pB_nichtVerfuegbar" label="Ergebnis der Verfügbarkeitsprüfung anzeigen:" type="string" defaultValue="${vP_fehlendeZimmer}" />
-          <camunda:formField id="pB_entscheidung" label="Alternative ok, annehmen?" type="boolean" />
+          <camunda:formField id="pB_verfuegbarkeit" label="Ergebnis der Verfügbarkeitsprüfung anzeigen:" type="string" defaultValue="${vP_verfuegbarkeit}" />
+          <camunda:formField id="pB_anzEinzelzimmer" label="Anzahl der gewünschten Einzelzimmer:" type="string" defaultValue="${kE_anzEinzelzimmer}">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="pB_anzFehlenderEinzelzimmer" label="Fehlende Einzelzimmer:" type="string" defaultValue="${vP_anzFehlenderEinzelzimmer}">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="pB_anzDoppelzimmer" label="Anzahl der gewünschten Doppelzimmer:" type="string" defaultValue="${kE_anzDoppelzimmer}">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="pB_anzFehlenderDoppelzimmer" label="Fehlende Doppelzimmerzimmer:" type="string" defaultValue="${vP_anzFehlenderDoppelzimmerzimmer}">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="pB_anzSuiten" label="Anzahl der gewünschten Suiten/ Appartments:" type="string" defaultValue="${kE_anzSuiten}">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="pB_anzFehlenderSuiten" label="Fehlende Suiten/ Appartments:" type="string" defaultValue="${vP_anzFehlenderSuiten}">
+            <camunda:validation>
+              <camunda:constraint name="readonly" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="pB_entscheidung" label="Entscheidung: Kundenwunsch ändern oder Vorgang abbrechen?" type="enum">
+            <camunda:value id="abbruch" name="Vorgang abbrechen!" />
+            <camunda:value id="aendern" name="Kundenwunsch ändern!" />
+          </camunda:formField>
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_059rxai</bpmn:incoming>
@@ -403,22 +469,12 @@ bonitaet
     <bpmn:userTask id="Task_lastschrifterlaubnisEinholen" name="Lastschrifterlaubnis einholen">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="lE_verfuegbar" label="Ergebnis der Verfügbarkeitsprüfung" type="string" defaultValue="${vP_verfuegbar}">
+          <camunda:formField id="lE_verfuegbar" label="Ergebnis der Verfügbarkeitsprüfung" type="string" defaultValue="${vP_verfuegbarkeit}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="lE_raumtyp" label="Verfügbares Zimmer" type="string" defaultValue="*irgendein Raumtyp*">
-            <camunda:validation>
-              <camunda:constraint name="readonly" />
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="lE_preisProNacht" label="Preis pro Nacht" type="long" defaultValue="165245">
-            <camunda:validation>
-              <camunda:constraint name="readonly" />
-            </camunda:validation>
-          </camunda:formField>
-          <camunda:formField id="lE_gesamtpreis" label="Gesamtpreis aller Übernachtungen" type="long" defaultValue="100000000">
+          <camunda:formField id="lE_gesamtpreis" label="Gesamtpreis der Reise" type="long" defaultValue="${vP_preisReiseGesamt}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
@@ -468,10 +524,10 @@ bonitaet
       <bpmn:outgoing>SequenceFlow_00j2no7</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="SequenceFlow_1omvrja" name="Angebot abgebrochen" sourceRef="XOR_angebotZugestimmt" targetRef="EndEvent_buchungAbgebrochen">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aA_angebotZugestimmt == "abbruch"}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aA_entscheidung == "abbruch"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_00vat3d" name="Nein" sourceRef="XOR_kundenwunschAnpassen" targetRef="EndEvent_buchungAbgebrochen">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${pB_entscheidung == false}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${pB_entscheidung == abbruch}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0b5ref0" sourceRef="ExclusiveGateway_0g8vq52" targetRef="Gateway_0lwg6xz" />
     <bpmn:sequenceFlow id="SequenceFlow_00j2no7" sourceRef="Task_unterlagenUebergeben" targetRef="EndEvent_buchungAbgeschlossen" />
@@ -481,24 +537,24 @@ bonitaet
     <bpmn:sequenceFlow id="Flow_00asvxw" sourceRef="Gateway_0lwg6xz" targetRef="Task_buchungDurchfuehren" />
     <bpmn:sequenceFlow id="Flow_0zty9hg" sourceRef="Gateway_0lwg6xz" targetRef="Task_rechnungGenerieren" />
     <bpmn:sequenceFlow id="SequenceFlow_0ghvr2o" name="Ja" sourceRef="XOR_kundenwunschAnpassen" targetRef="Task_kundenwunschErfassen">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${pB_entscheidung == true}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${pB_entscheidung == aendern}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0gmrw1v" sourceRef="Task_ratenzahlungPruefen" targetRef="XOR_ratenzahlungGenehmigt" />
     <bpmn:sequenceFlow id="SequenceFlow_14bnl9k" sourceRef="StartEvent_buchungswunschLiegtVor" targetRef="Task_kundenwunschErfassen" />
     <bpmn:sequenceFlow id="SequenceFlow_1em2555" sourceRef="Task_verfuegbarkeitenPruefen" targetRef="XOR_kundenwunschVerfuegbar" />
     <bpmn:sequenceFlow id="SequenceFlow_1jkbexr" name="ja" sourceRef="XOR_kundenwunschVerfuegbar" targetRef="Task_angebotAuswaehlen">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${vP_kundenwunschVerfuegbar == true}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${vP_verfuegbarkeit == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_059rxai" name="nein" sourceRef="XOR_kundenwunschVerfuegbar" targetRef="Task_problemBesprechen">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${vP_kundenwunschVerfuegbar == false}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${vP_verfuegbarkeit == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_02kf837" sourceRef="Task_problemBesprechen" targetRef="XOR_kundenwunschAnpassen" />
     <bpmn:sequenceFlow id="SequenceFlow_1t55m76" sourceRef="Task_angebotAuswaehlen" targetRef="XOR_angebotZugestimmt" />
     <bpmn:sequenceFlow id="SequenceFlow_0ixeut4" name="Änderung angefragt" sourceRef="XOR_angebotZugestimmt" targetRef="Task_kundenwunschErfassen">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aA_angebotZugestimmt == "aendern"}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aA_entscheidung == "aendern"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_1o47qu8" name="Angebot zugestimmt" sourceRef="XOR_angebotZugestimmt" targetRef="Task_kundendatenAufnehmen">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aA_angebotZugestimmt == "annehmen"}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${aA_entscheidung == "annehmen"}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0dbxllw" sourceRef="Task_kundenwunschErfassen" targetRef="Task_verfuegbarkeitenPruefen" />
     <bpmn:sequenceFlow id="SequenceFlow_1fljneq" sourceRef="Task_kundendatenAufnehmen" targetRef="Task_bonitaetPruefen" />
@@ -511,10 +567,10 @@ bonitaet
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${bonitaet == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_1h399qt" name="ja" sourceRef="XOR_ratenzahlungZugestimmt" targetRef="Task_ratenzahlungPruefen">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${rA_ratenzahlungZugestimmt == true}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${rA_ratenzahlung == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_0n9prht" name="nein" sourceRef="XOR_ratenzahlungZugestimmt" targetRef="Task_zahlungsweiseAuswaehlen">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${rA_ratenzahlungZugestimmt == false}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${rA_ratenzahlung == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_1mz5q3s" sourceRef="Task_sofortzahlungAnbieten" targetRef="XOR_sofortzahlungZugestimmt" />
     <bpmn:sequenceFlow id="SequenceFlow_09zsf56" name="ja" sourceRef="XOR_ratenzahlungGenehmigt" targetRef="Task_bankdatenEinholen">
@@ -526,10 +582,10 @@ bonitaet
     <bpmn:sequenceFlow id="SequenceFlow_1mkzrnu" sourceRef="Task_kundenInformieren" targetRef="Task_zahlungsweiseAuswaehlen" />
     <bpmn:sequenceFlow id="SequenceFlow_0ljyxsw" sourceRef="Task_zahlungsweiseAuswaehlen" targetRef="XOR_ZahlungsweiseAusgewaehlt" />
     <bpmn:sequenceFlow id="SequenceFlow_1ib12rw" name="ja" sourceRef="XOR_sofortzahlungZugestimmt" targetRef="Task_sofortzahlungDurchfuehren">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${sA_sofortzahlungZugestimmt == true}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${sA_sofortzahlung == true}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_091jvlm" name="nein" sourceRef="XOR_sofortzahlungZugestimmt" targetRef="EndEvent_buchungAbgebrochen2">
-      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${sA_sofortzahlungZugestimmt == false}</bpmn:conditionExpression>
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${sA_sofortzahlung == false}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="SequenceFlow_11bgnag" name="Abgebrochen" sourceRef="XOR_ZahlungsweiseAusgewaehlt" targetRef="EndEvent_buchungAbgebrochen2">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${zA_auswahlZahlungsweise == "abbruch"}</bpmn:conditionExpression>
@@ -654,14 +710,14 @@ bonitaet
         <di:waypoint x="1701" y="426" />
         <di:waypoint x="1763" y="426" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1697" y="405" width="21" height="14" />
+          <dc:Bounds x="1719" y="405" width="21" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_1h399qt_di" bpmnElement="SequenceFlow_1h399qt">
         <di:waypoint x="1676" y="451" />
         <di:waypoint x="1676" y="767" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1694" y="458" width="8" height="14" />
+          <dc:Bounds x="1686" y="473" width="8" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="SequenceFlow_0p3k10m_di" bpmnElement="SequenceFlow_0p3k10m">
