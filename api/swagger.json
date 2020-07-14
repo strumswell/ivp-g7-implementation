@@ -1,0 +1,255 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Try our project on this site.",
+    "version": "1.0.0",
+    "title": "Hotelbuchung"
+  },
+  "host": "localhost:8007",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "hotels",
+      "description": "All hotels"
+    },
+    {
+      "name": "rooms",
+      "description": "All rooms"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/hotels": {
+      "get": {
+        "tags": [
+          "hotels"
+        ],
+        "summary": "Get all hotelid's",
+        "description": "Get all hotelid's",
+        "operationId": "gethotelid",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Error"
+          }
+        }
+      }
+    },
+    "/hotels/{hotelid}": {
+      "get": {
+        "tags": [
+          "hotels"
+        ],
+        "summary": "Get a specific hotel",
+        "description": "Get a specific hotel",
+        "operationId": "getSpecificHotel",
+        "parameters": [
+          {
+            "name": "hotelid",
+            "in": "path",
+            "description": "id of hotel to return his rooms",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Error"
+          }
+        }
+      }
+    },
+    "/hotels/{hotelid}/rooms": {
+      "get": {
+        "tags": [
+          "rooms"
+        ],
+        "summary": "Get all rooms for specific hotel",
+        "description": "Get all rooms for specific hotel",
+        "operationId": "getRoomsOfhotel",
+        "parameters": [
+          {
+            "name": "hotelid",
+            "in": "path",
+            "description": "id of hotel to return his rooms",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Error"
+          }
+        }
+      }
+    },
+    "/hotels/{hotelid}/rooms/{roomid}": {
+      "get": {
+        "tags": [
+          "rooms"
+        ],
+        "summary": "Get all rooms for specific hotel",
+        "description": "Get a specific rooms for specific hotel",
+        "operationId": "getSpecificRoomsOfHotel",
+        "parameters": [
+          {
+            "name": "hotelid",
+            "in": "path",
+            "description": "id of hotel to return his rooms",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "roomid",
+            "in": "path",
+            "description": "id of room to return his properties",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "rooms"
+        ],
+        "summary": "Update rooms guest and status",
+        "description": "Update only guest and status",
+        "operationId": "updateRoomsGuestAndStatus",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "hotelid",
+            "in": "path",
+            "description": "id of hotel with rooms to update",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "roomid",
+            "in": "path",
+            "description": "id of rooms to update Status and Guest",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "body",
+            "name": "rooms",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/rooms"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Error"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "hotels": {
+      "type": "object",
+      "properties": {
+        "hotelid": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string",
+          "example": "Anaroc Hotels"
+        },
+        "location": {
+          "type": "string",
+          "example": "Berlin"
+        },
+        "rooms": {
+          "$ref": "#/definitions/rooms"
+        }
+      },
+      "required": [
+        "hotelid",
+        "name",
+        "location",
+        "rooms"
+      ],
+      "xml": {
+        "name": "hotels"
+      }
+    },
+    "rooms": {
+      "type": "object",
+      "properties": {
+        "roomid": {
+          "type": "string",
+          "example": "100"
+        },
+        "roomtype": {
+          "type": "string",
+          "example": "single"
+        },
+        "price": {
+          "type": "number",
+          "example": 80
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "free",
+            "occupied",
+            "locked"
+          ],
+          "example": "free"
+        },
+        "guest": {
+          "type": "string",
+          "example": ""
+        },
+        "bookedfrom": {
+          "type": "string",
+          "example": ""
+        },
+        "bookeduntil": {
+          "type": "string",
+          "example": ""
+        }
+      },
+      "required": [
+        "roomid",
+        "roomtype",
+        "price",
+        "status"
+      ],
+      "xml": {
+        "name": "rooms"
+      }
+    }
+  },
+  "externalDocs": {
+    "description": "GitHub Repository of ivp-g7-implementation",
+    "url": "https://github.com/strumswell/ivp-g7-implementation"
+  }
+}
