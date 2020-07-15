@@ -1,5 +1,8 @@
 /**
-*	Author: Prof. Dr. Jander
+*	Author: 
+*     - Prof. Dr. Jander
+*     - Jonas Teubner
+*     - Philipp Bolte
 */
 let port = 8007;
 let express = require('express');
@@ -94,12 +97,20 @@ app.get('/hotels/cities', (req, res) => {
 
 // Alle Hotels in einer Städte abfragen
 app.get('/hotels/:stadt', (req, res) => {
-	res.send(Object.keys(hotels[req.params.stadt]));
+	// Deep clone object
+	let hotelInfos = JSON.parse(JSON.stringify(hotels[req.params.stadt]));
+	// Remove rooms
+	Object.keys(hotelInfos).forEach(hotelID => {
+		delete hotelInfos[hotelID].rooms;
+	});
+	res.send(hotelInfos);
 });
 
 // Ein sepzifisches Hotel in einer bestimmten Stadt abfragen
 app.get('/hotels/:stadt/:hotelid', (req, res) => {
-	let hotelInfos = hotels[req.params.stadt][req.params.hotelid];
+	// Deep clone object
+	let hotelInfos = JSON.parse(JSON.stringify(hotels[req.params.stadt][req.params.hotelid]));
+	// Remove rooms
 	delete hotelInfos.rooms;
 	res.send(hotelInfos);
 });
@@ -118,19 +129,22 @@ app.get('/hotels/:stadt/:hotelid/rooms/:roomid', (req, res) => {
 app.put('/hotels/:stadt/:hotelid/rooms/:roomid', (req, res) => {
 	let change = req.body;
 	let room = hotels[req.params.stadt][req.params.hotelid]['rooms'][req.params.roomid];
-
 	switch(change.status) {
 		case "free":
 			room.guest = "none";
 			room.status = "free";
 			res.sendStatus(200);
 			break;
-		case "occupied" && change.guest != undefined:
-			room.guest = change.guest;
-			room.status = "occupied";
-			room.bookedfrom = change.bookedfrom;
-			room.bookeduntil = change.bookeduntil;
-			res.sendStatus(200);
+		case "occupied":
+			if (change.guest != undefined) {
+				room.guest = change.guest;
+				room.status = "occupied";
+				room.bookedfrom = change.bookedfrom;
+				room.bookeduntil = change.bookeduntil;
+				res.sendStatus(200);
+				break;
+			}
+			res.sendStatus(400);
 			break;
 		case "locked":
 			room.status = "locked";
@@ -142,6 +156,14 @@ app.put('/hotels/:stadt/:hotelid/rooms/:roomid', (req, res) => {
 			res.sendStatus(400);
 			return;
 	}
+});
+
+app.get('/debug', (req, res) => {
+	res.send(hotels);
+});
+
+app.get('/debug/:stadt', (req, res) => {
+	res.send(hotels[req.params.stadt]);
 });
 
 let server = app.listen(port, function () {
