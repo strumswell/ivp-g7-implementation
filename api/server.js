@@ -3,8 +3,10 @@
 */
 let port = 8007;
 let express = require('express');
+var cors = require('cors');
 let app = express();
 let bodyParser = require('body-parser');
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -13,67 +15,109 @@ var swaggerUi = require('swagger-ui-express'),
     swaggerDocument = require('./swagger.json');
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-let hotels = {};
-for (let h = 1; h <3; ++h){
-	let generatedRooms = {};
-	for (let i = 100; i < 120; ++i) {
-		generatedRooms[i] = {
-			roomtype : "single",
-			price : 80,
-			guest : "none",
-			status : "free",
-			bookedfrom : "",
-			bookeduntil : ""
+// generiere Hotels
+let staedte = ["Berlin", "Hamburg"];
+let hotels = {"Berlin": {}, "Hamburg": {}};
+staedte.forEach(stadt => {
+	for (let h = 1; h < 3; ++h){
+		// generiere Räume für Hotels
+		let generatedRooms = {};
+		for (let i = 100; i < 120; ++i) {
+			generatedRooms[i] = {
+				roomtype : "single",
+				price : 80,
+				guest : "none",
+				status : "free",
+				bookedfrom : "",
+				bookeduntil : ""
+			}
+		}
+		for (let i = 200; i < 210; ++i) {
+			generatedRooms[i] = {
+				roomtype : "double",
+				price : 120,
+				guest : "none",
+				status : "free",
+				bookedfrom : "",
+				bookeduntil : ""
+			}
+		}
+		for (let i = 300; i < 305; ++i) {
+			generatedRooms[i] = {
+				roomtype : "suite",
+				price : 250,
+				guest : "none",
+				status : "free",
+				bookedfrom : "",
+				bookeduntil : ""
+			}
+		}
+		
+		hotels[stadt]['b3876198-1a1b-4ddc-9c06-50bc05620d' + h + stadt.charAt(0).toLowerCase()] = {
+			name : 'Anaroc ' + stadt + " " + h, 
+			location : stadt,
+			rooms : generatedRooms
 		}
 	}
-	for (let i = 200; i < 210; ++i) {
-		generatedRooms[i] = {
-			roomtype : "double",
-			price : 120,
-			guest : "none",
-			status : "free",
-			bookedfrom : "",
-			bookeduntil : ""
+});
+
+// console.log(hotels["Hamburg"])
+// hotels/:stadt -> Alle Hotels zurückgeben
+// hotels/:stadt/:hotelid -> Spezifisches Hotels aus der Stadt
+// hotels/:stadt/:hotelid/rooms -> Räume aus spezifisches Hotels aus der Stadt
+// hotels/:stadt/:hotelid/rooms/:roomid -> Räume aus spezifisches Hotels aus der Stadt
+/**
+hotels = {
+	Berlin : {
+		uuid1: {
+	
+		}, 
+		uuid2: {
+	
 		}
-	}
-	for (let i = 300; i < 305; ++i) {
-		generatedRooms[i] = {
-			roomtype : "suite",
-			price : 250,
-			guest : "none",
-			status : "free",
-			bookedfrom : "",
-			bookeduntil : ""
+	},
+	Hamburg : {
+		uuid1: {
+	
+		}, 
+		uuid2: {
+	
 		}
-	}
-	hotels['b3876198-1a1b-4ddc-9c06-50bc05620d9' + h] = {
-		name : 'Anaroc ' + h,
-		location : 'Berlin',
-		rooms : generatedRooms
 	}
 }
+*/
 
-app.get('/hotels', (req, res) => {
+// Alle Städte abfrage
+app.get('/hotels/cities', (req, res) => {
 	res.send(Object.keys(hotels));
 });
 
-app.get('/hotels/:hotelid', (req, res) => {
-	let hotelInfos = hotels[req.params.hotelid];
+// Alle Hotels in einer Städte abfragen
+app.get('/hotels/:stadt', (req, res) => {
+	res.send(Object.keys(hotels[req.params.stadt]));
+});
+
+// Ein sepzifisches Hotel in einer bestimmten Stadt abfragen
+app.get('/hotels/:stadt/:hotelid', (req, res) => {
+	let hotelInfos = hotels[req.params.stadt][req.params.hotelid];
 	delete hotelInfos.rooms;
 	res.send(hotelInfos);
 });
 
-app.get('/hotels/:hotelid/rooms', (req, res) => {
-	res.send(hotels[req.params.hotelid]['rooms']);
+// Alle Räume eines Hotels abfragen
+app.get('/hotels/:stadt/:hotelid/rooms', (req, res) => {
+	res.send(hotels[req.params.stadt][req.params.hotelid]['rooms']);
 });
 
-app.get('/hotels/:hotelid/rooms/:roomid', (req, res) => {
-	res.send(hotels[req.params.hotelid]['rooms'][req.params.roomid]);
+// Spezifischen Raum abfragen
+app.get('/hotels/:stadt/:hotelid/rooms/:roomid', (req, res) => {
+	res.send(hotels[req.params.stadt][req.params.hotelid]['rooms'][req.params.roomid]);
 });
 
-app.put('/hotels/:hotelid/rooms/:roomid', (req, res) => {
+// Attribute eines spezifischen Raums updaten
+app.put('/hotels/:stadt/:hotelid/rooms/:roomid', (req, res) => {
 	let change = req.body;
-	let room = hotels[req.params.hotelid]['rooms'][req.params.roomid];
+	let room = hotels[req.params.stadt][req.params.hotelid]['rooms'][req.params.roomid];
 
 	switch(change.status) {
 		case "free":

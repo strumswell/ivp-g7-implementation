@@ -9,6 +9,10 @@
   "basePath": "/",
   "tags": [
     {
+      "name": "city",
+      "description": "All cities"
+    },
+    {
       "name": "hotels",
       "description": "All hotels"
     },
@@ -21,14 +25,14 @@
     "http"
   ],
   "paths": {
-    "/hotels": {
+    "/hotels/cities": {
       "get": {
         "tags": [
-          "hotels"
+          "city"
         ],
-        "summary": "Get all hotelid's",
-        "description": "Get all hotelid's",
-        "operationId": "gethotelid",
+        "summary": "Get all cities",
+        "description": "Get all cities",
+        "operationId": "getcities",
         "responses": {
           "200": {
             "description": "OK"
@@ -39,19 +43,19 @@
         }
       }
     },
-    "/hotels/{hotelid}": {
+    "/hotels/{city}": {
       "get": {
         "tags": [
           "hotels"
         ],
-        "summary": "Get a specific hotel",
-        "description": "Get a specific hotel",
-        "operationId": "getSpecificHotel",
+        "summary": "Get all hotels in city",
+        "description": "Get all hotels in city",
+        "operationId": "gethotelsincity",
         "parameters": [
           {
-            "name": "hotelid",
+            "name": "city",
             "in": "path",
-            "description": "id of hotel to return his rooms",
+            "description": "city name",
             "required": true,
             "type": "string"
           }
@@ -66,7 +70,41 @@
         }
       }
     },
-    "/hotels/{hotelid}/rooms": {
+    "/hotels/{city}/{hotelid}": {
+      "get": {
+        "tags": [
+          "hotels"
+        ],
+        "summary": "Get a specific hotel in specific city",
+        "description": "Get a specific hotel in specific city",
+        "operationId": "getSpecificHotelinCity",
+        "parameters": [
+          {
+            "name": "city",
+            "in": "path",
+            "description": "city name",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "hotelid",
+            "in": "path",
+            "description": "id of hotel in city to return its rooms",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Error"
+          }
+        }
+      }
+    },
+    "/hotels/{city}/{hotelid}/rooms": {
       "get": {
         "tags": [
           "rooms"
@@ -76,6 +114,13 @@
         "operationId": "getRoomsOfhotel",
         "parameters": [
           {
+            "name": "city",
+            "in": "path",
+            "description": "city name",
+            "required": true,
+            "type": "string"
+          },
+          {
             "name": "hotelid",
             "in": "path",
             "description": "id of hotel to return his rooms",
@@ -93,7 +138,7 @@
         }
       }
     },
-    "/hotels/{hotelid}/rooms/{roomid}": {
+    "/hotels/{city}/{hotelid}/rooms/{roomid}": {
       "get": {
         "tags": [
           "rooms"
@@ -102,6 +147,13 @@
         "description": "Get a specific rooms for specific hotel",
         "operationId": "getSpecificRoomsOfHotel",
         "parameters": [
+          {
+            "name": "city",
+            "in": "path",
+            "description": "city name",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "hotelid",
             "in": "path",
@@ -137,6 +189,13 @@
           "application/json"
         ],
         "parameters": [
+          {
+            "name": "city",
+            "in": "path",
+            "description": "city name",
+            "required": true,
+            "type": "string"
+          },
           {
             "name": "hotelid",
             "in": "path",
