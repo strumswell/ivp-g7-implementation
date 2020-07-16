@@ -75,7 +75,7 @@ app.get('/booking/:bookingnr', (req, res) => {
 		Object.keys(hotels[stadt]).forEach(hotel => {
 			rooms = [];
 			Object.keys(hotels[stadt][hotel]['rooms']).forEach(room => {
-				if (hotels[stadt][hotel]['rooms'][room]['bookingnr'] == req.params.buchungsnummer) {
+				if (hotels[stadt][hotel]['rooms'][room]['bookingnr'] == req.params.bookingnr) {
 					rooms.push(room);	
 				}
 			});
