@@ -3,7 +3,7 @@
 */
 require('dotenv').config()
 const { Client, Variables, logger } = require('camunda-external-task-client-js');
-const config = { baseUrl: 'http://bolte.cloud:8080/engine-rest/', use: logger };
+const config = { baseUrl: 'http://bolte.cloud:8080/engine-rest', use: logger };
 //const config = { baseUrl: 'http://localhost:8080/engine-rest/', use: logger };
 const client = new Client(config);
 const fs = require('fs')
@@ -39,7 +39,7 @@ client.subscribe('bonitaetPruefen', async function({ task, taskService }) {
 })
 
 client.subscribe('rechnungGenerieren', async function({ task, taskService }) {
-    let id = task.variables.get('bP_buchungsnummer')
+    let id = task.variables.get('bP_buchungsnummer');
     invoiceIt.configure({
         global: {
           logo: 'https://i.imgur.com/CkqXDlj.png',
@@ -75,17 +75,17 @@ client.subscribe('rechnungGenerieren', async function({ task, taskService }) {
         website: 'anoroc.de'
     };
 
-    let requestedSingleRooms = execution.getVariable("kE_anzEinzelzimmer");
-    let requestedDoubleRooms = execution.getVariable("kE_anzDoppelzimmer");
-    let requestedSuiteRooms = execution.getVariable("kE_anzSuite");
-    let priceSingleRoom = execution.getVariable("vP_preisEinzelzimmer");
-    let priceDoubleRoom = execution.getVariable("vP_preisDoppelzimmer");
-    let priceSuiteRoom = execution.getVariable("vP_preisSuiten");
+    let requestedSingleRooms = Number(task.variables.get("kE_anzEinzelzimmer"));
+    let requestedDoubleRooms = Number(task.variables.get("kE_anzDoppelzimmer"));
+    let requestedSuiteRooms = Number(task.variables.get("kE_anzSuite"));
+    let priceSingleRoom = Number(task.variables.get("vP_preisEinzelzimmer"));
+    let priceDoubleRoom = Number(task.variables.get("vP_preisDoppelzimmer"));
+    let priceSuiteRoom = Number(task.variables.get("vP_preisSuiten"));
     let rooms = [];
     requestedSingleRooms > 0 && rooms.push({description: 'Einzelzimmer', tax: 19, price: priceSingleRoom, qt: requestedSingleRooms});
     requestedDoubleRooms > 0 && rooms.push({description: 'Doppelzimmer', tax: 19, price: priceDoubleRoom, qt: requestedDoubleRooms});
     requestedSuiteRooms > 0 && rooms.push({description: 'Suite', tax: 19, price: priceSuiteRoom, qt: requestedSuiteRooms});
-    
+
     const invoice = invoiceIt.create(recipient, emitter);
     invoice.article = rooms;
     invoice.getInvoice().toPDF().toFile('./invoice_'+id+'.pdf').then(() => {
