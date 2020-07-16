@@ -1,21 +1,23 @@
 import groovy.json.JsonSlurper
 
-// Prepare
-def rooms = getServiceReponse('/rooms')
-def availableRoomsByType = [:]
-def fittingRooms = []
-def errorRooms = [:]
-def price = 0
-
 // Input
 def guests = execution.getVariable("kE_anzPersonen")
-def arrival = Date.parse("dd.mm.yyyy", execution.getVariable("kE_anreisedatum"))
-def depart = Date.parse("dd.mm.yyyy", execution.getVariable("kE_abreisedatum"))
+def arrival = Date.parse("dd.MM.yyyy", execution.getVariable("kE_anreisedatum"))
+def depart = Date.parse("dd.MM.yyyy", execution.getVariable("kE_abreisedatum"))
+def city = execution.getVariable("kE_stadt")
+def hotelid = execution.getVariable("kE_hotelid")
 def nights = depart - arrival
 
 enum RoomTypes {
     SINGLE, DOUBLE, SUITE
 }
+
+// Prepare
+def rooms = getServiceReponse(city+'/'+hotelid+'/rooms')
+def availableRoomsByType = [:]
+def fittingRooms = []
+def errorRooms = [:]
+def price = 0
 
 // Look for fitting rooms
 for (type in RoomTypes) {
@@ -25,12 +27,19 @@ for (type in RoomTypes) {
     availableRoomsByType[type] = typeAvailableRooms
     // Ok, how many do we need from this type
     typeAmount = getRequestedRoomAmount(type)
+    // Choose rooms for offer
     if (typeAvailableRooms.size() >= typeAmount) {
         for (i = 0; i < typeAmount; i++) {
-            fittingRooms.add(typeAvailableRooms[i].get('number'))
-            price += nights * typeAvailableRooms[i].get('price')
+            def roomNumber = typeAvailableRooms[i].get('number')
+            def roomPrice = typeAvailableRooms[i].get('price')
+            // Lock rooms
+            updateRoomInfo(city+'/'+hotelid+'/rooms/'+roomNumber, '{"status": "locked", "bookedfrom": "'+arrival.getDateString()+'", "bookeduntil": "'+depart.getDateString()+'"}')
+            // Save room number and calc price
+            fittingRooms.add(roomNumber)
+            price += nights * roomPrice
         }
     } else {
+        // Note how many are missing from this type
         errorRooms[type] = (typeAmount - typeAvailableRooms.size())
     }
 }
@@ -40,7 +49,6 @@ if (errorRooms.size() == 0) {
     def priceSingle = (availableRoomsByType[RoomTypes.SINGLE][0] != null) ? availableRoomsByType[RoomTypes.SINGLE][0]['price'] : 0
     def priceDouble = (availableRoomsByType[RoomTypes.DOUBLE][0] != null) ? availableRoomsByType[RoomTypes.DOUBLE][0]['price'] : 0
     def priceSuite = (availableRoomsByType[RoomTypes.SUITE][0] != null) ? availableRoomsByType[RoomTypes.SUITE][0]['price'] : 0
-
     execution.setVariable("vP_verfuegbarkeit", true)
     execution.setVariable("vP_preisEinzelzimmer", priceSingle)
     execution.setVariable("vP_preisDoppelzimmer", priceDouble)
@@ -51,7 +59,6 @@ if (errorRooms.size() == 0) {
     def missingSingle = (errorRooms[RoomTypes.SINGLE] != null) ? errorRooms[RoomTypes.SINGLE] : 0
     def missingDouble = (errorRooms[RoomTypes.DOUBLE] != null) ? errorRooms[RoomTypes.DOUBLE] : 0
     def missingSuite = (errorRooms[RoomTypes.SUITE] != null) ? errorRooms[RoomTypes.SUITE] : 0
-   
     execution.setVariable("vP_verfuegbarkeit", false)
     execution.setVariable("vP_anzFehlenderEinzelzimmer", missingSingle)
     execution.setVariable("vP_anzFehlenderDoppelzimmerzimmer", missingDouble)
@@ -64,13 +71,29 @@ if (errorRooms.size() == 0) {
 * @return the response of the service api
 */
 def getServiceReponse(route) {
-    def connection = new URL('http://implproz.cbu.net:8007/hotels/berlin'+route).openConnection();
+    def connection = new URL('http://implproz.cbu.net:8007/hotels/'+route).openConnection();
     def response = '';
     if(connection.getResponseCode().equals(200)) {
-        response = connection.getInputStream().getText();
+        response = connection.getInputStream().getText()
     }
-    return new JsonSlurper().parseText(response);
+    return new JsonSlurper().parseText(response)
 } 
+/**
+* Change a room's infos
+* @param route the route to call
+* @param data json of data to change
+*/
+def updateRoomInfo(route, data) {
+    def connection = new URL('http://implproz.cbu.net:8007/hotels/'+route).openConnection();
+    connection.setRequestMethod("PUT")
+    connection.setDoOutput(true)
+    connection.setRequestProperty("Content-Type", "application/json")
+    connection.getOutputStream().write(data.getBytes("UTF-8"))
+    if(connection.getResponseCode().equals(200)) {
+        println(connection.getInputStream().getText())
+    }
+    return
+}
 
 // TODO: Include a date check! Might have to adjust API
 /**
@@ -81,13 +104,10 @@ def getServiceReponse(route) {
 */
 def getFreeRooms(rooms, type) {
     freeRooms = []
-    for (roomNumber in rooms) {
-        def room = getServiceReponse('/rooms/'+roomNumber)
-        if (room.get('status') == 'free') {
-            if (room.get('roomtype') == type) {
-                room['number'] = roomNumber 
-                freeRooms.add(room)
-            } 
+    rooms.each { roomNumber, roomInfo -> 
+        if (roomInfo.status == 'free' && roomInfo.roomtype == type) {
+            roomInfo['number'] = roomNumber
+            freeRooms.add(roomInfo)
         }
     }
     return freeRooms

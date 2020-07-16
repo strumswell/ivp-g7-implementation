@@ -133,6 +133,8 @@ app.put('/hotels/:stadt/:hotelid/rooms/:roomid', (req, res) => {
 		case "free":
 			room.guest = "none";
 			room.status = "free";
+			room.bookedfrom = "";
+			room.bookeduntil = "";
 			res.sendStatus(200);
 			break;
 		case "occupied":
