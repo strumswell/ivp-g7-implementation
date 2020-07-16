@@ -1,7 +1,7 @@
 /*
-* Very weird logic. Just for testing purposes
 * https://github.com/camunda/camunda-external-task-client-js
 */
+require('dotenv').config()
 const { Client, Variables, logger } = require('camunda-external-task-client-js');
 const config = { baseUrl: 'http://bolte.cloud:8080/engine-rest/', use: logger };
 //const config = { baseUrl: 'http://localhost:8080/engine-rest/', use: logger };
@@ -9,6 +9,15 @@ const client = new Client(config);
 const fs = require('fs')
 const invoiceIt = require('@rimiti/invoice-it').default;
 const shortid = require('shortid');
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_PW
+    }
+});
 
 client.subscribe('bonitaetPruefen', async function({ task, taskService }) {
     const vorname = task.variables.get('kA_vorname');
@@ -34,7 +43,7 @@ client.subscribe('rechnungGenerieren', async function({ task, taskService }) {
     invoiceIt.configure({
         global: {
           logo: 'https://i.imgur.com/CkqXDlj.png',
-          invoice_reference_pattern: '$separator{BU-' + id + '}',
+          invoice_reference_pattern: '$separator{' + id + '}',
           invoice_note: 'Alles bezahlt!',
           date_format: 'DD.MM.YYYY',
           lang: 'de'
@@ -62,7 +71,7 @@ client.subscribe('rechnungGenerieren', async function({ task, taskService }) {
         city: 'Brandenburg',
         country: 'Deutschland',
         phone: '+49 3381 716101',
-        mail: 'hey@anoroc.de',
+        mail: 'anoroc@bolte.cloud',
         website: 'anoroc.de'
     };
 
@@ -81,6 +90,26 @@ client.subscribe('rechnungGenerieren', async function({ task, taskService }) {
     invoice.article = rooms;
     invoice.getInvoice().toPDF().toFile('./invoice_'+id+'.pdf').then(() => {
         console.log('PDF file created.');
+        const mailOptions = {
+            from: 'Reisebüro Anoroc <infodsp.bot@gmail.com>',
+            to: task.variables.get('kA_eMail'),
+            cc: 'anoroc@bolte.cloud',
+            subject: 'Ihre Rechnung',
+            text: 'Anbei Ihre Rechnung!',
+            attachments: [{
+                filename: 'invoice_'+id+'.pdf',
+                path: './invoice_'+id+'.pdf',
+                contentType: 'application/pdf'
+            }],
+        };
+    
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error) {
+              console.log(error);
+            } else {
+              console.log('Email sent: ' + info.response);
+            }
+          });
     });
 
     await taskService.complete(task);
