@@ -4,6 +4,7 @@
 - npm
 
 ## Run the service
+- Copy `@rimiti` to node_modules. It's a customized version to support DE and some other stuff.
 - Open the index.js and change the baseUrl to your local Camunda BPM server adress here: `const config = { baseUrl: 'http://bolte.cloud:8080/engine-rest/', use: logger };` Make sure to keep the `/engine-rest/` part!
 - Open your terminal
     - Make sure you are in the same directory as the index.js. If not, use `cd`to change your directory
