@@ -32,7 +32,8 @@ staedte.forEach(stadt => {
 				guest : "none",
 				status : "free",
 				bookedfrom : "",
-				bookeduntil : ""
+				bookeduntil : "",
+				bookingnr: ""
 			}
 		}
 		for (let i = 200; i < 210; ++i) {
@@ -42,7 +43,8 @@ staedte.forEach(stadt => {
 				guest : "none",
 				status : "free",
 				bookedfrom : "",
-				bookeduntil : ""
+				bookeduntil : "",
+				bookingnr: ""
 			}
 		}
 		for (let i = 300; i < 305; ++i) {
@@ -52,7 +54,8 @@ staedte.forEach(stadt => {
 				guest : "none",
 				status : "free",
 				bookedfrom : "",
-				bookeduntil : ""
+				bookeduntil : "",
+				bookingnr: ""
 			}
 		}
 		
@@ -64,31 +67,24 @@ staedte.forEach(stadt => {
 	}
 });
 
-// console.log(hotels["Hamburg"])
-// hotels/:stadt -> Alle Hotels zurückgeben
-// hotels/:stadt/:hotelid -> Spezifisches Hotels aus der Stadt
-// hotels/:stadt/:hotelid/rooms -> Räume aus spezifisches Hotels aus der Stadt
-// hotels/:stadt/:hotelid/rooms/:roomid -> Räume aus spezifisches Hotels aus der Stadt
-/**
-hotels = {
-	Berlin : {
-		uuid1: {
-	
-		}, 
-		uuid2: {
-	
-		}
-	},
-	Hamburg : {
-		uuid1: {
-	
-		}, 
-		uuid2: {
-	
-		}
-	}
-}
-*/
+// Alle gebuchten Räume von Buchungsnummer
+app.get('/buchung/:buchungsnummer', (req, res) => {
+	let bookedRooms = {};
+	Object.keys(hotels).forEach(stadt => {
+		hotelRooms = {}; 
+		Object.keys(hotels[stadt]).forEach(hotel => {
+			rooms = [];
+			Object.keys(hotels[stadt][hotel]['rooms']).forEach(room => {
+				if (hotels[stadt][hotel]['rooms'][room]['bookingnr'] == req.params.buchungsnummer) {
+					rooms.push(room);	
+				}
+			});
+			if (rooms.length > 0) hotelRooms[hotel] = {rooms: rooms}; 
+		});
+		if (Object.keys(hotelRooms).length > 0) bookedRooms[stadt] = hotelRooms;
+	});
+	res.send(bookedRooms);
+});
 
 // Alle Städte abfrage
 app.get('/hotels/cities', (req, res) => {
@@ -135,6 +131,7 @@ app.put('/hotels/:stadt/:hotelid/rooms/:roomid', (req, res) => {
 			room.status = "free";
 			room.bookedfrom = "";
 			room.bookeduntil = "";
+			room.bookingnr = "";
 			res.sendStatus(200);
 			break;
 		case "occupied":
@@ -143,6 +140,7 @@ app.put('/hotels/:stadt/:hotelid/rooms/:roomid', (req, res) => {
 				room.status = "occupied";
 				room.bookedfrom = change.bookedfrom;
 				room.bookeduntil = change.bookeduntil;
+				room.bookingnr = change.bookingnr;
 				res.sendStatus(200);
 				break;
 			}
