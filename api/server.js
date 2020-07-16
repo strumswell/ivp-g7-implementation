@@ -68,7 +68,7 @@ staedte.forEach(stadt => {
 });
 
 // Alle gebuchten Räume von Buchungsnummer
-app.get('/buchung/:buchungsnummer', (req, res) => {
+app.get('/booking/:bookingnr', (req, res) => {
 	let bookedRooms = {};
 	Object.keys(hotels).forEach(stadt => {
 		hotelRooms = {}; 
