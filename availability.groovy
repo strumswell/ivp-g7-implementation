@@ -4,8 +4,8 @@ import groovy.json.JsonSlurper
 def guests = execution.getVariable("kE_anzPersonen")
 def arrival = Date.parse("dd.MM.yyyy", execution.getVariable("kE_anreisedatum"))
 def depart = Date.parse("dd.MM.yyyy", execution.getVariable("kE_abreisedatum"))
-def city = execution.getVariable("kE_stadt")
-def hotelid = execution.getVariable("kE_hotelid")
+def city = execution.getVariable("kE_stadtAuswahl")
+def hotelid = execution.getVariable("kE_hotelAuswahl")
 def nights = depart - arrival
 
 enum RoomTypes {
