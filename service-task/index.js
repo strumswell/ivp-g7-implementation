@@ -12,6 +12,8 @@ const shortid = require('shortid');
 
 client.subscribe('bonitaetPruefen', async function({ task, taskService }) {
     const vorname = task.variables.get('kA_vorname');
+    let id = shortid.generate();
+
     console.log("Incoming: " + vorname);
     let bonitaet = false;
     
@@ -22,12 +24,13 @@ client.subscribe('bonitaetPruefen', async function({ task, taskService }) {
 
     const camunda_bonitaet = new Variables();
     camunda_bonitaet.set("bP_bonitaet", bonitaet);
+    camunda_bonitaet.set("bP_buchungsnummer", id);
 
     await taskService.complete(task, camunda_bonitaet);
 })
 
 client.subscribe('rechnungGenerieren', async function({ task, taskService }) {
-    let id = shortid.generate();
+    let id = task.variables.get('bP_buchungsnummer')
     invoiceIt.configure({
         global: {
           logo: 'https://i.imgur.com/CkqXDlj.png',
