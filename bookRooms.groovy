@@ -5,11 +5,12 @@ def firstname = execution.getVariable("kA_vorname")
 def lastname = execution.getVariable("kA_nachname")
 def arrival = Date.parse("dd.MM.yyyy", execution.getVariable("kE_anreisedatum"))
 def depart = Date.parse("dd.MM.yyyy", execution.getVariable("kE_abreisedatum"))
+def bookingnr = execution.getVariable("bP_buchungsnummer")
 lockedRooms = lockedRooms.split(',')
 
 for (roomNumber in lockedRooms) {
     // Book room
-    updateRoomInfo(city+'/'+hotelid+'/rooms/'+roomNumber, '{"status": "occupied", "guest": "'+firstname+' '+lastname+'" ,"bookedfrom": "'+arrival.getDateString()+'", "bookeduntil": "'+depart.getDateString()+'"}')
+    updateRoomInfo(city+'/'+hotelid+'/rooms/'+roomNumber, '{"status": "occupied", "guest": "'+firstname+' '+lastname+'" ,"bookedfrom": "'+arrival.getDateString()+'", "bookeduntil": "'+depart.getDateString()+'", "bookingnr": "'+bookingnr+'"}')
     println('Booked '+roomNumber)
 }
 
