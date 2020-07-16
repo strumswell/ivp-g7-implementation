@@ -1,6 +1,6 @@
 import groovy.json.JsonSlurper
 
-def bookingnr = "asdfghjkl"//execution.getVariable("sE_Buchungsnummer")
+def bookingnr = execution.getVariable("sE_Buchungsnummer")
 def bookedRooms = getServiceReponse('booking/'+bookingnr)
 
 bookedRooms.each { stadt, hotelids -> 
