@@ -58,7 +58,7 @@
     <bpmn:userTask id="Task_ratenzahlungAnbieten" name="Ratenzahlung anbieten">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="rA_bonitaet" label="Ergebnis Bonitätsprüfung:" type="string" defaultValue="${bP_bonitaet}">
+          <camunda:formField id="rA_bonitaet" label="Ergebnis der Bonitätsprüfung:" type="string" defaultValue="${bP_bonitaet}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
@@ -80,7 +80,7 @@
     <bpmn:userTask id="Task_sofortzahlungAnbieten" name="Sofortzahlung anbieten">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="sA_bonitaet" label="Ergebnis Bonitätsprüfung:" type="string" defaultValue="${bP_bonitaet}">
+          <camunda:formField id="sA_bonitaet" label="Ergebnis der Bonitätsprüfung:" type="string" defaultValue="${bP_bonitaet}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
@@ -107,7 +107,7 @@
     <bpmn:userTask id="Task_zahlungsweiseAuswaehlen" name="Zahlungsweise auswählen">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="zA_auswahlZahlungsweise" label="Zahlungsweise auswählen" type="enum">
+          <camunda:formField id="zA_auswahlZahlungsweise" label="Zahlungsweise auswählen:" type="enum">
             <camunda:value id="sofort" name="Sofort bezahlen!" />
             <camunda:value id="aufZiel" name="Auf Ziel bezahlen!" />
             <camunda:value id="abbruch" name="Vorgang abbrechen!" />
@@ -121,57 +121,57 @@
     <bpmn:userTask id="Task_ratenzahlungPruefen" name="Ratenzahlung prüfen">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="rP_anrede" label="Anrede" type="string" defaultValue="${kA_anrede}">
+          <camunda:formField id="rP_anrede" label="Anrede:" type="string" defaultValue="${kA_anrede}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="rP_vorname" label="Vorname" type="string" defaultValue="${kA_vorname}">
+          <camunda:formField id="rP_vorname" label="Vorname:" type="string" defaultValue="${kA_vorname}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="rP_nachname" label="Nachname" type="string" defaultValue="${kA_nachname}">
+          <camunda:formField id="rP_nachname" label="Nachname:" type="string" defaultValue="${kA_nachname}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="rP_geburtsdatum" label="Geburtsdatum" type="string" defaultValue="${kA_geburtsdatum}">
+          <camunda:formField id="rP_geburtsdatum" label="Geburtsdatum:" type="string" defaultValue="${kA_geburtsdatum}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="rP_eMail" label="E-Mail-Adresse" type="string" defaultValue="${kA_eMail}">
+          <camunda:formField id="rP_eMail" label="E-Mail-Adresse:" type="string" defaultValue="${kA_eMail}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="rP_strasse" label="Straße" type="string" defaultValue="${kA_strasse}">
+          <camunda:formField id="rP_strasse" label="Straße:" type="string" defaultValue="${kA_strasse}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="rP_hausnummer" label="Hausnummer" type="string" defaultValue="${kA_hausnummer}">
+          <camunda:formField id="rP_hausnummer" label="Hausnummer:" type="string" defaultValue="${kA_hausnummer}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="rP_plz" label="PLZ" type="string" defaultValue="${kA_plz}">
+          <camunda:formField id="rP_plz" label="PLZ:" type="string" defaultValue="${kA_plz}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="rP_ort" label="Ort" type="string" defaultValue="${kA_ort}">
+          <camunda:formField id="rP_ort" label="Ort:" type="string" defaultValue="${kA_ort}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="rP_umzugLetzten12Monate" label="Umzug innerhalb der letrzten 12 Monate:" type="string" defaultValue="${kA_umzugLetzten12Monate}">
+          <camunda:formField id="rP_umzugLetzten12Monate" label="Umzug innerhalb der letrzten 12 Monate?" type="string" defaultValue="${kA_umzugLetzten12Monate}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="rP_bonitaet" label="Ergebnis Bonitätsprüfung:" type="string" defaultValue="${bP_bonitaet}">
+          <camunda:formField id="rP_bonitaet" label="Ergebnis der Bonitätsprüfung:" type="string" defaultValue="${bP_bonitaet}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
@@ -207,19 +207,19 @@
     <bpmn:userTask id="Task_kundendatenAufnehmen" name="Kundendaten aufnehmen">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="kA_anrede" label="Anrede" type="enum">
+          <camunda:formField id="kA_anrede" label="Anrede:" type="enum">
             <camunda:value id="Herr" name="Herr" />
             <camunda:value id="Frau" name="Frau" />
           </camunda:formField>
-          <camunda:formField id="kA_vorname" label="Vorname" type="string" defaultValue="Jens" />
-          <camunda:formField id="kA_nachname" label="Nachname" type="string" defaultValue="Tester" />
-          <camunda:formField id="kA_geburtsdatum" label="Geburtsdatum" type="date" defaultValue="12/12/1984" />
+          <camunda:formField id="kA_vorname" label="Vorname:" type="string" defaultValue="Jens" />
+          <camunda:formField id="kA_nachname" label="Nachname:" type="string" defaultValue="Tester" />
+          <camunda:formField id="kA_geburtsdatum" label="Geburtsdatum:" type="date" defaultValue="12/12/1984" />
           <camunda:formField id="kA_eMail" label="E-Mail-Adresse (für Rechnungsversand):" type="string" defaultValue="tester@testnix.de" />
-          <camunda:formField id="kA_strasse" label="Straße" type="string" defaultValue="xyzstraße" />
-          <camunda:formField id="kA_hausnummer" label="Hausnummer" type="string" defaultValue="13A" />
-          <camunda:formField id="kA_plz" label="PLZ" type="string" defaultValue="23455" />
-          <camunda:formField id="kA_ort" label="Ort" type="string" defaultValue="Ortnix" />
-          <camunda:formField id="kA_umzugLetzten12Monate" label="Sind Sie in den letrzten 12 Monaten umgezogen?" type="boolean" />
+          <camunda:formField id="kA_strasse" label="Straße:" type="string" defaultValue="xyzstraße" />
+          <camunda:formField id="kA_hausnummer" label="Hausnummer:" type="string" defaultValue="13A" />
+          <camunda:formField id="kA_plz" label="PLZ:" type="string" defaultValue="23455" />
+          <camunda:formField id="kA_ort" label="Ort:" type="string" defaultValue="Ortnix" />
+          <camunda:formField id="kA_umzugLetzten12Monate" label="Sind Sie in den letzten 12 Monaten umgezogen?" type="boolean" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1o47qu8</bpmn:incoming>
@@ -228,11 +228,12 @@
     <bpmn:userTask id="Task_sofortzahlungDurchfuehren" name="Sofortzahlung durchführen">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="sD_ecKarteKreditKarteBar" label="Wie möchten Sie zahlen? EC-, Kreditkarte oder ?" type="enum">
+          <camunda:formField id="sD_ecKarteKreditKarteBar" label="Wie möchten Sie zahlen? EC-, Kreditkarte oder bar?" type="enum">
             <camunda:value id="ecKarte" name="EC-Karte!" />
             <camunda:value id="kreditKarte" name="Kreditkarte!" />
             <camunda:value id="barZahlen" name="Bar bezahlen!" />
           </camunda:formField>
+          <camunda:formField id="sD_bestaetigungGeldErhalten" label="Verkäufer bestätigt Erhalt des Geldes!" type="boolean" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_1ib12rw</bpmn:incoming>
@@ -242,52 +243,52 @@
     <bpmn:userTask id="Task_bankdatenEinholen" name="Bankdaten einholen">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="bE_anrede" label="Anrede" type="string" defaultValue="${kA_anrede}">
+          <camunda:formField id="bE_anrede" label="Anrede:" type="string" defaultValue="${kA_anrede}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="bE_vorname" label="Vorname" type="string" defaultValue="${kA_vorname}">
+          <camunda:formField id="bE_vorname" label="Vorname:" type="string" defaultValue="${kA_vorname}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="bE_nachname" label="Nachname" type="string" defaultValue="${kA_nachname}">
+          <camunda:formField id="bE_nachname" label="Nachname:" type="string" defaultValue="${kA_nachname}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="bE_geburtsdatum" label="Geburtsdatum" type="string" defaultValue="${kA_geburtsdatum}">
+          <camunda:formField id="bE_geburtsdatum" label="Geburtsdatum:" type="string" defaultValue="${kA_geburtsdatum}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="bE_eMail" label="E-Mail-Adresse" type="string" defaultValue="${kA_eMail}">
+          <camunda:formField id="bE_eMail" label="E-Mail-Adresse:" type="string" defaultValue="${kA_eMail}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="bE_strasse" label="Straße" type="string" defaultValue="${kA_strasse}">
+          <camunda:formField id="bE_strasse" label="Straße:" type="string" defaultValue="${kA_strasse}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="bE_hausnummer" label="Hausnummer" type="string" defaultValue="${kA_hausnummer}">
+          <camunda:formField id="bE_hausnummer" label="Hausnummer:" type="string" defaultValue="${kA_hausnummer}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="bE_plz" label="PLZ" type="string" defaultValue="${kA_plz}">
+          <camunda:formField id="bE_plz" label="PLZ:" type="string" defaultValue="${kA_plz}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="bE_ort" label="Ort" type="string" defaultValue="${kA_ort}">
+          <camunda:formField id="bE_ort" label="Ort:" type="string" defaultValue="${kA_ort}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="bE_umzugLetzten12Monate" label="Umzug innerhalb der letrzten 12 Monate:" type="string" defaultValue="${kA_umzugLetzten12Monate}">
+          <camunda:formField id="bE_umzugLetzten12Monate" label="Umzug innerhalb der letrzten 12 Monate?" type="string" defaultValue="${kA_umzugLetzten12Monate}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
@@ -755,12 +756,12 @@ def updateRoomInfo(route, data) {
     <bpmn:userTask id="Task_lastschrifterlaubnisEinholen" name="Lastschrifterlaubnis einholen">
       <bpmn:extensionElements>
         <camunda:formData>
-          <camunda:formField id="lE_verfuegbar" label="Ergebnis Verfügbarkeitsprüfung:" type="string" defaultValue="${vP_verfuegbarkeit}">
+          <camunda:formField id="lE_verfuegbar" label="Ergebnis der Verfügbarkeitsprüfung:" type="string" defaultValue="${vP_verfuegbarkeit}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
-          <camunda:formField id="lE_gesamtpreis" label="Gesamtpreis der Reise" type="long" defaultValue="${vP_preisReiseGesamt}">
+          <camunda:formField id="lE_gesamtpreis" label="Gesamtpreis der Reise:" type="long" defaultValue="${vP_preisReiseGesamt}">
             <camunda:validation>
               <camunda:constraint name="readonly" />
             </camunda:validation>
@@ -788,6 +789,7 @@ def updateRoomInfo(route, data) {
               <camunda:constraint name="readonly" />
             </camunda:validation>
           </camunda:formField>
+          <camunda:formField id="kI_kommentarZurRatenzahlung" label="Kommentar der Filialleitung zur Ablehnung:" type="string" defaultValue="${rP_kommentarZurRatenzahlung}" />
         </camunda:formData>
       </bpmn:extensionElements>
       <bpmn:incoming>SequenceFlow_09jw7d1</bpmn:incoming>
