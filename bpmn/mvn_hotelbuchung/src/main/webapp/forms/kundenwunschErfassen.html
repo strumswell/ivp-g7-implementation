@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
-<form role="form" name="form" class="form-horizontal" id="divMouseOver" onmouseover="updateDate()">
-=======
 <form role="form" name="form" class="form-horizontal" id="divMouseOver" onmouseover="updateData()">
->>>>>>> Stashed changes
   <h1>Test&uuml;berschrift_12</h1>
     <div class="col-xs-12">
       <div class="form-group">
@@ -75,66 +71,16 @@
 
     </script>
 
-<<<<<<< Updated upstream
-    <script>
-
-      
-    // Stadt beim Form öffenen laden
-    //window.onload = function(){
-    //  updateStadt();
-    //  seiteAufrufen = false;
-    //}
-
-    //JS aktualisieren bei erneuten öffenen der Aktivität 
-    
-    
-    //let seiteAufrufen = true;
-    //const DivInhalt = document.getElementById('divMouseOver');
-
-    //DivInhalt.addEventListener ("mouseover", function () {
-      /*if (seiteAufrufen == false) {
-          console.log("SeiteAufrufen", seiteAufrufen)
-          seiteAufrufen = true;  
-          console.log("SeiteAufrufen", seiteAufrufen)
-      }*/
-
-      //if(list_cities.innerText=="") {
-              //list_cities.innerHTML="";
-      //        updateStadt();
-      //}
-
-
-    //});
-  
-   /*
-    function datenLaden (){
-      if (seiteAufrufen == true) {
-          console.log("City-List:", cities)
-          
-          if(list_cities.innerText=="") {
-              updateStadt();
-            seiteAufrufen = false;  
-          }
-      }
-    }
-    */
-
-=======
 
     <script>
 
     // Stadt beim Form öffenen laden
->>>>>>> Stashed changes
     let list_cities = document.getElementById('cities');
     const url_cities = 'http://implproz.cbu.net:8007/hotels/cities/'  
     let seiteAufrufen = true;
     
 
-<<<<<<< Updated upstream
-    function updateDate(){
-=======
     function updateData(){
->>>>>>> Stashed changes
       if(list_cities.innerText=="" && seiteAufrufen == true) {
             seiteAufrufen = false;
             updateStadt();
@@ -143,18 +89,6 @@
     }
 
     //Bei Ã„nderung der Stadt
-<<<<<<< Updated upstream
-    /*
-    list_cities.addEventListener("click", function () {
-          console.log("Ausführen onClick EventListener")
-          console.log(list_cities)
-          datenLaden();
-    });
-    */
-
-
-=======
->>>>>>> Stashed changes
     //list_cities.addEventListener ("change", function () {
     function updateFelder(){
       if(list_cities.innerText=="") {
@@ -274,12 +208,6 @@
     };
 
 
-<<<<<<< Updated upstream
-        
-
-
-=======
->>>>>>> Stashed changes
     </script>
 </form>
       
