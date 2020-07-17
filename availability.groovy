@@ -33,7 +33,7 @@ for (type in RoomTypes) {
             def roomNumber = typeAvailableRooms[i].get('number')
             def roomPrice = typeAvailableRooms[i].get('price')
             // Lock rooms
-            updateRoomInfo(city+'/'+hotelid+'/rooms/'+roomNumber, '{"status": "locked", "bookedfrom": "'+arrival.getDateString()+'", "bookeduntil": "'+depart.getDateString()+'"}')
+            updateRoomInfo(city+'/'+hotelid+'/rooms/'+roomNumber, '{"status": "locked", "bookedfrom": "'+arrival.format("dd.MM.yyyy")+'", "bookeduntil": "'+depart.format("dd.MM.yyyy")+'"}')
             // Save room number and calc price
             fittingRooms.add(roomNumber)
             price += nights * roomPrice
