@@ -55,7 +55,7 @@ if (errorRooms.size() == 0) {
     execution.setVariable("vP_preisDoppelzimmer", priceDouble)
     execution.setVariable("vP_preisSuiten", priceSuite)
     execution.setVariable("vP_preisReiseGesamt", price)
-    execution.setVariable("vP_blockierteRäume", fittingRooms.join(","))
+    execution.setVariable("vP_blockierteRaeume", fittingRooms.join(","))
     execution.setVariable("vP_nameHotel", hotelname)
 } else {
     def missingSingle = (errorRooms[RoomTypes.SINGLE] != null) ? errorRooms[RoomTypes.SINGLE] : 0
