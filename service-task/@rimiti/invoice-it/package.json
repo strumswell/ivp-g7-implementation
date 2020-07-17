@@ -1,0 +1,97 @@
+{
+  "_from": "@rimiti/invoice-it",
+  "_id": "@rimiti/invoice-it@3.5.0",
+  "_inBundle": false,
+  "_integrity": "sha512-2jEz+umJ3tm4J29sx6IzpfmSPxWZrq504qLOYmG94yeZF5bYubFPJsIAsgAuDdJ2UIgGWEiufVEAb48XVMojlw==",
+  "_location": "/@rimiti/invoice-it",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "@rimiti/invoice-it",
+    "name": "@rimiti/invoice-it",
+    "escapedName": "@rimiti%2finvoice-it",
+    "scope": "@rimiti",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/@rimiti/invoice-it/-/invoice-it-3.5.0.tgz",
+  "_shasum": "97ae2cd8abc03c629ff6cfb56dace347b48b37a1",
+  "_spec": "@rimiti/invoice-it",
+  "_where": "/Users/philippbolte/Desktop/WIM2/IVP/Projekt/ivp-g7-implementation/service-task",
+  "author": {
+    "name": "Dimitri DO BAIRRO",
+    "email": "dimitri.dobairro@dimsolution.com",
+    "url": "dimsolution.com"
+  },
+  "bugs": {
+    "url": "https://github.com/rimiti/invoice-it/issues"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "html-pdf": "2.2.0",
+    "i18n-factory": "0.0.2",
+    "json-override": "0.2.0",
+    "moment": "2.26.0",
+    "pug": "3.0.0"
+  },
+  "deprecated": false,
+  "description": "Order and invoice generator",
+  "devDependencies": {
+    "@babel/cli": "7.10.0",
+    "@babel/core": "7.10.0",
+    "@babel/preset-env": "7.10.0",
+    "@babel/register": "7.9.0",
+    "babel-eslint": "10.1.0",
+    "babel-jest": "26.0.1",
+    "eslint": "7.1.0",
+    "eslint-config-airbnb-base": "14.1.0",
+    "eslint-plugin-import": "2.20.2",
+    "jest": "26.0.1"
+  },
+  "engines": {
+    "node": ">=6"
+  },
+  "homepage": "https://github.com/rimiti/invoice-it#readme",
+  "jest": {
+    "moduleFileExtensions": [
+      "js"
+    ],
+    "coverageDirectory": "coverage",
+    "collectCoverageFrom": [
+      "src/**/*.js"
+    ]
+  },
+  "keywords": [
+    "node",
+    "order",
+    "invoice",
+    "html",
+    "pdf",
+    "generator"
+  ],
+  "license": "MIT",
+  "main": "dist/index.js",
+  "name": "@rimiti/invoice-it",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rimiti/invoice-it.git"
+  },
+  "scripts": {
+    "build": "babel src -d dist --copy-files --source-maps inline",
+    "build:watch": "babel src -d dist --watch --copy-files --source-maps inline",
+    "clean": "rm -rf coverage dist tmp invoice.pdf invoice.html order.pdf orderAdd.pdf order.html invoiceAdd.pdf",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "prepare": "npm run build",
+    "pretest": "npm run lint",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch"
+  },
+  "version": "3.5.0"
+}

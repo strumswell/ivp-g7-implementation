@@ -12,8 +12,10 @@
     "@rimiti/invoice-it": "^3.5.0",
     "axios": "^0.19.2",
     "camunda-external-task-client-js": "^2.0.0",
+    "dotenv": "^8.2.0",
     "easyinvoice": "^1.0.91",
     "is-base64": "^1.1.0",
+    "nodemailer": "^6.4.10",
     "pdfjs-dist": "^2.4.456",
     "shortid": "^2.2.15"
   }

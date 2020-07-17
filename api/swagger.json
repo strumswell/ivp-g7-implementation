@@ -9,6 +9,10 @@
   "basePath": "/",
   "tags": [
     {
+      "name": "booking",
+      "description": "All bookings"
+    },
+    {
       "name": "city",
       "description": "All cities"
     },
@@ -25,6 +29,33 @@
     "http"
   ],
   "paths": {
+    "/booking/{bookingnr}": {
+      "get": {
+        "tags": [
+          "booking"
+        ],
+        "summary": "Get specific bookingnr in bookings",
+        "description": "Get specific booking",
+        "operationId": "getBookingnr",
+        "parameters": [
+          {
+            "name": "bookingnr",
+            "in": "path",
+            "description": "bookingnr of booking",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "500": {
+            "description": "Internal Error"
+          }
+        }
+      }
+    },
     "/hotels/cities": {
       "get": {
         "tags": [
@@ -292,6 +323,10 @@
           "example": ""
         },
         "bookeduntil": {
+          "type": "string",
+          "example": ""
+        },
+        "bookingnr": {
           "type": "string",
           "example": ""
         }
