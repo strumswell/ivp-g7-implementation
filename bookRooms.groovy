@@ -1,4 +1,4 @@
-def lockedRooms = execution.getVariable("vP_blockierteRäume")
+def lockedRooms = execution.getVariable("vP_blockierteRaeume")
 def city = execution.getVariable("kE_stadtAuswahl")
 def hotelid = execution.getVariable("kE_hotelAuswahl")
 def firstname = execution.getVariable("kA_vorname")
