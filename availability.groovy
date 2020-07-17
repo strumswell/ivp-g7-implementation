@@ -14,6 +14,7 @@ enum RoomTypes {
 
 // Prepare
 def rooms = getServiceReponse(city+'/'+hotelid+'/rooms')
+def hotelname = getServiceReponse(city+"/"+hotelid).name
 def availableRoomsByType = [:]
 def fittingRooms = []
 def errorRooms = [:]
@@ -55,6 +56,7 @@ if (errorRooms.size() == 0) {
     execution.setVariable("vP_preisSuiten", priceSuite)
     execution.setVariable("vP_preisReiseGesamt", price)
     execution.setVariable("vP_blockierteRäume", fittingRooms.join(","))
+    execution.setVariable("vP_nameHotel", hotelname)
 } else {
     def missingSingle = (errorRooms[RoomTypes.SINGLE] != null) ? errorRooms[RoomTypes.SINGLE] : 0
     def missingDouble = (errorRooms[RoomTypes.DOUBLE] != null) ? errorRooms[RoomTypes.DOUBLE] : 0
