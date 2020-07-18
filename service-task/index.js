@@ -81,10 +81,18 @@ client.subscribe('rechnungGenerieren', async function({ task, taskService }) {
     let priceSingleRoom = Number(task.variables.get("vP_preisEinzelzimmer"));
     let priceDoubleRoom = Number(task.variables.get("vP_preisDoppelzimmer"));
     let priceSuiteRoom = Number(task.variables.get("vP_preisSuiten"));
+
+    const dayLength = 1000 * 60 * 60 * 24;
+    let arrivalString = (task.variables.get("kE_anreisedatum")).split('.').map(Number);
+    let departString = (task.variables.get("kE_abreisedatum")).split('.').map(Number);
+    let arrivalDate = new Date(arrivalString[2],arrivalString[1]-1,arrivalString[0]);
+    let departDate = new Date(departString[2],departString[1]-1,departString[0]);
+    let nights = Math.round((departDate - arrivalDate) / dayLength);
+
     let rooms = [];
-    requestedSingleRooms > 0 && rooms.push({description: 'Einzelzimmer', tax: 19, price: priceSingleRoom, qt: requestedSingleRooms});
-    requestedDoubleRooms > 0 && rooms.push({description: 'Doppelzimmer', tax: 19, price: priceDoubleRoom, qt: requestedDoubleRooms});
-    requestedSuiteRooms > 0 && rooms.push({description: 'Suite', tax: 19, price: priceSuiteRoom, qt: requestedSuiteRooms});
+    requestedSingleRooms > 0 && rooms.push({description: 'Einzelzimmer', tax: 19, price: priceSingleRoom*nights, qt: requestedSingleRooms});
+    requestedDoubleRooms > 0 && rooms.push({description: 'Doppelzimmer', tax: 19, price: priceDoubleRoom*nights, qt: requestedDoubleRooms});
+    requestedSuiteRooms > 0 && rooms.push({description: 'Suite', tax: 19, price: priceSuiteRoom*nights, qt: requestedSuiteRooms});
 
     const invoice = invoiceIt.create(recipient, emitter);
     invoice.article = rooms;
