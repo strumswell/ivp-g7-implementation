@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1bzlu2k" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.1">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1bzlu2k" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.3">
   <bpmn:collaboration id="Collaboration_1pq649f">
     <bpmn:participant id="Participant_05bozbo" name="Reisebüro" processRef="Stornierung" />
     <bpmn:participant id="Participant_00ysfop" name="Kunde" />
@@ -30,7 +30,7 @@
       <bpmn:incoming>Flow_02jqqmo</bpmn:incoming>
       <bpmn:outgoing>Flow_0exfrkh</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:scriptTask id="task_stornierungDurchfuehren" name="Stornierung durchfuehren">
+    <bpmn:scriptTask id="task_stornierungDurchfuehren" name="Stornierung durchfuehren" scriptFormat="groovy">
       <bpmn:incoming>Flow_0exfrkh</bpmn:incoming>
       <bpmn:outgoing>Flow_0uu83ww</bpmn:outgoing>
       <bpmn:script>import groovy.json.JsonSlurper
@@ -76,7 +76,7 @@ def getServiceReponse(route) {
         response = connection.getInputStream().getText()
     }
     return new JsonSlurper().parseText(response)
-} </bpmn:script>
+}</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:userTask id="task_reisezeitpunktAbfragen" name="Reisezeitpunkt abfragen">
       <bpmn:extensionElements>
@@ -134,13 +134,27 @@ def getServiceReponse(route) {
       <bpmndi:BPMNShape id="Participant_05bozbo_di" bpmnElement="Participant_05bozbo" isHorizontal="true">
         <dc:Bounds x="150" y="160" width="1090" height="450" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Flow_0uu83ww_di" bpmnElement="Flow_0uu83ww">
-        <di:waypoint x="570" y="400" />
-        <di:waypoint x="610" y="400" />
+      <bpmndi:BPMNEdge id="Flow_1sdvjm8_di" bpmnElement="Flow_1sdvjm8">
+        <di:waypoint x="780" y="425" />
+        <di:waypoint x="780" y="520" />
+        <di:waypoint x="1120" y="520" />
+        <di:waypoint x="1120" y="418" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="911" y="502" width="78" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0u87xdf_di" bpmnElement="Flow_0u87xdf">
+        <di:waypoint x="1000" y="280" />
+        <di:waypoint x="1120" y="280" />
+        <di:waypoint x="1120" y="382" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1gid6he_di" bpmnElement="Flow_1gid6he">
         <di:waypoint x="1000" y="400" />
         <di:waypoint x="1102" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0uu83ww_di" bpmnElement="Flow_0uu83ww">
+        <di:waypoint x="570" y="400" />
+        <di:waypoint x="610" y="400" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0vfg9lw_di" bpmnElement="Flow_0vfg9lw">
         <di:waypoint x="805" y="400" />
@@ -168,20 +182,6 @@ def getServiceReponse(route) {
       <bpmndi:BPMNEdge id="Flow_02jqqmo_di" bpmnElement="Flow_02jqqmo">
         <di:waypoint x="278" y="400" />
         <di:waypoint x="330" y="400" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0u87xdf_di" bpmnElement="Flow_0u87xdf">
-        <di:waypoint x="1000" y="280" />
-        <di:waypoint x="1120" y="280" />
-        <di:waypoint x="1120" y="382" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_1sdvjm8_di" bpmnElement="Flow_1sdvjm8">
-        <di:waypoint x="780" y="425" />
-        <di:waypoint x="780" y="520" />
-        <di:waypoint x="1120" y="520" />
-        <di:waypoint x="1120" y="418" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="911" y="502" width="78" height="14" />
-        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNShape id="Activity_139n0rx_di" bpmnElement="task_stornierungswunschErfassen">
         <dc:Bounds x="330" y="360" width="100" height="80" />
