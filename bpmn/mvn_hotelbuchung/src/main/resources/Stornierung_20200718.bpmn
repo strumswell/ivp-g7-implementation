@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1bzlu2k" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.7.1">
+  <bpmn:collaboration id="Collaboration_1pq649f">
+    <bpmn:participant id="Participant_05bozbo" name="Reisebüro" processRef="Stornierung" />
+    <bpmn:participant id="Participant_00ysfop" name="Kunde" />
+  </bpmn:collaboration>
+  <bpmn:process id="Stornierung" isExecutable="true">
+    <bpmn:sequenceFlow id="Flow_02jqqmo" sourceRef="StartEvent_stornierungswunschLiegtVor" targetRef="task_stornierungswunschErfassen" />
+    <bpmn:sequenceFlow id="Flow_0exfrkh" sourceRef="task_stornierungswunschErfassen" targetRef="task_stornierungDurchfuehren" />
+    <bpmn:sequenceFlow id="Flow_164rj2d" sourceRef="task_reisezeitpunktAbfragen" targetRef="XOR_ueberVierWochen" />
+    <bpmn:sequenceFlow id="Flow_0h0v8lz" name="über 4 Wochen" sourceRef="XOR_ueberVierWochen" targetRef="task_volleRueckzahlungBeauftragen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${vierWochen == "ueberVierWochen"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0vfg9lw" name="unter 4 Wochen" sourceRef="XOR_ueberVierWochen" targetRef="task_teilrueckzahlungBeauftragen">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${vierWochen == "unterVierWochen"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_0uu83ww" sourceRef="task_stornierungDurchfuehren" targetRef="task_reisezeitpunktAbfragen" />
+    <bpmn:userTask id="task_stornierungswunschErfassen" name="Stornierungswunsch erfassen">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="sE_Buchungsnummer" label="Buchungsnummer eingeben* (* Eingabe erforderlich)" type="string">
+            <camunda:validation>
+              <camunda:constraint name="required" />
+            </camunda:validation>
+          </camunda:formField>
+          <camunda:formField id="sE_Vorname" label="Vorname" type="string" />
+          <camunda:formField id="sE_Name" label="Name" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_02jqqmo</bpmn:incoming>
+      <bpmn:outgoing>Flow_0exfrkh</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:scriptTask id="task_stornierungDurchfuehren" name="Stornierung durchfuehren">
+      <bpmn:incoming>Flow_0exfrkh</bpmn:incoming>
+      <bpmn:outgoing>Flow_0uu83ww</bpmn:outgoing>
+      <bpmn:script>import groovy.json.JsonSlurper
+
+def bookingnr = execution.getVariable("sE_Buchungsnummer")
+def bookedRooms = getServiceReponse('booking/'+bookingnr)
+
+bookedRooms.each { stadt, hotelids -&gt; 
+    hotelids.each { hotelid, allRooms -&gt;
+        allRooms.rooms.each { roomID -&gt;
+            updateRoomInfo(stadt+"/"+hotelid+"/rooms/"+roomID, '{"status": "free"}')
+            println("Cancelled " + hotelid + " " + roomID)
+        }
+    }
+}
+
+/**
+* Change a room's infos
+* @param route the route to call
+* @param data json of data to change
+*/
+def updateRoomInfo(route, data) {
+    def connection = new URL('http://implproz.cbu.net:8007/hotels/'+route).openConnection();
+    connection.setRequestMethod("PUT")
+    connection.setDoOutput(true)
+    connection.setRequestProperty("Content-Type", "application/json")
+    connection.getOutputStream().write(data.getBytes("UTF-8"))
+    if(connection.getResponseCode().equals(200)) {
+        println(connection.getInputStream().getText())
+    }
+    return
+}
+
+/**
+* Make a call to the rooms service api.
+* @param route the route to call
+* @return the response of the service api
+*/
+def getServiceReponse(route) {
+    def connection = new URL('http://implproz.cbu.net:8007/'+route).openConnection();
+    def response = '';
+    if(connection.getResponseCode().equals(200)) {
+        response = connection.getInputStream().getText()
+    }
+    return new JsonSlurper().parseText(response)
+} </bpmn:script>
+    </bpmn:scriptTask>
+    <bpmn:userTask id="task_reisezeitpunktAbfragen" name="Reisezeitpunkt abfragen">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="vierWochen" label="Abreisezeitpunkt ab Stornierung" type="enum">
+            <camunda:value id="ueberVierWochen" name="Abreise in über 4 Wochen" />
+            <camunda:value id="unterVierWochen" name="Abreise in weniger als 4 Wochen" />
+            <camunda:value id="unterZweiWochen" name="Abreise in unter 2 Wochen" />
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0uu83ww</bpmn:incoming>
+      <bpmn:outgoing>Flow_164rj2d</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="XOR_ueberVierWochen" name="Reisezeitpunkt &#62; 4 Wochen?">
+      <bpmn:incoming>Flow_164rj2d</bpmn:incoming>
+      <bpmn:outgoing>Flow_0h0v8lz</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0vfg9lw</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1sdvjm8</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="task_teilrueckzahlungBeauftragen" name="Teilruekzahlung beauftragen">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="tR_IBAN" label="Rückerstattungsbetrag" type="string" defaultValue="IBAN" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0vfg9lw</bpmn:incoming>
+      <bpmn:outgoing>Flow_1gid6he</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="task_volleRueckzahlungBeauftragen" name="Volle Rueckzahlung beauftragen">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="vR_IBAN" label="IBAN" type="string" />
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0h0v8lz</bpmn:incoming>
+      <bpmn:outgoing>Flow_0u87xdf</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:startEvent id="StartEvent_stornierungswunschLiegtVor" name="Stornierungswunsch liegt vor">
+      <bpmn:outgoing>Flow_02jqqmo</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1gid6he" sourceRef="task_teilrueckzahlungBeauftragen" targetRef="EndEvent_stornierungDurchgefuehrt" />
+    <bpmn:sequenceFlow id="Flow_0u87xdf" sourceRef="task_volleRueckzahlungBeauftragen" targetRef="EndEvent_stornierungDurchgefuehrt" />
+    <bpmn:sequenceFlow id="Flow_1sdvjm8" name="unter 2 Wochen" sourceRef="XOR_ueberVierWochen" targetRef="EndEvent_stornierungDurchgefuehrt">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${vierWochen == "unterZweiWochen"}</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:endEvent id="EndEvent_stornierungDurchgefuehrt" name="Stornierung durchgefuehrt">
+      <bpmn:incoming>Flow_1gid6he</bpmn:incoming>
+      <bpmn:incoming>Flow_0u87xdf</bpmn:incoming>
+      <bpmn:incoming>Flow_1sdvjm8</bpmn:incoming>
+    </bpmn:endEvent>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1pq649f">
+      <bpmndi:BPMNShape id="Participant_05bozbo_di" bpmnElement="Participant_05bozbo" isHorizontal="true">
+        <dc:Bounds x="150" y="160" width="1090" height="450" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0uu83ww_di" bpmnElement="Flow_0uu83ww">
+        <di:waypoint x="570" y="400" />
+        <di:waypoint x="610" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1gid6he_di" bpmnElement="Flow_1gid6he">
+        <di:waypoint x="1000" y="400" />
+        <di:waypoint x="1102" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0vfg9lw_di" bpmnElement="Flow_0vfg9lw">
+        <di:waypoint x="805" y="400" />
+        <di:waypoint x="900" y="400" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="814" y="382" width="78" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0h0v8lz_di" bpmnElement="Flow_0h0v8lz">
+        <di:waypoint x="780" y="375" />
+        <di:waypoint x="780" y="280" />
+        <di:waypoint x="900" y="280" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="776" y="253" width="75" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_164rj2d_di" bpmnElement="Flow_164rj2d">
+        <di:waypoint x="710" y="400" />
+        <di:waypoint x="755" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0exfrkh_di" bpmnElement="Flow_0exfrkh">
+        <di:waypoint x="430" y="400" />
+        <di:waypoint x="470" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02jqqmo_di" bpmnElement="Flow_02jqqmo">
+        <di:waypoint x="278" y="400" />
+        <di:waypoint x="330" y="400" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0u87xdf_di" bpmnElement="Flow_0u87xdf">
+        <di:waypoint x="1000" y="280" />
+        <di:waypoint x="1120" y="280" />
+        <di:waypoint x="1120" y="382" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1sdvjm8_di" bpmnElement="Flow_1sdvjm8">
+        <di:waypoint x="780" y="425" />
+        <di:waypoint x="780" y="520" />
+        <di:waypoint x="1120" y="520" />
+        <di:waypoint x="1120" y="418" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="911" y="502" width="78" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_139n0rx_di" bpmnElement="task_stornierungswunschErfassen">
+        <dc:Bounds x="330" y="360" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ghi4p8_di" bpmnElement="task_stornierungDurchfuehren">
+        <dc:Bounds x="470" y="360" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1me846k_di" bpmnElement="task_reisezeitpunktAbfragen">
+        <dc:Bounds x="610" y="360" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0fncemo_di" bpmnElement="XOR_ueberVierWochen" isMarkerVisible="true">
+        <dc:Bounds x="755" y="375" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="778" y="345.5" width="83" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1fd93h6_di" bpmnElement="task_teilrueckzahlungBeauftragen">
+        <dc:Bounds x="900" y="360" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1cbbsp0_di" bpmnElement="task_volleRueckzahlungBeauftragen">
+        <dc:Bounds x="900" y="240" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ns21k9_di" bpmnElement="StartEvent_stornierungswunschLiegtVor">
+        <dc:Bounds x="242" y="382" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="220" y="425" width="83" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0p7ndve_di" bpmnElement="EndEvent_stornierungDurchgefuehrt">
+        <dc:Bounds x="1102" y="382" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1145" y="386" width="69" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Participant_179ps3o_di" bpmnElement="Participant_00ysfop" isHorizontal="true">
+        <dc:Bounds x="150" y="70" width="1090" height="60" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
