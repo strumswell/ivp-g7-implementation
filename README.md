@@ -10,7 +10,7 @@ Folgende Abschnitte werden vom Projektteam agil bearbeitet:
 |1.    |Konzeptionierung eines Hotelbuchungsprozess      |✅    |
 |2.   |Modellierung des Prozesses in Kombination Skript- und Service-Tasks      |✅      |
 |3.    |Integration und Anpassung einer beispielhaften Hotelbuchungs-API      |✅      |
-|4.    |Dokumentation in Form eines Projekberichts      |🔁      |
+|4.    |Dokumentation in Form eines Projekberichts      |✅      |
 
 Legende: ✅ Fertig, 🔁 In Bearbeitung, 🔴 Offen
 
